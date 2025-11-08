@@ -34,17 +34,15 @@ $version | Out-File "data/version.txt" -Encoding UTF8
 # Download champion list (EN)
 Write-Host "`nDownloading champion list (EN)..." -ForegroundColor Yellow
 $champListUrl = "https://ddragon.leagueoflegends.com/cdn/$version/data/en_US/champion.json"
-$champListJson = Invoke-RestMethod -Uri $champListUrl
-$utf8NoBom = New-Object System.Text.UTF8Encoding $false
-[System.IO.File]::WriteAllText("$PWD/data/champion_list_en.json", ($champListJson | ConvertTo-Json -Depth 100), $utf8NoBom)
+& curl.exe -s -o "data/champion_list_en.json" $champListUrl
 
 # Download champion list (RU)
 Write-Host "Downloading champion list (RU)..." -ForegroundColor Yellow
 $champListUrlRu = "https://ddragon.leagueoflegends.com/cdn/$version/data/ru_RU/champion.json"
-$champListJsonRu = Invoke-RestMethod -Uri $champListUrlRu
-[System.IO.File]::WriteAllText("$PWD/data/champion_list_ru.json", ($champListJsonRu | ConvertTo-Json -Depth 100), $utf8NoBom)
+& curl.exe -s -o "data/champion_list_ru.json" $champListUrlRu
 
-# Get champion list from already loaded data
+# Read champion list
+$champListJson = Get-Content "data/champion_list_en.json" -Raw -Encoding UTF8 | ConvertFrom-Json
 $champions = $champListJson.data.PSObject.Properties.Name
 
 Write-Host "`nFound champions: $($champions.Count)" -ForegroundColor Green
@@ -63,16 +61,15 @@ foreach ($champId in $champions) {
         # Download champion JSON (EN)
         $champDetailUrl = "https://ddragon.leagueoflegends.com/cdn/$version/data/en_US/champion/$champId.json"
         $champDetailPath = "data/champion/${champId}_en.json"
-        $champDetailJson = Invoke-RestMethod -Uri $champDetailUrl -ErrorAction Stop
-        [System.IO.File]::WriteAllText("$PWD/$champDetailPath", ($champDetailJson | ConvertTo-Json -Depth 100), $utf8NoBom)
+        & curl.exe -s -o $champDetailPath $champDetailUrl
         
         # Download champion JSON (RU)
         $champDetailUrlRu = "https://ddragon.leagueoflegends.com/cdn/$version/data/ru_RU/champion/$champId.json"
         $champDetailPathRu = "data/champion/${champId}_ru.json"
-        $champDetailJsonRu = Invoke-RestMethod -Uri $champDetailUrlRu -ErrorAction Stop
-        [System.IO.File]::WriteAllText("$PWD/$champDetailPathRu", ($champDetailJsonRu | ConvertTo-Json -Depth 100), $utf8NoBom)
+        & curl.exe -s -o $champDetailPathRu $champDetailUrlRu
         
-        # Use already loaded champion data
+        # Read champion data
+        $champDetailJson = Get-Content $champDetailPath -Raw -Encoding UTF8 | ConvertFrom-Json
         $champInfo = $champDetailJson.data.$champId
         
         # Download champion main image
@@ -80,14 +77,14 @@ foreach ($champId in $champions) {
         $champImageUrl = "https://ddragon.leagueoflegends.com/cdn/$version/img/champion/$champImageName"
         $champImagePath = "images/champion/$champImageName"
         if (-not (Test-Path $champImagePath)) {
-            Invoke-WebRequest -Uri $champImageUrl -OutFile $champImagePath -ErrorAction SilentlyContinue
+            & curl.exe -s -o $champImagePath $champImageUrl
         }
         
         # Download loading image (splash)
         $loadingImageUrl = "https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champId}_0.jpg"
         $loadingImagePath = "images/champion/loading/${champId}_0.jpg"
         if (-not (Test-Path $loadingImagePath)) {
-            Invoke-WebRequest -Uri $loadingImageUrl -OutFile $loadingImagePath -ErrorAction SilentlyContinue
+            & curl.exe -s -o $loadingImagePath $loadingImageUrl
         }
         
         # Download passive icon
@@ -96,7 +93,7 @@ foreach ($champId in $champions) {
             $passiveUrl = "https://ddragon.leagueoflegends.com/cdn/$version/img/passive/$passiveImage"
             $passivePath = "images/passive/$passiveImage"
             if (-not (Test-Path $passivePath)) {
-                Invoke-WebRequest -Uri $passiveUrl -OutFile $passivePath -ErrorAction SilentlyContinue
+                & curl.exe -s -o $passivePath $passiveUrl
             }
         }
         
@@ -108,7 +105,7 @@ foreach ($champId in $champions) {
                     $spellUrl = "https://ddragon.leagueoflegends.com/cdn/$version/img/spell/$spellImage"
                     $spellPath = "images/spell/$spellImage"
                     if (-not (Test-Path $spellPath)) {
-                        Invoke-WebRequest -Uri $spellUrl -OutFile $spellPath -ErrorAction SilentlyContinue
+                        & curl.exe -s -o $spellPath $spellUrl
                     }
                 }
             }

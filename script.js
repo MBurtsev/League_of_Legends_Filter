@@ -126,7 +126,7 @@
     modalClose: null
   };
 
-  const USE_LOCAL_FILES = false; // Использовать CDN для GitHub Pages (установите true для локальной работы)
+  const USE_LOCAL_FILES = true; // Все ресурсы из репозитория (локальные файлы)
   const DDRAGON_BASE = "https://ddragon.leagueoflegends.com";
   const LOCAL_BASE = "."; // Базовая папка для локальных файлов
   const LOCALE = "en_US"; // используем en_US для надежного поиска по ключевым словам

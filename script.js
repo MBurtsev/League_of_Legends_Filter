@@ -41,6 +41,13 @@
       found: 'Найдено чемпионов',
       of: 'из',
       loading: 'Загрузка данных чемпионов…',
+      detectingVersion: 'Определение версии данных…',
+      versionDetected: 'Версия данных',
+      checkingCache: 'Проверка кэша…',
+      cacheNotFound: 'Кэш не найден. Загрузка списка чемпионов…',
+      loadingAbilities: 'Загрузка подробных данных способностей…',
+      ready: 'Готово. Чемпионов загружено',
+      applyingFilters: 'Применяю фильтры…',
       passive: 'Пассивное умение',
       cooldown: 'Перезарядка',
       cost: 'Стоимость',
@@ -87,6 +94,13 @@
       found: 'Found champions',
       of: 'of',
       loading: 'Loading champion data…',
+      detectingVersion: 'Detecting data version…',
+      versionDetected: 'Data version',
+      checkingCache: 'Checking cache…',
+      cacheNotFound: 'Cache not found. Loading champion list…',
+      loadingAbilities: 'Loading detailed ability data…',
+      ready: 'Ready. Champions loaded',
+      applyingFilters: 'Applying filters…',
       passive: 'Passive',
       cooldown: 'Cooldown',
       cost: 'Cost',
@@ -98,7 +112,7 @@
     version: null,
     championsIndex: null,
     champions: [],
-    language: 'ru', // 'ru' or 'en'
+    language: 'en', // 'ru' or 'en' - default English
     searchQuery: '',
     currentModalChampion: null,
     filters: {
@@ -2136,32 +2150,32 @@
     const browserLanguages = navigator.languages || [navigator.language || navigator.userLanguage];
     const hasRussian = browserLanguages.some(lang => lang.toLowerCase().startsWith('ru'));
     
-    if (!hasRussian) {
-      state.language = 'en';
+    if (hasRussian) {
+      state.language = 'ru';
       // Обновляем переключатель языка (checked=true для ru, false для en)
       const langToggle = qs("#lang-toggle");
       if (langToggle) {
-        langToggle.checked = false;
+        langToggle.checked = true;
       }
     }
     
     bindUI();
     updateUILanguage(); // Применяем текущий язык к интерфейсу
-    setStatus("Определение версии данных…");
+    setStatus(t('detectingVersion'));
     state.version = await getLatestVersion();
-    setStatus(`Версия данных: ${state.version}. Проверка кэша…`);
+    setStatus(`${t('versionDetected')}: ${state.version}. ${t('checkingCache')}`);
     if (tryLoadFromCache()) {
       applyFiltersAndRender();
       return;
     }
-    setStatus(`Кэш не найден. Загрузка списка чемпионов…`);
+    setStatus(t('cacheNotFound'));
     try {
       state.championsIndex = await loadChampionsIndex();
     } catch (e) {
-      setStatus("Не удалось загрузить список чемпионов из Data Dragon.");
+      setStatus("Failed to load champion list from Data Dragon.");
       throw e;
     }
-    setStatus("Загрузка подробных данных способностей…");
+    setStatus(t('loadingAbilities'));
     state.champions = await loadAllChampionDetails(state.championsIndex);
     try {
       sessionStorage.setItem(CACHE_KEY, JSON.stringify({
@@ -2169,7 +2183,7 @@
         champions: state.champions
       }));
     } catch {}
-    setStatus(`Готово. Чемпионов загружено: ${state.champions.length}. Применяю фильтры…`);
+    setStatus(`${t('ready')}: ${state.champions.length}. ${t('applyingFilters')}`);
     applyFiltersAndRender();
   }
 

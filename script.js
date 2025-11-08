@@ -30,6 +30,11 @@
       roleSupport: 'Поддержка',
       attackRange: 'Дальность автоатаки',
       spellRange: 'Дальность умений',
+      minAttackRange: 'Мин. дальность автоатаки',
+      minRangeQ: 'Мин. дальность Q',
+      minRangeW: 'Мин. дальность W',
+      minRangeE: 'Мин. дальность E',
+      minRangeR: 'Мин. дальность R',
       reset: 'Сбросить',
       searchPlaceholder: 'Поиск по имени чемпиона...',
       found: 'Найдено чемпионов',
@@ -70,6 +75,11 @@
       roleSupport: 'Support',
       attackRange: 'Attack Range',
       spellRange: 'Spell Range',
+      minAttackRange: 'Min. Attack Range',
+      minRangeQ: 'Min. Q Range',
+      minRangeW: 'Min. W Range',
+      minRangeE: 'Min. E Range',
+      minRangeR: 'Min. R Range',
       reset: 'Reset',
       searchPlaceholder: 'Search champion name...',
       found: 'Found champions',
@@ -1783,16 +1793,18 @@
   }
   
   function updateUILanguage() {
-    // Update page title and headers
-    const filterTitle = document.querySelector('.filters h2');
-    if (filterTitle) filterTitle.textContent = t('filters');
+    // Update all elements with data-i18n attribute
+    const i18nElements = document.querySelectorAll('[data-i18n]');
+    i18nElements.forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      el.textContent = t(key);
+    });
     
-    // Update filter subtitles
-    const abilitiesSubtitle = document.querySelectorAll('.filters-subtitle')[0];
-    if (abilitiesSubtitle) abilitiesSubtitle.textContent = t('abilities');
-    
-    const rolesSubtitle = document.querySelectorAll('.filters-subtitle')[1];
-    if (rolesSubtitle) rolesSubtitle.textContent = t('roles');
+    // Update search placeholder
+    const searchInput = qs("#search-input");
+    if (searchInput) {
+      searchInput.placeholder = t('searchPlaceholder');
+    }
     
     // Update filter labels
     const filterLabels = {
@@ -1825,21 +1837,41 @@
       if (label) label.textContent = t(key);
     }
     
-    // Update range labels
-    const rangeLabels = document.querySelectorAll('.range-label');
-    if (rangeLabels[0]) rangeLabels[0].textContent = t('attackRange');
-    if (rangeLabels[1]) rangeLabels[1].textContent = t('spellRange') + ' Q';
-    if (rangeLabels[2]) rangeLabels[2].textContent = t('spellRange') + ' W';
-    if (rangeLabels[3]) rangeLabels[3].textContent = t('spellRange') + ' E';
-    if (rangeLabels[4]) rangeLabels[4].textContent = t('spellRange') + ' R';
+    // Update range labels with values
+    const minRangeLabel = qs('label[for="min-range"]');
+    if (minRangeLabel) {
+      const valueSpan = minRangeLabel.querySelector('#min-range-value');
+      const value = valueSpan ? valueSpan.textContent : '0';
+      minRangeLabel.innerHTML = `${t('minAttackRange')}: <span id="min-range-value">${value}</span>`;
+    }
     
-    // Update reset button
-    const resetBtn = qs('#reset-filters');
-    if (resetBtn) resetBtn.textContent = t('reset');
+    const minRangeQLabel = qs('label[for="min-range-q"]');
+    if (minRangeQLabel) {
+      const valueSpan = minRangeQLabel.querySelector('#min-range-q-value');
+      const value = valueSpan ? valueSpan.textContent : '0';
+      minRangeQLabel.innerHTML = `${t('minRangeQ')}: <span id="min-range-q-value">${value}</span>`;
+    }
     
-    // Update search placeholder
-    const searchInput = qs('#search-input');
-    if (searchInput) searchInput.placeholder = t('searchPlaceholder');
+    const minRangeWLabel = qs('label[for="min-range-w"]');
+    if (minRangeWLabel) {
+      const valueSpan = minRangeWLabel.querySelector('#min-range-w-value');
+      const value = valueSpan ? valueSpan.textContent : '0';
+      minRangeWLabel.innerHTML = `${t('minRangeW')}: <span id="min-range-w-value">${value}</span>`;
+    }
+    
+    const minRangeELabel = qs('label[for="min-range-e"]');
+    if (minRangeELabel) {
+      const valueSpan = minRangeELabel.querySelector('#min-range-e-value');
+      const value = valueSpan ? valueSpan.textContent : '0';
+      minRangeELabel.innerHTML = `${t('minRangeE')}: <span id="min-range-e-value">${value}</span>`;
+    }
+    
+    const minRangeRLabel = qs('label[for="min-range-r"]');
+    if (minRangeRLabel) {
+      const valueSpan = minRangeRLabel.querySelector('#min-range-r-value');
+      const value = valueSpan ? valueSpan.textContent : '0';
+      minRangeRLabel.innerHTML = `${t('minRangeR')}: <span id="min-range-r-value">${value}</span>`;
+    }
     
     // Update modal if it's open
     if (state.currentModalChampion) {
@@ -2098,6 +2130,7 @@
     }
     
     bindUI();
+    updateUILanguage(); // Применяем текущий язык к интерфейсу
     setStatus("Определение версии данных…");
     state.version = await getLatestVersion();
     setStatus(`Версия данных: ${state.version}. Проверка кэша…`);

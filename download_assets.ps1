@@ -34,16 +34,18 @@ $version | Out-File "data/version.txt" -Encoding UTF8
 # Download champion list (EN)
 Write-Host "`nDownloading champion list (EN)..." -ForegroundColor Yellow
 $champListUrl = "https://ddragon.leagueoflegends.com/cdn/$version/data/en_US/champion.json"
-Invoke-WebRequest -Uri $champListUrl -OutFile "data/champion_list_en.json"
+$champListJson = Invoke-RestMethod -Uri $champListUrl
+$utf8NoBom = New-Object System.Text.UTF8Encoding $false
+[System.IO.File]::WriteAllText("$PWD/data/champion_list_en.json", ($champListJson | ConvertTo-Json -Depth 100), $utf8NoBom)
 
 # Download champion list (RU)
 Write-Host "Downloading champion list (RU)..." -ForegroundColor Yellow
 $champListUrlRu = "https://ddragon.leagueoflegends.com/cdn/$version/data/ru_RU/champion.json"
-Invoke-WebRequest -Uri $champListUrlRu -OutFile "data/champion_list_ru.json"
+$champListJsonRu = Invoke-RestMethod -Uri $champListUrlRu
+[System.IO.File]::WriteAllText("$PWD/data/champion_list_ru.json", ($champListJsonRu | ConvertTo-Json -Depth 100), $utf8NoBom)
 
-# Read champion list
-$champData = Get-Content "data/champion_list_en.json" | ConvertFrom-Json
-$champions = $champData.data.PSObject.Properties.Name
+# Get champion list from already loaded data
+$champions = $champListJson.data.PSObject.Properties.Name
 
 Write-Host "`nFound champions: $($champions.Count)" -ForegroundColor Green
 
@@ -61,16 +63,17 @@ foreach ($champId in $champions) {
         # Download champion JSON (EN)
         $champDetailUrl = "https://ddragon.leagueoflegends.com/cdn/$version/data/en_US/champion/$champId.json"
         $champDetailPath = "data/champion/${champId}_en.json"
-        Invoke-WebRequest -Uri $champDetailUrl -OutFile $champDetailPath -ErrorAction Stop
+        $champDetailJson = Invoke-RestMethod -Uri $champDetailUrl -ErrorAction Stop
+        [System.IO.File]::WriteAllText("$PWD/$champDetailPath", ($champDetailJson | ConvertTo-Json -Depth 100), $utf8NoBom)
         
         # Download champion JSON (RU)
         $champDetailUrlRu = "https://ddragon.leagueoflegends.com/cdn/$version/data/ru_RU/champion/$champId.json"
         $champDetailPathRu = "data/champion/${champId}_ru.json"
-        Invoke-WebRequest -Uri $champDetailUrlRu -OutFile $champDetailPathRu -ErrorAction Stop
+        $champDetailJsonRu = Invoke-RestMethod -Uri $champDetailUrlRu -ErrorAction Stop
+        [System.IO.File]::WriteAllText("$PWD/$champDetailPathRu", ($champDetailJsonRu | ConvertTo-Json -Depth 100), $utf8NoBom)
         
-        # Read champion data
-        $champDetail = Get-Content $champDetailPath | ConvertFrom-Json
-        $champInfo = $champDetail.data.$champId
+        # Use already loaded champion data
+        $champInfo = $champDetailJson.data.$champId
         
         # Download champion main image
         $champImageName = $champInfo.image.full

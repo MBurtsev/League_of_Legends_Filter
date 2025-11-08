@@ -9,17 +9,17 @@ $jsContent = @"
 "@
 
 # Add version
-$version = (Get-Content "data/version.txt" -Raw).Trim()
+$version = (Get-Content "data/version.txt" -Raw -Encoding UTF8).Trim()
 $jsContent += "`nwindow.LOL_DATA_VERSION = '$version';`n"
 
 # Add champion list EN
 Write-Host "Adding champion list (EN)..." -ForegroundColor Cyan
-$champListEn = Get-Content "data/champion_list_en.json" -Raw
+$champListEn = Get-Content "data/champion_list_en.json" -Raw -Encoding UTF8
 $jsContent += "`nwindow.LOL_CHAMPION_LIST_EN = $champListEn;`n"
 
 # Add champion list RU
 Write-Host "Adding champion list (RU)..." -ForegroundColor Cyan
-$champListRu = Get-Content "data/champion_list_ru.json" -Raw
+$champListRu = Get-Content "data/champion_list_ru.json" -Raw -Encoding UTF8
 $jsContent += "`nwindow.LOL_CHAMPION_LIST_RU = $champListRu;`n"
 
 # Add all champion details in one object
@@ -33,7 +33,7 @@ foreach ($file in $championFiles) {
     $current++
     Write-Host "`r[$current/$total] Processing: $($file.Name)" -NoNewline -ForegroundColor Yellow
     
-    $content = Get-Content $file.FullName -Raw
+    $content = Get-Content $file.FullName -Raw -Encoding UTF8
     $fileName = $file.BaseName
     
     # Add to the big object
@@ -49,8 +49,9 @@ foreach ($file in $championFiles) {
 
 $jsContent += "};`n"
 
-# Save to single file
-$jsContent | Out-File "champion_data.js" -Encoding UTF8
+# Save to single file with UTF8 (no BOM)
+$utf8NoBom = New-Object System.Text.UTF8Encoding $false
+[System.IO.File]::WriteAllText("$PWD/champion_data.js", $jsContent, $utf8NoBom)
 
 Write-Host "`n`nConversion completed!" -ForegroundColor Green
 Write-Host "Created file: champion_data.js" -ForegroundColor Cyan

@@ -103,8 +103,10 @@
         Фильтры
         <button class="filters-close" id="filters-close" aria-label="Закрыть">×</button>
       </h2>
+      
+      <!-- Бафы -->
       <div class="filters-group">
-        <div class="filters-subtitle">Умения</div>
+        <div class="filters-subtitle">Бафы</div>
         
         <div class="filter-item-extended">
           <div class="filter-main">
@@ -118,76 +120,6 @@
             <input type="checkbox" id="filter-mobility-r" class="ability-r" title="R" />
           </div>
           <span class="filter-badge" data-filter="mobility">0</span>
-        </div>
-
-        <div class="filter-item-extended">
-          <div class="filter-main">
-            <input type="checkbox" id="filter-stun" />
-            <label for="filter-stun">Оглушение</label>
-          </div>
-          <div class="filter-abilities">
-            <input type="checkbox" id="filter-stun-q" class="ability-q" title="Q" />
-            <input type="checkbox" id="filter-stun-w" class="ability-w" title="W" />
-            <input type="checkbox" id="filter-stun-e" class="ability-e" title="E" />
-            <input type="checkbox" id="filter-stun-r" class="ability-r" title="R" />
-          </div>
-          <span class="filter-badge" data-filter="stun">0</span>
-        </div>
-
-        <div class="filter-item-extended">
-          <div class="filter-main">
-            <input type="checkbox" id="filter-slow" />
-            <label for="filter-slow">Замедление</label>
-          </div>
-          <div class="filter-abilities">
-            <input type="checkbox" id="filter-slow-q" class="ability-q" title="Q" />
-            <input type="checkbox" id="filter-slow-w" class="ability-w" title="W" />
-            <input type="checkbox" id="filter-slow-e" class="ability-e" title="E" />
-            <input type="checkbox" id="filter-slow-r" class="ability-r" title="R" />
-          </div>
-          <span class="filter-badge" data-filter="slow">0</span>
-        </div>
-
-        <div class="filter-item-extended">
-          <div class="filter-main">
-            <input type="checkbox" id="filter-root" />
-            <label for="filter-root">Удержание</label>
-          </div>
-          <div class="filter-abilities">
-            <input type="checkbox" id="filter-root-q" class="ability-q" title="Q" />
-            <input type="checkbox" id="filter-root-w" class="ability-w" title="W" />
-            <input type="checkbox" id="filter-root-e" class="ability-e" title="E" />
-            <input type="checkbox" id="filter-root-r" class="ability-r" title="R" />
-          </div>
-          <span class="filter-badge" data-filter="root">0</span>
-        </div>
-
-        <div class="filter-item-extended">
-          <div class="filter-main">
-            <input type="checkbox" id="filter-knockup" />
-            <label for="filter-knockup">Подброс / отброс</label>
-          </div>
-          <div class="filter-abilities">
-            <input type="checkbox" id="filter-knockup-q" class="ability-q" title="Q" />
-            <input type="checkbox" id="filter-knockup-w" class="ability-w" title="W" />
-            <input type="checkbox" id="filter-knockup-e" class="ability-e" title="E" />
-            <input type="checkbox" id="filter-knockup-r" class="ability-r" title="R" />
-          </div>
-          <span class="filter-badge" data-filter="knockup">0</span>
-        </div>
-
-        <div class="filter-item-extended">
-          <div class="filter-main">
-            <input type="checkbox" id="filter-silence" />
-            <label for="filter-silence">Молчание</label>
-          </div>
-          <div class="filter-abilities">
-            <input type="checkbox" id="filter-silence-q" class="ability-q" title="Q" />
-            <input type="checkbox" id="filter-silence-w" class="ability-w" title="W" />
-            <input type="checkbox" id="filter-silence-e" class="ability-e" title="E" />
-            <input type="checkbox" id="filter-silence-r" class="ability-r" title="R" />
-          </div>
-          <span class="filter-badge" data-filter="silence">0</span>
         </div>
 
         <div class="filter-item-extended">
@@ -262,20 +194,6 @@
 
         <div class="filter-item-extended">
           <div class="filter-main">
-            <input type="checkbox" id="filter-pull" />
-            <label for="filter-pull">Притяжение</label>
-          </div>
-          <div class="filter-abilities">
-            <input type="checkbox" id="filter-pull-q" class="ability-q" title="Q" />
-            <input type="checkbox" id="filter-pull-w" class="ability-w" title="W" />
-            <input type="checkbox" id="filter-pull-e" class="ability-e" title="E" />
-            <input type="checkbox" id="filter-pull-r" class="ability-r" title="R" />
-          </div>
-          <span class="filter-badge" data-filter="pull">0</span>
-        </div>
-
-        <div class="filter-item-extended">
-          <div class="filter-main">
             <input type="checkbox" id="filter-lifesteal" />
             <label for="filter-lifesteal">Вампиризм</label>
           </div>
@@ -287,7 +205,99 @@
           </div>
           <span class="filter-badge" data-filter="lifesteal">0</span>
         </div>
+      </div>
 
+      <!-- Дебафы -->
+      <div class="filters-group">
+        <div class="filters-subtitle">Дебафы</div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-stun" />
+            <label for="filter-stun">Оглушение</label>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-stun-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-stun-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-stun-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-stun-r" class="ability-r" title="R" />
+          </div>
+          <span class="filter-badge" data-filter="stun">0</span>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-slow" />
+            <label for="filter-slow">Замедление</label>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-slow-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-slow-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-slow-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-slow-r" class="ability-r" title="R" />
+          </div>
+          <span class="filter-badge" data-filter="slow">0</span>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-root" />
+            <label for="filter-root">Удержание</label>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-root-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-root-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-root-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-root-r" class="ability-r" title="R" />
+          </div>
+          <span class="filter-badge" data-filter="root">0</span>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-knockup" />
+            <label for="filter-knockup">Подброс / отброс</label>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-knockup-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-knockup-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-knockup-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-knockup-r" class="ability-r" title="R" />
+          </div>
+          <span class="filter-badge" data-filter="knockup">0</span>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-silence" />
+            <label for="filter-silence">Молчание</label>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-silence-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-silence-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-silence-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-silence-r" class="ability-r" title="R" />
+          </div>
+          <span class="filter-badge" data-filter="silence">0</span>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-pull" />
+            <label for="filter-pull">Притяжение</label>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-pull-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-pull-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-pull-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-pull-r" class="ability-r" title="R" />
+          </div>
+          <span class="filter-badge" data-filter="pull">0</span>
+        </div>
+      </div>
+
+      <!-- Типы урона -->
+      <div class="filters-group">
         <div class="filter-item-extended">
           <div class="filter-main">
             <input type="checkbox" id="dmg-physical" />

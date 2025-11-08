@@ -3,6 +3,8 @@
     ru: {
       filters: 'Фильтры',
       abilities: 'Умения',
+      buffs: 'Бафы',
+      debuffs: 'Дебафы',
       mobility: 'Прыжок / рывок',
       stun: 'Оглушение',
       slow: 'Замедление',
@@ -41,6 +43,8 @@
     en: {
       filters: 'Filters',
       abilities: 'Abilities',
+      buffs: 'Buffs',
+      debuffs: 'Debuffs',
       mobility: 'Dash / Blink',
       stun: 'Stun',
       slow: 'Slow',

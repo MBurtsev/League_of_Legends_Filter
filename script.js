@@ -1875,6 +1875,13 @@
       minRangeRLabel.innerHTML = `${t('minRangeR')}: <span id="min-range-r-value">${value}</span>`;
     }
     
+    // Обновляем ссылки на элементы после изменения innerHTML
+    els.minRangeValue = qs("#min-range-value");
+    els.minRangeQValue = qs("#min-range-q-value");
+    els.minRangeWValue = qs("#min-range-w-value");
+    els.minRangeEValue = qs("#min-range-e-value");
+    els.minRangeRValue = qs("#min-range-r-value");
+    
     // Update modal if it's open
     if (state.currentModalChampion) {
       els.modalContent.innerHTML = buildModalHtml(state.currentModalChampion);

@@ -1499,6 +1499,7 @@
       
       // Проверяем Q/W/E/R чекбоксы
       const abilities = ['q', 'w', 'e', 'r'];
+      const disabledStates = [];
       for (const ability of abilities) {
         const abilityKey = `${filter}${ability.toUpperCase()}`;
         const testFiltersAbility = { 
@@ -1517,7 +1518,21 @@
         const checkbox = qs(`#filter-${filter}-${ability}`);
         if (checkbox) {
           checkbox.disabled = countAbility === 0;
+          disabledStates.push(countAbility === 0);
         }
+      }
+      
+      // Если все Q/W/E/R disabled, делаем disabled всю строку
+      const allDisabled = disabledStates.length === 4 && disabledStates.every(d => d === true);
+      const mainCheckbox = qs(`#filter-${filter}`);
+      const mainLabel = mainCheckbox ? mainCheckbox.nextElementSibling : null;
+      if (mainCheckbox) {
+        mainCheckbox.disabled = allDisabled;
+        if (allDisabled) mainCheckbox.checked = false;
+      }
+      if (mainLabel) {
+        mainLabel.style.opacity = allDisabled ? '0.4' : '1';
+        mainLabel.style.cursor = allDisabled ? 'not-allowed' : 'pointer';
       }
     }
     
@@ -1538,6 +1553,7 @@
       // Проверяем Q/W/E/R чекбоксы
       const abilities = ['q', 'w', 'e', 'r'];
       const id = dmgFilter.key === 'dmgPhysical' ? 'dmg-physical' : 'dmg-magic';
+      const disabledStates = [];
       for (const ability of abilities) {
         const abilityKey = `${dmgFilter.key}${ability.toUpperCase()}`;
         const testFiltersAbility = { 
@@ -1556,7 +1572,21 @@
         const checkbox = qs(`#${id}-${ability}`);
         if (checkbox) {
           checkbox.disabled = countAbility === 0;
+          disabledStates.push(countAbility === 0);
         }
+      }
+      
+      // Если все Q/W/E/R disabled, делаем disabled всю строку
+      const allDisabled = disabledStates.length === 4 && disabledStates.every(d => d === true);
+      const mainCheckbox = qs(`#${id}`);
+      const mainLabel = mainCheckbox ? mainCheckbox.nextElementSibling : null;
+      if (mainCheckbox) {
+        mainCheckbox.disabled = allDisabled;
+        if (allDisabled) mainCheckbox.checked = false;
+      }
+      if (mainLabel) {
+        mainLabel.style.opacity = allDisabled ? '0.4' : '1';
+        mainLabel.style.cursor = allDisabled ? 'not-allowed' : 'pointer';
       }
     }
     
@@ -1574,6 +1604,7 @@
     
     // Проверяем Q/W/E/R чекбоксы для здоровья
     const abilities = ['q', 'w', 'e', 'r'];
+    const disabledStatesHealth = [];
     for (const ability of abilities) {
       const abilityKey = `${scalesFilter.key}${ability.toUpperCase()}`;
       const testFiltersAbility = { 
@@ -1592,7 +1623,21 @@
       const checkbox = qs(`#scales-health-${ability}`);
       if (checkbox) {
         checkbox.disabled = countAbility === 0;
+        disabledStatesHealth.push(countAbility === 0);
       }
+    }
+    
+    // Если все Q/W/E/R disabled, делаем disabled всю строку
+    const allDisabledHealth = disabledStatesHealth.length === 4 && disabledStatesHealth.every(d => d === true);
+    const mainCheckboxHealth = qs(`#scales-health`);
+    const mainLabelHealth = mainCheckboxHealth ? mainCheckboxHealth.nextElementSibling : null;
+    if (mainCheckboxHealth) {
+      mainCheckboxHealth.disabled = allDisabledHealth;
+      if (allDisabledHealth) mainCheckboxHealth.checked = false;
+    }
+    if (mainLabelHealth) {
+      mainLabelHealth.style.opacity = allDisabledHealth ? '0.4' : '1';
+      mainLabelHealth.style.cursor = allDisabledHealth ? 'not-allowed' : 'pointer';
     }
     
     // Для фильтров ролей
@@ -1608,6 +1653,27 @@
       
       const badge = document.querySelector(`.filter-badge[data-filter="${roleFilter}"]`);
       if (badge) badge.textContent = count;
+      
+      // Делаем disabled роль, если по ней нет чемпионов
+      const roleId = roleFilter.replace('role', 'role-').toLowerCase().replace('role-', 'role-');
+      let checkboxId = '';
+      if (roleFilter === 'roleTank') checkboxId = 'role-tank';
+      else if (roleFilter === 'roleFighter') checkboxId = 'role-fighter';
+      else if (roleFilter === 'roleMage') checkboxId = 'role-mage';
+      else if (roleFilter === 'roleMarksman') checkboxId = 'role-marksman';
+      else if (roleFilter === 'roleAssassin') checkboxId = 'role-assassin';
+      else if (roleFilter === 'roleSupport') checkboxId = 'role-support';
+      
+      const roleCheckbox = qs(`#${checkboxId}`);
+      const roleLabel = roleCheckbox ? roleCheckbox.nextElementSibling : null;
+      if (roleCheckbox) {
+        roleCheckbox.disabled = count === 0;
+        if (count === 0) roleCheckbox.checked = false;
+      }
+      if (roleLabel) {
+        roleLabel.style.opacity = count === 0 ? '0.4' : '1';
+        roleLabel.style.cursor = count === 0 ? 'not-allowed' : 'pointer';
+      }
     }
   }
   

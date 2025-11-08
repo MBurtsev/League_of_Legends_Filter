@@ -221,6 +221,11 @@ body {
   flex-shrink: 0;
 }
 
+.filter-item input[type="checkbox"]:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 /* Расширенные фильтры с Q/W/E/R */
 .filter-item-extended {
   display: flex;
@@ -252,6 +257,11 @@ body {
   accent-color: var(--accent);
   cursor: pointer;
   flex-shrink: 0;
+}
+
+.filter-main > input[type="checkbox"]:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
 .filter-main > label {

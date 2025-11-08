@@ -1,3 +1,6 @@
+# Скрипт для проверки плейсхолдеров в описаниях умений
+# Использование: .\tools\check_placeholders.ps1
+
 $champions = @("Aatrox", "Ahri", "Akali", "Yasuo", "Yone", "Zed", "Brand", "Annie", "Lux", "Jinx", "Aphelios", "Samira", "Sett", "Gwen", "Viego", "Belveth", "Evelynn", "KhaZix", "Rengar", "Sylas", "Thresh", "Pyke", "Ezreal", "Kayn", "Jhin")
 $version = "15.21.1"
 $placeholders = @{}

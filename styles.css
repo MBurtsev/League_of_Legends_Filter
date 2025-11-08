@@ -93,12 +93,15 @@ body {
 .filter-item label {
   font-size: 15px; /* было около 16px по умолчанию, уменьшили на 1px */
   line-height: 1.1;
+  flex: 1;
+  cursor: pointer;
 }
 
 .filter-item input[type="checkbox"] {
   width: 16px;
   height: 16px;
   accent-color: var(--accent);
+  flex-shrink: 0;
 }
 
 /* Расширенные фильтры с Q/W/E/R */
@@ -114,11 +117,16 @@ body {
   gap: 8px;
 }
 
+.filter-item-extended > .filter-badge {
+  flex-shrink: 0;
+}
+
 .filter-main {
   display: flex;
   align-items: center;
   gap: 8px;
   flex: 1;
+  min-width: 0;
 }
 
 .filter-main > input[type="checkbox"] {
@@ -144,8 +152,10 @@ body {
   border-radius: 10px;
   font-size: 13px;
   font-weight: 600;
-  min-width: 20px;
+  min-width: 34px;
+  width: 34px;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .filter-abilities {
@@ -154,6 +164,8 @@ body {
   gap: 4px;
   flex-wrap: nowrap;
   flex-shrink: 0;
+  width: 88px;
+  justify-content: flex-end;
 }
 
 /* Цветные чекбоксы для Q/W/E/R */
@@ -175,23 +187,23 @@ body {
 }
 
 .ability-q {
-  background-color: #059669;
-  border: 2px solid #059669;
+  background-color: #047857;
+  border: 2px solid #047857;
 }
 
 .ability-w {
-  background-color: #3b82f6;
-  border: 2px solid #3b82f6;
+  background-color: #2563eb;
+  border: 2px solid #2563eb;
 }
 
 .ability-e {
-  background-color: #a855f7;
-  border: 2px solid #a855f7;
+  background-color: #9333ea;
+  border: 2px solid #9333ea;
 }
 
 .ability-r {
-  background-color: #ef4444;
-  border: 2px solid #ef4444;
+  background-color: #991b1b;
+  border: 2px solid #991b1b;
 }
 
 .ability-q:checked,

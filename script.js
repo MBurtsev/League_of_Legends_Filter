@@ -126,8 +126,6 @@
     modalClose: null
   };
 
-  const USE_LOCAL_FILES = true; // Все ресурсы из репозитория (локальные файлы)
-  const DDRAGON_BASE = "https://ddragon.leagueoflegends.com";
   const LOCAL_BASE = "."; // Базовая папка для локальных файлов
   const LOCALE = "en_US"; // используем en_US для надежного поиска по ключевым словам
   const RU_LOCALE = "ru_RU"; // ru для отображения описаний
@@ -157,25 +155,16 @@
       return window.LOL_DATA_VERSION;
     }
     
-    if (USE_LOCAL_FILES) {
-      try {
-        const resp = await fetch(`${LOCAL_BASE}/data/version.txt`);
-        if (resp.ok) {
-          const version = (await resp.text()).trim();
-          return version || FALLBACK_VERSION;
-        }
-      } catch (e) {
-        console.warn("Не удалось загрузить локальную версию:", e);
-      }
-      return FALLBACK_VERSION;
-    }
-    
     try {
-      const versions = await fetchJson(`${DDRAGON_BASE}/api/versions.json`);
-      return Array.isArray(versions) && versions.length ? versions[0] : FALLBACK_VERSION;
-    } catch {
-      return FALLBACK_VERSION;
+      const resp = await fetch(`${LOCAL_BASE}/data/version.txt`);
+      if (resp.ok) {
+        const version = (await resp.text()).trim();
+        return version || FALLBACK_VERSION;
+      }
+    } catch (e) {
+      console.warn("Не удалось загрузить локальную версию:", e);
     }
+    return FALLBACK_VERSION;
   }
 
   function tryLoadFromCache() {
@@ -200,43 +189,36 @@
       return window.LOL_CHAMPION_LIST_EN.data;
     }
     
-    if (USE_LOCAL_FILES) {
-      const url = `${LOCAL_BASE}/data/champion_list_en.json`;
-      const json = await fetchJson(url);
-      return json.data;
-    }
-    
-    const url = `${DDRAGON_BASE}/cdn/${state.version}/data/${LOCALE}/champion.json`;
+    const url = `${LOCAL_BASE}/data/champion_list_en.json`;
     const json = await fetchJson(url);
     return json.data;
   }
 
   function getChampionIcon(version, imageFull) {
-    if (USE_LOCAL_FILES) {
-      return `${LOCAL_BASE}/images/champion/${imageFull}`;
-    }
-    return `${DDRAGON_BASE}/cdn/${version}/img/champion/${imageFull}`;
+    return `${LOCAL_BASE}/images/champion/${imageFull}`;
   }
+  
   function getSpellIcon(version, imageFull) {
-    if (USE_LOCAL_FILES) {
-      return `${LOCAL_BASE}/images/spell/${imageFull}`;
-    }
-    return `${DDRAGON_BASE}/cdn/${version}/img/spell/${imageFull}`;
+    return `${LOCAL_BASE}/images/spell/${imageFull}`;
   }
+  
   function getPassiveIcon(version, imageFull) {
-    if (USE_LOCAL_FILES) {
-      return `${LOCAL_BASE}/images/passive/${imageFull}`;
-    }
-    return `${DDRAGON_BASE}/cdn/${version}/img/passive/${imageFull}`;
+    return `${LOCAL_BASE}/images/passive/${imageFull}`;
   }
 
-  function fillPlaceholdersInText(text, spellEn, spellRu) {
+  function fillPlaceholdersInText(text, spellEn, spellRu, isRussian = true) {
     let result = String(text || "");
     const dict = {};
     const missingKeys = new Set();
     
-    // Словарь человекочитаемых замен для типичных плейсхолдеров LoL
-    const fallbackDescriptions = {
+    // Fallback замены отключены - плейсхолдеры остаются в оригинальном виде
+    const fallbackDescriptionsRu = {
+      // Словарь убран - оставляем плейсхолдеры как есть
+      "spellmodifierdescriptionappend": ""  // Только этот удаляем, он всегда пустой
+    };
+    /*
+    // ОТКЛЮЧЕНО: Старый словарь замен (оставлен для справки)
+    const fallbackDescriptionsRu_DISABLED = {
       // Урон
       "basedamage": "базовый урон",
       "totaldamage": "урон",
@@ -263,6 +245,7 @@
       "slowpercentage*100": "сила замедления%",
       "slowamountcalc": "сила замедления",
       "initialslow*-100": "начальное замедление%",
+      "movespeedmod": "модификатор скорости",
       "movespeedmod*-100": "модификатор скорости%",
       "movespeedmodbonus*-100": "бонусный модификатор скорости%",
       "trapslowamount*100": "замедление ловушки%",
@@ -274,6 +257,7 @@
       
       // Оглушение
       "stunduration": "длительность оглушения",
+      "wallstunduration": "длительность оглушения от стены",
       
       // Здоровье
       "missinghealthpercent": "% от недостающего здоровья",
@@ -296,11 +280,14 @@
       "shieldconversion": "% конверсии в щит",
       "shieldconversion*100": "% конверсии в щит",
       "shieldduration": "длительность щита",
+      "shield_duration": "длительность щита",
       "shieldmaxduration": "длительность щита",
       "shieldblocktotal": "сила щита",
       "wshield": "сила щита W",
       "totalshield": "общий щит",
       "totalshieldtt": "общий щит",
+      "totalshieldstrength": "сила щита",
+      "calc_shield": "сила щита",
       
       // Лечение
       "heal": "лечение",
@@ -323,12 +310,16 @@
       "startingms*100": "начальная скорость%",
       "stealthms": "скорость в невидимости",
       "oocms": "скорость вне боя",
+      "berserkms*100": "% скорости передвижения берсерка",
+      "extramovespeedpercent*100": "% дополнительной скорости передвижения",
       
       // Скорость атаки
       "attackspeed": "скорость атаки",
       "attackspeed*100": "скорость атаки%",
+      "attackspeedmod*100": "% модификатора скорости атаки",
       "bonusattackspeed": "бонусная скорость атаки",
       "bonusattackspeed*100": "бонусная скорость атаки%",
+      "berserkas*100": "% скорости атаки берсерка",
       "totalasmod*100": "общий модификатор скорости атаки%",
       "minigunattackspeedmax": "макс. скорость атаки миниган",
       "minigunattackspeedstacks": "стаки скорости атаки миниган",
@@ -340,6 +331,7 @@
       "totalad": "сила атаки",
       "bonusad": "бонусная сила атаки",
       "rtotaladamp": "% усиления силы атаки",
+      "rtotaladamp*100": "% усиления силы атаки",
       "qtotaladratio": "коэфф. силы атаки",
       
       // Сила умений
@@ -368,6 +360,7 @@
       "rpercentarmorpen": "% пробития брони",
       "damagereflection": "отражение урона",
       "drpercent": "снижение получаемого урона",
+      "drpercent*100": "% снижения получаемого урона",
       "damagereduction": "снижение урона",
       "damagereductionpercent": "% снижения урона",
       "rdamageamp*100": "% усиления урона",
@@ -393,6 +386,11 @@
       "rmaxcasts": "макс. количество применений R",
       "rmaxtargetspercast": "макс. целей за применение R",
       "e0": "эффект 0",
+      "e1": "эффект 1",
+      "e2": "эффект 2",
+      "e3": "эффект 3",
+      "e4": "эффект 4",
+      "e5": "эффект 5",
       
       // Специфичные плейсхолдеры для разных способностей
       "spellmodifierdescriptionappend": "", // обычно пустой, просто удаляем
@@ -421,6 +419,9 @@
       "projectiledamage": "урон снаряда",
       "totalbonusdamage": "общий бонусный урон",
       "bonustotaldamage": "общий бонусный урон",
+      "totalattackbonusdamage": "общий бонусный урон атаки",
+      "totalattackpercentmissinghealth": "% урона от недостающего здоровья",
+      "totalaoeоedamage": "общий урон по области",
       
       // Дополнительный урон
       "bonusdamagetooltip": "бонусный урон",
@@ -445,11 +446,13 @@
       "dashdamage": "урон при рывке",
       "explosiondamage": "урон от взрыва",
       "totalexplosiondamage": "общий урон от взрыва",
+      "wallhitdamage": "урон при ударе о стену",
       "cast1damage": "урон первого применения",
       "cast2damagemax": "макс. урон второго применения",
       "cast2damagemin": "мин. урон второго применения",
       "e1damage": "урон E1",
       "e2damagecalc": "урон E2",
+      "edamagecalc": "урон E",
       "finalswipedamage": "урон финального удара",
       "miniswipedamage": "урон малого удара",
       "secondattackdamage": "урон второй атаки",
@@ -467,6 +470,8 @@
       "totaldamage3": "общий урон (3 уровень)",
       "totaldamage5": "общий урон (5 уровень)",
       "totaldamagett": "общий урон",
+      "totaldamagetooltip": "общий урон",
+      "zonedamagetooltip": "урон зоны",
       "rcalculateddamage": "расчётный урон R",
       "darkinflatdamage": "фиксированный урон Темного",
       "darkinpercentdamage": "процентный урон Темного",
@@ -476,6 +481,7 @@
       "lifesteal": "вампиризм",
       "totallifesteal": "вампиризм",
       "lifestealmod*100": "модификатор вампиризма%",
+      "lifestealpercent*100": "% вампиризма",
       "spellvamp": "заклинательный вампиризм",
       "omnivamp": "все-вампиризм",
       "physicalvamp": "физический вампиризм",
@@ -488,6 +494,9 @@
       "healmodvschamps*100": "модификатор лечения против чемпионов%",
       "damagepercentagehealed": "% вылеченного урона",
       "slayerhealpercent*100": "% лечения Убийцы",
+      "attackmaxhpheal": "лечение от макс. здоровья при атаке",
+      "attackhealpercent*100": "% лечения при атаке",
+      "percentmaxhpheal": "% лечения от макс. здоровья",
       
       // Перезарядка
       "recastcooldown": "перезарядка повторного применения",
@@ -532,6 +541,8 @@
       "knockupdurationtooltiponly": "длительность подброса",
       "q3knockupduration": "длительность подброса",
       "rknockupduration": "длительность подброса",
+      "minknockup": "мин. длительность подброса",
+      "maxknockup": "макс. длительность подброса",
       "fearduartion": "длительность страха",
       "fearduration": "длительность страха",
       "charmduartion": "длительность очарования",
@@ -549,6 +560,7 @@
       "buffduration": "длительность усиления",
       "debuffduration": "длительность ослабления",
       "rbuffduration": "длительность усиления",
+      "berserkduration": "длительность берсерка",
       "stealthduration": "длительность невидимости",
       "steroidduration": "длительность усиления",
       "attackspeedduration": "длительность ускорения атаки",
@@ -558,6 +570,7 @@
       "infestduration": "длительность заражения",
       "slashduration": "длительность удара",
       "zoneduration": "длительность зоны",
+      "slowzoneduration": "длительность зоны замедления",
       "mistduration": "длительность тумана",
       "voidduration": "длительность Бездны",
       "trapduration": "длительность ловушки",
@@ -592,12 +605,19 @@
       "armorpenetration": "пробитие брони",
       "armorshred": "снижение брони",
       "armorshredamount": "величина снижения брони",
+      "armorshredduration": "длительность снижения брони",
+      "shredpercent*100": "% снижения защиты",
+      "grantedallyarmor": "броня союзнику",
+      "grantedbraumarmor": "броня",
       "magicresist": "магическая защита",
       "bonusmagicresist": "бонусная магическая защита",
       "totalmagicresist": "общая магическая защита",
       "magicpenetration": "пробитие магической защиты",
       "magicshred": "снижение магической защиты",
       "mrshred": "снижение магической защиты",
+      "mrshred*100": "% снижения магической защиты",
+      "grantedallymr": "магическая защита союзнику",
+      "grantedbraummr": "магическая защита",
       "shredduration": "длительность снижения",
       "shredamount": "величина снижения",
       
@@ -618,6 +638,7 @@
       "rstackcount": "количество зарядов R",
       "stackcount": "количество стаков",
       "maxstacks": "макс. количество стаков",
+      "stackcap": "макс. количество стаков",
       "goldcost": "стоимость в золоте",
       "percenthealth": "% здоровья",
       "percentmana": "% маны",
@@ -627,6 +648,7 @@
       "percenthealthempoweredtooltip": "% от макс. здоровья (усиленный)",
       "percenthealthtooltip": "% от макс. здоровья",
       "speedamount": "скорость передвижения",
+      "speedamount*100": "% скорости передвижения",
       "speedduration": "длительность ускорения",
       "critdamage": "критический урон",
       "criticalstrikechance": "шанс критического удара",
@@ -636,6 +658,7 @@
       "monsterdamagebase": "базовый урон по монстрам",
       "monsterdamagebonus": "бонусный урон по монстрам"
     };
+    */
     
     const addDict = (obj) => {
       if (!obj) return;
@@ -740,24 +763,24 @@
         return String(val);
       }
       
-      // Если значения нет, проверяем словарь fallback-описаний
-      // Для fallback убираем все спецсимволы и числа, чтобы "f2.0" → "f", "f2" → "f"
-      const cleanKeyForFallback = keyLower.replace(/[*+\-./0-9\s]/g, '');
-      const fallback = fallbackDescriptions[keyLower] || fallbackDescriptions[cleanKeyForFallback];
-      
-      if (fallback !== undefined) {
-        // Если в словаре есть замена
-        if (fallback === "") {
-          // Пустая строка означает, что плейсхолдер нужно просто удалить
-          return "";
-        } else {
-          // Заменяем на человекочитаемое описание
-          missingKeys.add(key);
-          return fallback;
+      // ОТКЛЮЧЕНО: Fallback замена плейсхолдеров на текст (оставляем плейсхолдеры как есть)
+      /*
+      if (isRussian) {
+        const cleanKeyForFallback = keyLower.replace(/[*+\-./0-9\s]/g, '');
+        const fallback = fallbackDescriptionsRu[keyLower] || fallbackDescriptionsRu[cleanKeyForFallback];
+        
+        if (fallback !== undefined) {
+          if (fallback === "") {
+            return "";
+          } else {
+            missingKeys.add(key);
+            return fallback;
+          }
         }
       }
+      */
       
-      // Если нет ни данных, ни fallback-описания, оставляем плейсхолдер как есть
+      // Оставляем плейсхолдеры в оригинальном виде
       missingKeys.add(key);
       return fullMatch;
     });
@@ -895,15 +918,8 @@
       }
     }
     
-    if (USE_LOCAL_FILES) {
-      const suffix = locale === RU_LOCALE ? 'ru' : 'en';
-      const url = `${LOCAL_BASE}/data/champion/${champKey}_${suffix}.json`;
-      const json = await fetchJson(url);
-      const entry = json.data?.[champKey];
-      return entry;
-    }
-    
-    const url = `${DDRAGON_BASE}/cdn/${state.version}/data/${locale}/champion/${champKey}.json`;
+    const suffix = locale === RU_LOCALE ? 'ru' : 'en';
+    const url = `${LOCAL_BASE}/data/champion/${champKey}_${suffix}.json`;
     const json = await fetchJson(url);
     const entry = json.data?.[champKey];
     return entry;
@@ -1012,26 +1028,26 @@
     return tags.map(t => String(t).toLowerCase()); // e.g., ["tank","fighter"]
   }
 
-  function buildAbilitiesRU(detailRu, detailEn) {
-    if (!detailRu) return { passive: null, spells: [] };
+  function buildAbilities(detail, detailEn, isRussian = true) {
+    if (!detail) return { passive: null, spells: [] };
     const spells = [];
-    if (Array.isArray(detailRu.spells)) {
+    if (Array.isArray(detail.spells)) {
       const labels = ["Q", "W", "E", "R"];
-      for (let i = 0; i < detailRu.spells.length; i++) {
-        const s = detailRu.spells[i];
+      for (let i = 0; i < detail.spells.length; i++) {
+        const s = detail.spells[i];
         const sEn = Array.isArray(detailEn?.spells) ? detailEn.spells[i] : null;
         spells.push({
           key: labels[i] || "",
           name: s?.name || "",
-          descHtml: fillPlaceholdersInText(s?.tooltip || s?.description || "", sEn, s),
+          descHtml: fillPlaceholdersInText(s?.tooltip || s?.description || "", sEn, s, isRussian),
           icon: s?.image?.full ? getSpellIcon(state.version, s.image.full) : null
         });
       }
     }
-    const passive = detailRu.passive ? {
-      name: detailRu.passive.name || "",
-      descHtml: fillPlaceholdersInText(detailRu.passive.description || "", detailEn?.passive, detailRu.passive),
-      icon: detailRu.passive.image?.full ? getPassiveIcon(state.version, detailRu.passive.image.full) : null
+    const passive = detail.passive ? {
+      name: detail.passive.name || "",
+      descHtml: fillPlaceholdersInText(detail.passive.description || "", detailEn?.passive, detail.passive, isRussian),
+      icon: detail.passive.image?.full ? getPassiveIcon(state.version, detail.passive.image.full) : null
     } : null;
     return { passive, spells };
   }
@@ -1054,8 +1070,8 @@
           const classTags = mapRoleTagsLowercase(item.tags);
           const damageTypesData = extractDamageTypesFromDetailEN(detailEn);
           const scalesData = hasOwnHealthScaling(detailEn);
-          const ruAbilities = buildAbilitiesRU(detailRu, detailEn);
-          const enAbilities = buildAbilitiesRU(detailEn, detailEn);
+          const ruAbilities = buildAbilities(detailRu, detailEn, true);
+          const enAbilities = buildAbilities(detailEn, detailEn, false);
           // spell ranges
           let spellRanges = { Q: 0, W: 0, E: 0, R: 0 };
           if (Array.isArray(detailEn?.spells)) {
@@ -1458,6 +1474,7 @@
       { key: 'dmgMagic', type: 'magic' }
     ];
     const scalesFilter = { key: 'scalesHealth', type: 'health' };
+    const roleFilters = ['roleTank', 'roleFighter', 'roleMage', 'roleMarksman', 'roleAssassin', 'roleSupport'];
     
     // Для каждого фильтра способностей
     for (const filter of abilityFilters) {
@@ -1572,6 +1589,21 @@
       if (checkbox) {
         checkbox.disabled = countAbility === 0;
       }
+    }
+    
+    // Для фильтров ролей
+    for (const roleFilter of roleFilters) {
+      const testFilters = { ...currentFilters, [roleFilter]: true };
+      
+      let count = 0;
+      for (const champ of state.champions) {
+        if (championMatchesFiltersWithOverride(champ, testFilters)) {
+          count++;
+        }
+      }
+      
+      const badge = document.querySelector(`.filter-badge[data-filter="${roleFilter}"]`);
+      if (badge) badge.textContent = count;
     }
   }
   
@@ -1951,6 +1983,20 @@
   async function init() {
     els.status = qs("#status");
     els.grid = qs("#grid");
+    
+    // Проверка языка браузера при старте
+    const browserLanguages = navigator.languages || [navigator.language || navigator.userLanguage];
+    const hasRussian = browserLanguages.some(lang => lang.toLowerCase().startsWith('ru'));
+    
+    if (!hasRussian) {
+      state.language = 'en';
+      // Обновляем переключатель языка (checked=true для ru, false для en)
+      const langToggle = qs("#lang-toggle");
+      if (langToggle) {
+        langToggle.checked = false;
+      }
+    }
+    
     bindUI();
     setStatus("Определение версии данных…");
     state.version = await getLatestVersion();

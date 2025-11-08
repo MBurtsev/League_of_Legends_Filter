@@ -1654,7 +1654,14 @@
     
     // Для фильтров ролей
     for (const roleFilter of roleFilters) {
-      const testFilters = { ...currentFilters, [roleFilter]: true };
+      // Создаем копию фильтров БЕЗ других ролей, только с текущей проверяемой ролью
+      const testFilters = { ...currentFilters };
+      // Убираем все роли
+      for (const rf of roleFilters) {
+        delete testFilters[rf];
+      }
+      // Добавляем только проверяемую роль
+      testFilters[roleFilter] = true;
       
       let count = 0;
       for (const champ of state.champions) {

@@ -91,10 +91,18 @@
 </head>
 <body>
 
+  <!-- Кнопка открытия фильтров на мобильных -->
+  <button class="filters-toggle" id="filters-toggle" aria-label="Открыть фильтры">☰</button>
+  
+  <!-- Backdrop для мобильного меню -->
+  <div class="filters-backdrop" id="filters-backdrop"></div>
 
   <main class="app-main">
-    <section class="filters">
-      <h2>Фильтры</h2>
+    <section class="filters" id="filters-panel">
+      <h2>
+        Фильтры
+        <button class="filters-close" id="filters-close" aria-label="Закрыть">×</button>
+      </h2>
       <div class="filters-group">
         <div class="filters-subtitle">Умения</div>
         

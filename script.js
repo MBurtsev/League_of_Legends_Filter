@@ -1835,6 +1835,36 @@
     els.modalClose = qs("#modal-root .modal-close");
     bindModalEvents();
 
+    // Mobile filters menu
+    const filtersToggle = qs("#filters-toggle");
+    const filtersPanel = qs("#filters-panel");
+    const filtersClose = qs("#filters-close");
+    const filtersBackdrop = qs("#filters-backdrop");
+
+    function openFilters() {
+      if (filtersPanel) filtersPanel.classList.add("open");
+      if (filtersBackdrop) filtersBackdrop.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeFilters() {
+      if (filtersPanel) filtersPanel.classList.remove("open");
+      if (filtersBackdrop) filtersBackdrop.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+
+    if (filtersToggle) {
+      filtersToggle.addEventListener("click", openFilters);
+    }
+
+    if (filtersClose) {
+      filtersClose.addEventListener("click", closeFilters);
+    }
+
+    if (filtersBackdrop) {
+      filtersBackdrop.addEventListener("click", closeFilters);
+    }
+
     // Add event listeners for main checkboxes
     const abilityFilters = ['mobility', 'stun', 'slow', 'root', 'knockup', 'silence', 'stealth', 'attackspeed', 'movespeed', 'shield', 'heal', 'pull', 'lifesteal'];
     for (const filter of abilityFilters) {

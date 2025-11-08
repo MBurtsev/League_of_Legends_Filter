@@ -51,7 +51,8 @@
       passive: 'Пассивное умение',
       cooldown: 'Перезарядка',
       cost: 'Стоимость',
-      range: 'Дальность'
+      range: 'Дальность',
+      footer: 'Неофициальный инструмент. Все права на материалы принадлежат Riot Games.'
     },
     en: {
       filters: 'Filters',
@@ -104,7 +105,8 @@
       passive: 'Passive',
       cooldown: 'Cooldown',
       cost: 'Cost',
-      range: 'Range'
+      range: 'Range',
+      footer: 'Unofficial tool. All rights to materials belong to Riot Games.'
     }
   };
 

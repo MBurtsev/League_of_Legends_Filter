@@ -3,6 +3,7 @@
     ru: {
       filters: 'Фильтры',
       abilities: 'Умения',
+      abilitiesTitle: 'Способности',
       buffs: 'Бафы',
       debuffs: 'Дебафы',
       mobility: 'Прыжок / рывок',
@@ -48,6 +49,7 @@
     en: {
       filters: 'Filters',
       abilities: 'Abilities',
+      abilitiesTitle: 'Abilities',
       buffs: 'Buffs',
       debuffs: 'Debuffs',
       mobility: 'Dash / Blink',
@@ -1413,7 +1415,7 @@
       ${header}
       <div class="modal-section">
         <div class="modal-block">
-          <h4>Способности</h4>
+          <h4>${t('abilitiesTitle')}</h4>
           ${abilities.join("")}
         </div>
       </div>

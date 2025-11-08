@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>League of Legends — Фильтр чемпионов по способностям | LoL Champion Filter</title>
+  
+  <!-- SEO Meta Tags (Russian) -->
+  <meta name="description" content="Удобный фильтр чемпионов League of Legends по способностям: оглушение, лечение, щит, мобильность и другие. Полная база данных всех 171 чемпионов LoL с описаниями на русском и английском языках. Advanced LoL champion filter by abilities: stun, heal, shield, mobility, damage types, and more.">
+  <meta name="keywords" content="League of Legends, LoL, чемпионы, фильтр, способности, умения, оглушение, лечение, щит, мобильность, дальность, урон, роли, Лига Легенд, champions, filter, abilities, stun, heal, shield, mobility, damage, range, roles">
+  <meta name="author" content="LoL Champion Filter">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="Russian, English">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="">
+  <meta property="og:title" content="League of Legends — Champion Filter by Abilities | Фильтр чемпионов по способностям">
+  <meta property="og:description" content="Advanced filter for 171 LoL champions by abilities, damage types, and roles. Supports Russian and English. / Продвинутый фильтр для 171 чемпиона LoL по способностям, типам урона и ролям. Поддержка русского и английского языков.">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:locale:alternate" content="en_US">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="League of Legends — Champion Filter by Abilities">
+  <meta property="twitter:description" content="Advanced filter for 171 LoL champions: stun, heal, shield, mobility, damage types. Russian & English support.">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="">
+  
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Structured Data (JSON-LD) - Russian -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "League of Legends Champion Filter | Фильтр чемпионов LoL",
+    "alternateName": ["LoL Champion Filter", "Фильтр чемпионов Лиги Легенд"],
+    "description": "Advanced champion filter for League of Legends with 171 champions. Filter by abilities (stun, heal, shield, mobility), damage types, attack range, and champion roles. Full bilingual support (Russian/English). | Продвинутый фильтр для 171 чемпиона League of Legends. Фильтрация по способностям (оглушение, лечение, щит, мобильность), типам урона, дальности атаки и ролям. Полная поддержка двух языков (русский/английский).",
+    "applicationCategory": "GameApplication",
+    "operatingSystem": "Web Browser",
+    "browserRequirements": "Requires JavaScript. Modern browser (Chrome, Firefox, Edge, Safari)",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "171 League of Legends champions / 171 чемпион Лиги Легенд",
+      "Filter by abilities: mobility, stun, slow, heal, shield / Фильтр по способностям",
+      "Filter by damage types: physical, magic / Фильтр по типам урона",
+      "Filter by champion roles / Фильтр по ролям чемпионов",
+      "Attack and spell range filters / Фильтры дальности атаки и умений",
+      "Bilingual support: Russian & English / Поддержка двух языков",
+      "Champion search / Поиск чемпионов",
+      "Detailed ability descriptions / Подробные описания способностей",
+      "Offline mode support / Поддержка офлайн режима"
+    ],
+    "inLanguage": ["ru-RU", "en-US"],
+    "availableLanguage": [
+      {
+        "@type": "Language",
+        "name": "Russian",
+        "alternateName": "ru"
+      },
+      {
+        "@type": "Language",
+        "name": "English",
+        "alternateName": "en"
+      }
+    ],
+    "about": {
+      "@type": "VideoGame",
+      "name": "League of Legends",
+      "alternateName": "LoL",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Riot Games"
+      },
+      "gamePlatform": ["PC", "Mac"],
+      "genre": "MOBA"
+    },
+    "softwareVersion": "1.0",
+    "datePublished": "2024",
+    "keywords": "League of Legends, LoL, champion filter, ability filter, фильтр чемпионов, фильтр способностей, Лига Легенд"
+  }
+  </script>
+</head>
+<body>
+
+
+  <main class="app-main">
+    <section class="filters">
+      <h2>Фильтры</h2>
+      <div class="filters-group">
+        <div class="filters-subtitle">Умения</div>
+        
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-mobility" />
+            <label for="filter-mobility">Прыжок / рывок</label>
+            <span class="filter-badge" data-filter="mobility">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-mobility-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-mobility-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-mobility-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-mobility-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-stun" />
+            <label for="filter-stun">Оглушение</label>
+            <span class="filter-badge" data-filter="stun">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-stun-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-stun-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-stun-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-stun-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-slow" />
+            <label for="filter-slow">Замедление</label>
+            <span class="filter-badge" data-filter="slow">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-slow-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-slow-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-slow-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-slow-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-root" />
+            <label for="filter-root">Удержание</label>
+            <span class="filter-badge" data-filter="root">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-root-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-root-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-root-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-root-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-knockup" />
+            <label for="filter-knockup">Подброс / отброс</label>
+            <span class="filter-badge" data-filter="knockup">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-knockup-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-knockup-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-knockup-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-knockup-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-silence" />
+            <label for="filter-silence">Молчание</label>
+            <span class="filter-badge" data-filter="silence">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-silence-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-silence-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-silence-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-silence-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-stealth" />
+            <label for="filter-stealth">Невидимость</label>
+            <span class="filter-badge" data-filter="stealth">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-stealth-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-stealth-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-stealth-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-stealth-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-attackspeed" />
+            <label for="filter-attackspeed">Ускорение автоатаки</label>
+            <span class="filter-badge" data-filter="attackspeed">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-attackspeed-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-attackspeed-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-attackspeed-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-attackspeed-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-movespeed" />
+            <label for="filter-movespeed">Ускорение бега</label>
+            <span class="filter-badge" data-filter="movespeed">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-movespeed-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-movespeed-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-movespeed-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-movespeed-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-shield" />
+            <label for="filter-shield">Щит</label>
+            <span class="filter-badge" data-filter="shield">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-shield-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-shield-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-shield-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-shield-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-heal" />
+            <label for="filter-heal">Лечение</label>
+            <span class="filter-badge" data-filter="heal">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-heal-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-heal-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-heal-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-heal-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-pull" />
+            <label for="filter-pull">Притяжение</label>
+            <span class="filter-badge" data-filter="pull">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-pull-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-pull-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-pull-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-pull-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="filter-lifesteal" />
+            <label for="filter-lifesteal">Вампиризм</label>
+            <span class="filter-badge" data-filter="lifesteal">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="filter-lifesteal-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="filter-lifesteal-w" class="ability-w" title="W" />
+            <input type="checkbox" id="filter-lifesteal-e" class="ability-e" title="E" />
+            <input type="checkbox" id="filter-lifesteal-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="dmg-physical" />
+            <label for="dmg-physical">Физический урон</label>
+            <span class="filter-badge" data-filter="dmgPhysical">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="dmg-physical-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="dmg-physical-w" class="ability-w" title="W" />
+            <input type="checkbox" id="dmg-physical-e" class="ability-e" title="E" />
+            <input type="checkbox" id="dmg-physical-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="dmg-magic" />
+            <label for="dmg-magic">Магический урон</label>
+            <span class="filter-badge" data-filter="dmgMagic">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="dmg-magic-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="dmg-magic-w" class="ability-w" title="W" />
+            <input type="checkbox" id="dmg-magic-e" class="ability-e" title="E" />
+            <input type="checkbox" id="dmg-magic-r" class="ability-r" title="R" />
+          </div>
+        </div>
+
+        <div class="filter-item-extended">
+          <div class="filter-main">
+            <input type="checkbox" id="scales-health" />
+            <label for="scales-health">Урон от здоровья</label>
+            <span class="filter-badge" data-filter="scalesHealth">0</span>
+          </div>
+          <div class="filter-abilities">
+            <input type="checkbox" id="scales-health-q" class="ability-q" title="Q" />
+            <input type="checkbox" id="scales-health-w" class="ability-w" title="W" />
+            <input type="checkbox" id="scales-health-e" class="ability-e" title="E" />
+            <input type="checkbox" id="scales-health-r" class="ability-r" title="R" />
+          </div>
+        </div>
+      </div>
+
+      <div class="filters-group">
+        <div class="filters-subtitle">Роли чемпиона</div>
+        <div class="filter-item">
+          <input type="checkbox" id="role-tank" />
+          <label for="role-tank">Танк</label>
+        </div>
+        <div class="filter-item">
+          <input type="checkbox" id="role-fighter" />
+          <label for="role-fighter">Воин</label>
+        </div>
+        <div class="filter-item">
+          <input type="checkbox" id="role-mage" />
+          <label for="role-mage">Маг</label>
+        </div>
+        <div class="filter-item">
+          <input type="checkbox" id="role-marksman" />
+          <label for="role-marksman">Стрелок</label>
+        </div>
+        <div class="filter-item">
+          <input type="checkbox" id="role-assassin" />
+          <label for="role-assassin">Убийца</label>
+        </div>
+        <div class="filter-item">
+          <input type="checkbox" id="role-support" />
+          <label for="role-support">Поддержка</label>
+        </div>
+      </div>
+
+      <div class="filters-group">
+        <label for="min-range" class="range-label">Мин. дальность автоатаки: <span id="min-range-value">0</span></label>
+        <input type="range" id="min-range" min="0" max="700" step="25" value="0" />
+      </div>
+
+      <div class="filters-group">
+        <label for="min-range-q" class="range-label">Мин. дальность Q: <span id="min-range-q-value">0</span></label>
+        <input type="range" id="min-range-q" min="0" max="3000" step="25" value="0" />
+        <label for="min-range-w" class="range-label">Мин. дальность W: <span id="min-range-w-value">0</span></label>
+        <input type="range" id="min-range-w" min="0" max="3000" step="25" value="0" />
+        <label for="min-range-e" class="range-label">Мин. дальность E: <span id="min-range-e-value">0</span></label>
+        <input type="range" id="min-range-e" min="0" max="3000" step="25" value="0" />
+        <label for="min-range-r" class="range-label">Мин. дальность R: <span id="min-range-r-value">0</span></label>
+        <input type="range" id="min-range-r" min="0" max="3000" step="25" value="0" />
+      </div>
+
+      <div class="filters-actions">
+        <button id="reset-filters" type="button">Сбросить</button>
+      </div>
+    </section>
+
+    <section class="results">
+      <div class="results-header">
+        <input type="text" id="search-input" class="search-input" placeholder="Поиск по имени чемпиона..." />
+        <div id="status" class="status">Загрузка данных чемпионов…</div>
+        <div class="lang-switcher">
+          <label for="lang-toggle">EN</label>
+          <input type="checkbox" id="lang-toggle" checked />
+        </div>
+      </div>
+      <div id="grid" class="grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <small>Неофициальный инструмент. Все права на материалы принадлежат Riot Games.</small>
+  </footer>
+
+  <div id="modal-root" class="modal-root" aria-hidden="true">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" type="button" aria-label="Закрыть">×</button>
+      <div class="modal-viewport">
+        <div class="modal-scale">
+          <div id="modal-content"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Champion data (for static file:// protocol support) -->
+  <script src="champion_data.js"></script>
+  <script src="script.js"></script>
+  <noscript>Для работы фильтра требуется JavaScript.</noscript>
+</body>
+<style>
+</style>
+</html>
+
+

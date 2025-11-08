@@ -438,6 +438,30 @@ button:hover {
   font-size: 14px;
 }
 
+.github-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.github-link:hover {
+  background: var(--card);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.github-link svg {
+  display: block;
+}
+
 .lang-switcher {
   display: flex;
   align-items: center;

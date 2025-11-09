@@ -889,7 +889,14 @@
     if (/\b(movement speed|move speed|bonus movement speed|increases movement speed|gain movement speed)\b/.test(t)) tags.add("movespeed");
     if (/\b(shield|shielded)\b/.test(t)) tags.add("shield");
     if (/\b(heal|heals|healed|restore health|restores health)\b/.test(t)) tags.add("heal");
-    if (/\b(lifesteal|life steal|omnivamp|spell vamp|vamp)\b/.test(t)) tags.add("lifesteal");
+    // Lifesteal/vamp - patterns that indicate healing proportional to damage dealt
+    // Also includes placeholders like {{ vamppercentage }}, {{ lifesteal }}, etc.
+    if (/\b(lifesteal|life steal|omnivamp|spell vamp|vamp)\b/i.test(t) ||
+        /\{\{\s*(vamp|lifesteal|omnivamp)/i.test(t) ||
+        /(heal|healing|heals).{0,15}(for|from).{0,15}(damage dealt|damage)/i.test(t) ||
+        /(heal|healing|heals).{0,15}(% of|percent of).{0,15}damage/i.test(t) ||
+        /(damage dealt|damage).{0,15}(as health|as healing)/i.test(t) ||
+        /восстанавливает.{0,20}(от|процент).{0,15}(нанесенного урона|урона)/i.test(t)) tags.add("lifesteal");
 
     return tags;
   }

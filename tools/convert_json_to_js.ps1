@@ -11,23 +11,23 @@ $jsContent = @"
 "@
 
 # Add version
-$version = (Get-Content "../data/version.txt" -Raw -Encoding UTF8).Trim()
+$version = (Get-Content ".\data\version.txt" -Raw -Encoding UTF8).Trim()
 $jsContent += "`nwindow.LOL_DATA_VERSION = '$version';`n"
 
 # Add champion list EN
 Write-Host "Adding champion list (EN)..." -ForegroundColor Cyan
-$champListEn = Get-Content "../data/champion_list_en.json" -Raw -Encoding UTF8
+$champListEn = Get-Content ".\data\champion_list_en.json" -Raw -Encoding UTF8
 $jsContent += "`nwindow.LOL_CHAMPION_LIST_EN = $champListEn;`n"
 
 # Add champion list RU
 Write-Host "Adding champion list (RU)..." -ForegroundColor Cyan
-$champListRu = Get-Content "../data/champion_list_ru.json" -Raw -Encoding UTF8
+$champListRu = Get-Content ".\data\champion_list_ru.json" -Raw -Encoding UTF8
 $jsContent += "`nwindow.LOL_CHAMPION_LIST_RU = $champListRu;`n"
 
 # Add all champion details in one object
 $jsContent += "`nwindow.LOL_CHAMPIONS_DATA = {`n"
 
-$championFiles = Get-ChildItem "../data/champion/*.json" | Sort-Object Name
+$championFiles = Get-ChildItem ".\data\champion\*.json" | Sort-Object Name
 $total = $championFiles.Count
 $current = 0
 

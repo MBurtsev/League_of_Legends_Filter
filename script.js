@@ -199,6 +199,46 @@
     return FALLBACK_VERSION;
   }
 
+  // Dynamic language file loading
+  const languageState = {
+    ru: { loaded: false, loading: null },
+    en: { loaded: false, loading: null }
+  };
+
+  async function loadLanguageFile(locale) {
+    const lang = locale === RU_LOCALE ? 'ru' : 'en';
+    const varName = `LOL_CHAMPIONS_TEXT_${lang.toUpperCase()}`;
+    
+    // Already loaded
+    if (window[varName]) {
+      languageState[lang].loaded = true;
+      return;
+    }
+    
+    // Already loading
+    if (languageState[lang].loading) {
+      return languageState[lang].loading;
+    }
+    
+    // Start loading
+    languageState[lang].loading = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = `champion_text_${lang}.js`;
+      script.onload = () => {
+        languageState[lang].loaded = true;
+        languageState[lang].loading = null;
+        resolve();
+      };
+      script.onerror = () => {
+        languageState[lang].loading = null;
+        reject(new Error(`Failed to load ${varName}`));
+      };
+      document.head.appendChild(script);
+    });
+    
+    return languageState[lang].loading;
+  }
+
   function tryLoadFromCache() {
     try {
       const raw = sessionStorage.getItem(CACHE_KEY);
@@ -947,7 +987,47 @@
   }
 
   async function loadChampionDetailByLocale(champKey, locale) {
-    // Check if data is embedded in window (for static file:// support)
+    const lang = locale === RU_LOCALE ? 'ru' : 'en';
+    
+    // NEW: Check if optimized data structure is available
+    if (window.LOL_CHAMPIONS_META) {
+      // Load language file if not loaded yet
+      await loadLanguageFile(locale);
+      
+      const meta = window.LOL_CHAMPIONS_META[champKey];
+      const textVar = `LOL_CHAMPIONS_TEXT_${lang.toUpperCase()}`;
+      const texts = window[textVar]?.[champKey];
+      
+      if (meta && texts) {
+        // Merge metadata and texts to match original structure
+        return {
+          id: meta.id,
+          key: meta.key,
+          name: texts.name,
+          title: texts.title,
+          image: meta.image,
+          skins: meta.skins,
+          lore: texts.lore,
+          blurb: texts.blurb,
+          allytips: texts.allytips,
+          enemytips: texts.enemytips,
+          tags: meta.tags,
+          partype: meta.partype,
+          info: meta.info,
+          stats: meta.stats,
+          spells: meta.spells.map((spellMeta, i) => ({
+            ...spellMeta,
+            ...texts.spells[i]
+          })),
+          passive: {
+            ...meta.passive,
+            ...texts.passive
+          }
+        };
+      }
+    }
+    
+    // OLD: Fallback to legacy format
     if (window.LOL_CHAMPIONS_DATA) {
       const suffix = locale === RU_LOCALE ? 'ru' : 'en';
       const key = `${champKey}_${suffix}`;
@@ -957,6 +1037,7 @@
       }
     }
     
+    // Load from file
     const suffix = locale === RU_LOCALE ? 'ru' : 'en';
     const url = `${LOCAL_BASE}/data/champion/${champKey}_${suffix}.json`;
     const json = await fetchJson(url);
@@ -2166,6 +2247,14 @@
       if (langToggle) {
         langToggle.checked = true;
       }
+    }
+    
+    // Pre-load language file based on browser language
+    const initialLocale = hasRussian ? RU_LOCALE : LOCALE;
+    try {
+      await loadLanguageFile(initialLocale);
+    } catch (e) {
+      console.warn("Failed to pre-load language file:", e);
     }
     
     bindUI();

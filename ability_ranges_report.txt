@@ -1,0 +1,1029 @@
+﻿Ability Ranges Report - Generated 11/10/2025 02:52:00
+====================================================================================================
+
+Aatrox (Aatrox)
+  Q: The Darkin Blade - Range: 650
+  W: Infernal Chains - Range: 825
+  E: Umbral Dash - Range: 350
+  R: World Ender - Range: 0
+
+Ahri (Ahri)
+  Q: Orb of Deception - Range: 970
+  W: Fox-Fire - Range: 700
+  E: Charm - Range: 975
+  R: Spirit Rush - Range: 450
+
+Akali (Akali)
+  Q: Five Point Strike - Range: 550
+  W: Twilight Shroud - Range: 350
+  E: Shuriken Flip - Range: 825
+  R: Perfect Execution - Range: 675
+
+Akshan (Akshan)
+  Q: Avengerang - Range: 850
+  W: Going Rogue - Range: 5500
+  E: Heroic Swing - Range: 800
+  R: Comeuppance - Range: 2500
+
+Alistar (Alistar)
+  Q: Pulverize - Range: 365
+  W: Headbutt - Range: 650
+  E: Trample - Range: 350
+  R: Unbreakable Will - Range: 1
+
+Ambessa (Ambessa)
+  Q: Cunning Sweep / Sundering Slam - Range: 650
+  W: Repudiation - Range: 325
+  E: Lacerate - Range: 325
+  R: Public Execution - Range: 1250
+
+Amumu (Amumu)
+  Q: Bandage Toss - Range: 1100
+  W: Despair - Range: 300
+  E: Tantrum - Range: 350
+  R: Curse of the Sad Mummy - Range: 550
+
+Anivia (Anivia)
+  Q: Flash Frost - Range: 1075
+  W: Crystallize - Range: 1000
+  E: Frostbite - Range: 650
+  R: Glacial Storm - Range: 750
+
+Annie (Annie)
+  Q: Disintegrate - Range: 625
+  W: Incinerate - Range: 600
+  E: Molten Shield - Range: 800
+  R: Summon: Tibbers - Range: 600
+
+Aphelios (Aphelios)
+  Q: Weapon Abilites - Range: 1450
+  W: Phase - Range: 250
+  E: Weapon Queue System - Range: 1000
+  R: Moonlight Vigil - Range: 1300
+
+Ashe (Ashe)
+  Q: Ranger's Focus - Range: 1200
+  W: Volley - Range: 1200
+  E: Hawkshot - Range: 25000
+  R: Enchanted Crystal Arrow - Range: 25000
+
+Aurelion Sol (AurelionSol)
+  Q: Breath of Light - Range: 750
+  W: Astral Flight - Range: 1500
+  E: Singularity - Range: 750
+  R: Falling Star / The Skies Descend - Range: 1250
+
+Aurora (Aurora)
+  Q: Twofold Hex - Range: 900
+  W: Across the Veil - Range: 700
+  E: The Weirding - Range: 825
+  R: Between Worlds - Range: 250
+
+Azir (Azir)
+  Q: Conquering Sands - Range: 740
+  W: Arise! - Range: 525
+  E: Shifting Sands - Range: 1100
+  R: Emperor's Divide - Range: 250
+
+Bard (Bard)
+  Q: Cosmic Binding - Range: 950
+  W: Caretaker's Shrine - Range: 800
+  E: Magical Journey - Range: 900
+  R: Tempered Fate - Range: 3400
+
+Bel'Veth (Belveth)
+  Q: Void Surge - Range: 450
+  W: Above and Below - Range: 715
+  E: Royal Maelstrom - Range: 500
+  R: Endless Banquet - Range: 450
+
+Blitzcrank (Blitzcrank)
+  Q: Rocket Grab - Range: 1079
+  W: Overdrive - Range: 1
+  E: Power Fist - Range: 300
+  R: Static Field - Range: 600
+
+Brand (Brand)
+  Q: Sear - Range: 1050
+  W: Pillar of Flame - Range: 900
+  E: Conflagration - Range: 625
+  R: Pyroclasm - Range: 750
+
+Braum (Braum)
+  Q: Winter's Bite - Range: 1000
+  W: Stand Behind Me - Range: 650
+  E: Unbreakable - Range: 0
+  R: Glacial Fissure - Range: 1250
+
+Briar (Briar)
+  Q: Head Rush - Range: 475
+  W: Blood Frenzy / Snack Attack - Range: 350
+  E: Chilling Scream - Range: 400
+  R: Certain Death - Range: 6000
+
+Caitlyn (Caitlyn)
+  Q: Piltover Peacemaker - Range: 1250
+  W: Yordle Snap Trap - Range: 800
+  E: 90 Caliber Net - Range: 750
+  R: Ace in the Hole - Range: 3500
+
+Camille (Camille)
+  Q: Precision Protocol - Range: 325
+  W: Tactical Sweep - Range: 610
+  E: Hookshot - Range: 800
+  R: The Hextech Ultimatum - Range: 475
+
+Cassiopeia (Cassiopeia)
+  Q: Noxious Blast - Range: 850
+  W: Miasma - Range: 700
+  E: Twin Fang - Range: 700
+  R: Petrifying Gaze - Range: 825
+
+Cho'Gath (Chogath)
+  Q: Rupture - Range: 950
+  W: Feral Scream - Range: 300
+  E: Vorpal Spikes - Range: 40
+  R: Feast - Range: 175
+
+Corki (Corki)
+  Q: Phosphorus Bomb - Range: 825
+  W: Valkyrie - Range: 600
+  E: Gatling Gun - Range: 600
+  R: Missile Barrage - Range: 1225
+
+Darius (Darius)
+  Q: Decimate - Range: 1
+  W: Crippling Strike - Range: 300
+  E: Apprehend - Range: 535
+  R: Noxian Guillotine - Range: 460
+
+Diana (Diana)
+  Q: Crescent Strike - Range: 900
+  W: Pale Cascade - Range: 800
+  E: Lunar Rush - Range: 825
+  R: Moonfall - Range: 475
+
+Draven (Draven)
+  Q: Spinning Axe - Range: 1100
+  W: Blood Rush - Range: 1000
+  E: Stand Aside - Range: 1050
+  R: Whirling Death - Range: 20000
+
+Dr. Mundo (DrMundo)
+  Q: Infected Bonesaw - Range: 975
+  W: Heart Zapper - Range: 325
+  E: Blunt Force Trauma - Range: 0
+  R: Maximum Dosage - Range: 20
+
+Ekko (Ekko)
+  Q: Timewinder - Range: 1075
+  W: Parallel Convergence - Range: 1600
+  E: Phase Dive - Range: 325
+  R: Chronobreak - Range: 850
+
+Elise (Elise)
+  Q: Neurotoxin / Venomous Bite - Range: 615
+  W: Volatile Spiderling / Skittering Frenzy - Range: 950
+  E: Cocoon / Rappel - Range: 1075
+  R: Spider Form - Range: 20
+
+Evelynn (Evelynn)
+  Q: Hate Spike - Range: 800
+  W: Allure - Range: 1200
+  E: Whiplash - Range: 210
+  R: Last Caress - Range: 650
+
+Ezreal (Ezreal)
+  Q: Mystic Shot - Range: 1150
+  W: Essence Flux - Range: 1150
+  E: Arcane Shift - Range: 475
+  R: Trueshot Barrage - Range: 25000
+
+Fiddlesticks (Fiddlesticks)
+  Q: Terrify - Range: 575
+  W: Bountiful Harvest - Range: 650
+  E: Reap - Range: 850
+  R: Crowstorm - Range: 800
+
+Fiora (Fiora)
+  Q: Lunge - Range: 400
+  W: Riposte - Range: 750
+  E: Bladework - Range: 425
+  R: Grand Challenge - Range: 500
+
+Fizz (Fizz)
+  Q: Urchin Strike - Range: 550
+  W: Seastone Trident - Range: 600
+  E: Playful / Trickster - Range: 400
+  R: Chum the Waters - Range: 1300
+
+Galio (Galio)
+  Q: Winds of War - Range: 825
+  W: Shield of Durand - Range: 275
+  E: Justice Punch - Range: 650
+  R: Hero's Entrance - Range: 4000
+
+Gangplank (Gangplank)
+  Q: Parrrley - Range: 625
+  W: Remove Scurvy - Range: 400
+  E: Powder Keg - Range: 1000
+  R: Cannon Barrage - Range: 30000
+
+Garen (Garen)
+  Q: Decisive Strike - Range: 300
+  W: Courage - Range: 0
+  E: Judgment - Range: 325
+  R: Demacian Justice - Range: 400
+
+Gnar (Gnar)
+  Q: Boomerang Throw / Boulder Toss - Range: 1100
+  W: Hyper / Wallop - Range: 0
+  E: Hop / Crunch - Range: 475
+  R: GNAR! - Range: 590
+
+Gragas (Gragas)
+  Q: Barrel Roll - Range: 850
+  W: Drunken Rage - Range: 20
+  E: Body Slam - Range: 600
+  R: Explosive Cask - Range: 1000
+
+Graves (Graves)
+  Q: End of the Line - Range: 925
+  W: Smoke Screen - Range: 950
+  E: Quickdraw - Range: 425
+  R: Collateral Damage - Range: 1000
+
+Gwen (Gwen)
+  Q: Snip Snip! - Range: 450
+  W: Hallowed Mist - Range: 0
+  E: Skip 'n Slash - Range: 400
+  R: Needlework - Range: 1200
+
+Hecarim (Hecarim)
+  Q: Rampage - Range: 350
+  W: Spirit of Dread - Range: 525
+  E: Devastating Charge - Range: 300
+  R: Onslaught of Shadows - Range: 1000
+
+Heimerdinger (Heimerdinger)
+  Q: H-28 G Evolution Turret - Range: 350
+  W: Hextech Micro-Rockets - Range: 1325
+  E: CH-2 Electron Storm Grenade - Range: 970
+  R: UPGRADE!!! - Range: 1
+
+Hwei (Hwei)
+  Q: Subject: Disaster - Range: 1400
+  W: Subject: Serenity - Range: 850
+  E: Subject: Torment - Range: 800
+  R: Spiraling Despair - Range: 1300
+
+Illaoi (Illaoi)
+  Q: Tentacle Smash - Range: 850
+  W: Harsh Lesson - Range: 400
+  E: Test of Spirit - Range: 900
+  R: Leap of Faith - Range: 450
+
+Irelia (Irelia)
+  Q: Bladesurge - Range: 600
+  W: Defiant Dance - Range: 825
+  E: Flawless Duet - Range: 850
+  R: Vanguard's Edge - Range: 950
+
+Ivern (Ivern)
+  Q: Rootcaller - Range: 1125
+  W: Brushmaker - Range: 1150
+  E: Triggerseed - Range: 750
+  R: Daisy! - Range: 600
+
+Janna (Janna)
+  Q: Howling Gale - Range: 1075
+  W: Zephyr - Range: 800
+  E: Eye Of The Storm - Range: 800
+  R: Monsoon - Range: 725
+
+Jarvan IV (JarvanIV)
+  Q: Dragon Strike - Range: 770
+  W: Golden Aegis - Range: 625
+  E: Demacian Standard - Range: 860
+  R: Cataclysm - Range: 650
+
+Jax (Jax)
+  Q: Leap Strike - Range: 700
+  W: Empower - Range: 300
+  E: Counter Strike - Range: 300
+  R: Grandmaster-at-Arms - Range: 260
+
+Jayce (Jayce)
+  Q: To the Skies! / Shock Blast - Range: 600
+  W: Lightning Field / Hyper Charge - Range: 285
+  E: Thundering Blow / Acceleration Gate - Range: 240
+  R: Mercury Cannon / Mercury Hammer - Range: 600
+
+Jhin (Jhin)
+  Q: Dancing Grenade - Range: 550
+  W: Deadly Flourish - Range: 3000
+  E: Captive Audience - Range: 750
+  R: Curtain Call - Range: 3500
+
+Jinx (Jinx)
+  Q: Switcheroo! - Range: 600
+  W: Zap! - Range: 1450
+  E: Flame Chompers! - Range: 925
+  R: Super Mega Death Rocket! - Range: 25000
+
+Kai'Sa (Kaisa)
+  Q: Icathian Rain - Range: 600
+  W: Void Seeker - Range: 3000
+  E: Supercharge - Range: 1
+  R: Killer Instinct - Range: 2000
+
+Kalista (Kalista)
+  Q: Pierce - Range: 1150
+  W: Sentinel - Range: 5000
+  E: Rend - Range: 1000
+  R: Fate's Call - Range: 1000
+
+Karma (Karma)
+  Q: Inner Flame - Range: 950
+  W: Focused Resolve - Range: 675
+  E: Inspire - Range: 800
+  R: Mantra - Range: 1100
+
+Karthus (Karthus)
+  Q: Lay Waste - Range: 875
+  W: Wall of Pain - Range: 1000
+  E: Defile - Range: 550
+  R: Requiem - Range: 10000
+
+Kassadin (Kassadin)
+  Q: Null Sphere - Range: 650
+  W: Nether Blade - Range: 1
+  E: Force Pulse - Range: 400
+  R: Riftwalk - Range: 500
+
+Katarina (Katarina)
+  Q: Bouncing Blade - Range: 625
+  W: Preparation - Range: 400
+  E: Shunpo - Range: 725
+  R: Death Lotus - Range: 550
+
+Kayle (Kayle)
+  Q: Radiant Blast - Range: 900
+  W: Celestial Blessing - Range: 900
+  E: Starfire Spellblade - Range: 550
+  R: Divine Judgment - Range: 900
+
+Kayn (Kayn)
+  Q: Reaping Slash - Range: 350
+  W: Blade's Reach - Range: 700
+  E: Shadow Step - Range: 400
+  R: Umbral Trespass - Range: 550
+
+Kennen (Kennen)
+  Q: Thundering Shuriken - Range: 950
+  W: Electrical Surge - Range: 725
+  E: Lightning Rush - Range: 170
+  R: Slicing Maelstrom - Range: 550
+
+Kha'Zix (Khazix)
+  Q: Taste Their Fear - Range: 325
+  W: Void Spike - Range: 1000
+  E: Leap - Range: 700
+  R: Void Assault - Range: 0
+
+Kindred (Kindred)
+  Q: Dance of Arrows - Range: 340
+  W: Wolf's Frenzy - Range: 560
+  E: Mounting Dread - Range: 500
+  R: Lamb's Respite - Range: 500
+
+Kled (Kled)
+  Q: Bear Trap on a Rope - Range: 800
+  W: Violent Tendencies - Range: 0
+  E: Jousting - Range: 550
+  R: Chaaaaaaaarge!!! - Range: 3500
+
+Kog'Maw (KogMaw)
+  Q: Caustic Spittle - Range: 1175
+  W: Bio-Arcane Barrage - Range: 530
+  E: Void Ooze - Range: 1200
+  R: Living Artillery - Range: 1300
+
+K'Sante (KSante)
+  Q: Ntofo Strikes - Range: 450
+  W: Path Maker - Range: 600
+  E: Footwork - Range: 525
+  R: All Out - Range: 250
+
+LeBlanc (Leblanc)
+  Q: Sigil of Malice - Range: 700
+  W: Distortion - Range: 600
+  E: Ethereal Chains - Range: 925
+  R: Mimic - Range: 0
+
+Lee Sin (LeeSin)
+  Q: Sonic Wave / Resonating Strike - Range: 1100
+  W: Safeguard / Iron Will - Range: 700
+  E: Tempest / Cripple - Range: 450
+  R: Dragon's Rage - Range: 375
+
+Leona (Leona)
+  Q: Shield of Daybreak - Range: 100
+  W: Eclipse - Range: 450
+  E: Zenith Blade - Range: 875
+  R: Solar Flare - Range: 1200
+
+Lillia (Lillia)
+  Q: Blooming Blows - Range: 450
+  W: Watch Out! Eep! - Range: 500
+  E: Swirlseed - Range: 700
+  R: Lilting Lullaby - Range: 1600
+
+Lissandra (Lissandra)
+  Q: Ice Shard - Range: 725
+  W: Ring of Frost - Range: 450
+  E: Glacial Path - Range: 1050
+  R: Frozen Tomb - Range: 550
+
+Lucian (Lucian)
+  Q: Piercing Light - Range: 500
+  W: Ardent Blaze - Range: 900
+  E: Relentless Pursuit - Range: 445
+  R: The Culling - Range: 1400
+
+Lulu (Lulu)
+  Q: Glitterlance - Range: 925
+  W: Whimsy - Range: 650
+  E: Help, Pix! - Range: 650
+  R: Wild Growth - Range: 900
+
+Lux (Lux)
+  Q: Light Binding - Range: 1175
+  W: Prismatic Barrier - Range: 1150
+  E: Lucent Singularity - Range: 1100
+  R: Final Spark - Range: 3340
+
+Malphite (Malphite)
+  Q: Seismic Shard - Range: 625
+  W: Thunderclap - Range: 400
+  E: Ground Slam - Range: 400
+  R: Unstoppable Force - Range: 1000
+
+Malzahar (Malzahar)
+  Q: Call of the Void - Range: 900
+  W: Void Swarm - Range: 150
+  E: Malefic Visions - Range: 650
+  R: Nether Grasp - Range: 700
+
+Maokai (Maokai)
+  Q: Bramble Smash - Range: 600
+  W: Twisted Advance - Range: 525
+  E: Sapling Toss - Range: 1100
+  R: Nature's Grasp - Range: 3000
+
+Master Yi (MasterYi)
+  Q: Alpha Strike - Range: 600
+  W: Meditate - Range: 20
+  E: Wuju Style - Range: 20
+  R: Highlander - Range: 1
+
+Mel (Mel)
+  Q: Radiant Volley - Range: 950
+  W: Rebuttal - Range: 250
+  E: Solar Snare - Range: 1050
+  R: Golden Eclipse - Range: 25000
+
+Milio (Milio)
+  Q: Ultra Mega Fire Kick - Range: 1200
+  W: Cozy Campfire - Range: 350
+  E: Warm Hugs - Range: 650
+  R: Breath of Life - Range: 700
+
+Miss Fortune (MissFortune)
+  Q: Double Up - Range: 650
+  W: Strut - Range: 1000
+  E: Make It Rain - Range: 1000
+  R: Bullet Time - Range: 1400
+
+Wukong (MonkeyKing)
+  Q: Crushing Blow - Range: 250
+  W: Warrior Trickster - Range: 275
+  E: Nimbus Strike - Range: 650
+  R: Cyclone - Range: 315
+
+Mordekaiser (Mordekaiser)
+  Q: Obliterate - Range: 675
+  W: Indestructible - Range: 325
+  E: Death's Grasp - Range: 700
+  R: Realm of Death - Range: 650
+
+Morgana (Morgana)
+  Q: Dark Binding - Range: 1250
+  W: Tormented Shadow - Range: 900
+  E: Black Shield - Range: 800
+  R: Soul Shackles - Range: 625
+
+Naafiri (Naafiri)
+  Q: Darkin Daggers - Range: 900
+  W: The Call of the Pack - Range: 400
+  E: Eviscerate - Range: 450
+  R: Hounds' Pursuit - Range: 900
+
+Nami (Nami)
+  Q: Aqua Prison - Range: 875
+  W: Ebb and Flow - Range: 725
+  E: Tidecaller's Blessing - Range: 800
+  R: Tidal Wave - Range: 2550
+
+Nasus (Nasus)
+  Q: Siphoning Strike - Range: 255
+  W: Wither - Range: 700
+  E: Spirit Fire - Range: 650
+  R: Fury of the Sands - Range: 400
+
+Nautilus (Nautilus)
+  Q: Dredge Line - Range: 1150
+  W: Titan's Wrath - Range: 350
+  E: Riptide - Range: 600
+  R: Depth Charge - Range: 825
+
+Neeko (Neeko)
+  Q: Blooming Burst - Range: 800
+  W: Shapesplitter - Range: 900
+  E: Tangle-Barbs - Range: 1000
+  R: Pop Blossom - Range: 600
+
+Nidalee (Nidalee)
+  Q: Javelin Toss / Takedown - Range: 1500
+  W: Bushwhack / Pounce - Range: 900
+  E: Primal Surge / Swipe - Range: 900
+  R: Aspect Of The Cougar - Range: 20
+
+Nilah (Nilah)
+  Q: Formless Blade - Range: 600
+  W: Jubilant Veil - Range: 150
+  E: Slipstream - Range: 550
+  R: Apotheosis - Range: 400
+
+Nocturne (Nocturne)
+  Q: Duskbringer - Range: 1125
+  W: Shroud of Darkness - Range: 20
+  E: Unspeakable Horror - Range: 425
+  R: Paranoia - Range: 2500
+
+Nunu & Willump (Nunu)
+  Q: Consume - Range: 125
+  W: Biggest Snowball Ever! - Range: 5500
+  E: Snowball Barrage - Range: 625
+  R: Absolute Zero - Range: 650
+
+Olaf (Olaf)
+  Q: Undertow - Range: 1000
+  W: Tough It Out - Range: 700
+  E: Reckless Swing - Range: 325
+  R: Ragnarok - Range: 400
+
+Orianna (Orianna)
+  Q: Command: Attack - Range: 815
+  W: Command: Dissonance - Range: 225
+  E: Command: Protect - Range: 1095
+  R: Command: Shockwave - Range: 410
+
+Ornn (Ornn)
+  Q: Volcanic Rupture - Range: 800
+  W: Bellows Breath - Range: 550
+  E: Searing Charge - Range: 450
+  R: Call of the Forge God - Range: 2500
+
+Pantheon (Pantheon)
+  Q: Comet Spear - Range: 575
+  W: Shield Vault - Range: 600
+  E: Aegis Assault - Range: 400
+  R: Grand Starfall - Range: 5500
+
+Poppy (Poppy)
+  Q: Hammer Shock - Range: 430
+  W: Steadfast Presence - Range: 400
+  E: Heroic Charge - Range: 475
+  R: Keeper's Verdict - Range: 500
+
+Pyke (Pyke)
+  Q: Bone Skewer - Range: 400
+  W: Ghostwater Dive - Range: 600
+  E: Phantom Undertow - Range: 550
+  R: Death From Below - Range: 750
+
+Qiyana (Qiyana)
+  Q: Elemental Wrath / Edge of Ixtal - Range: 525
+  W: Terrashape - Range: 1100
+  E: Audacity - Range: 650
+  R: Supreme Display of Talent - Range: 950
+
+Quinn (Quinn)
+  Q: Blinding Assault - Range: 1025
+  W: Heightened Senses - Range: 2100
+  E: Vault - Range: 675
+  R: Behind Enemy Lines - Range: 700
+
+Rakan (Rakan)
+  Q: Gleaming Quill - Range: 850
+  W: Grand Entrance - Range: 600
+  E: Battle Dance - Range: 650
+  R: The Quickness - Range: 150
+
+Rammus (Rammus)
+  Q: Powerball - Range: 300
+  W: Defensive Ball Curl - Range: 300
+  E: Frenzying Taunt - Range: 325
+  R: Soaring Slam - Range: 600
+
+Rek'Sai (RekSai)
+  Q: Queen's Wrath / Prey Seeker - Range: 325
+  W: Burrow / Un-burrow - Range: 1650
+  E: Furious Bite / Tunnel - Range: 250
+  R: Void Rush - Range: 1500
+
+Rell (Rell)
+  Q: Shattering Strike - Range: 600
+  W: Ferromancy: Crash Down - Range: 450
+  E: Full Tilt - Range: 1200
+  R: Magnet Storm - Range: 200
+
+Renata Glasc (Renata)
+  Q: Handshake - Range: 900
+  W: Bailout - Range: 800
+  E: Loyalty Program - Range: 800
+  R: Hostile Takeover - Range: 2000
+
+Renekton (Renekton)
+  Q: Cull the Meek - Range: 325
+  W: Ruthless Predator - Range: 300
+  E: Slice and Dice - Range: 450
+  R: Dominus - Range: 20
+
+Rengar (Rengar)
+  Q: Savagery - Range: 450
+  W: Battle Roar - Range: 450
+  E: Bola Strike - Range: 1000
+  R: Thrill of the Hunt - Range: 2500
+
+Riven (Riven)
+  Q: Broken Wings - Range: 275
+  W: Ki Burst - Range: 260
+  E: Valor - Range: 250
+  R: Blade of the Exile - Range: 200
+
+Rumble (Rumble)
+  Q: Flamespitter - Range: 600
+  W: Scrap Shield - Range: 20
+  E: Electro Harpoon - Range: 850
+  R: The Equalizer - Range: 1750
+
+Ryze (Ryze)
+  Q: Overload - Range: 1000
+  W: Rune Prison - Range: 615
+  E: Spell Flux - Range: 615
+  R: Realm Warp - Range: 3000
+
+Samira (Samira)
+  Q: Flair - Range: 950
+  W: Blade Whirl - Range: 325
+  E: Wild Rush - Range: 600
+  R: Inferno Trigger - Range: 600
+
+Sejuani (Sejuani)
+  Q: Arctic Assault - Range: 650
+  W: Winter's Wrath - Range: 600
+  E: Permafrost - Range: 560
+  R: Glacial Prison - Range: 1300
+
+Senna (Senna)
+  Q: Piercing Darkness - Range: 600
+  W: Last Embrace - Range: 1250
+  E: Curse of the Black Mist - Range: 400
+  R: Dawning Shadow - Range: 25000
+
+Seraphine (Seraphine)
+  Q: High Note - Range: 900
+  W: Surround Sound - Range: 800
+  E: Beat Drop - Range: 1300
+  R: Encore - Range: 1200
+
+Sett (Sett)
+  Q: Knuckle Down - Range: 0
+  W: Haymaker - Range: 790
+  E: Facebreaker - Range: 490
+  R: The Show Stopper - Range: 400
+
+Shaco (Shaco)
+  Q: Deceive - Range: 400
+  W: Jack In The Box - Range: 500
+  E: Two-Shiv Poison - Range: 625
+  R: Hallucinate - Range: 200
+
+Shen (Shen)
+  Q: Twilight Assault - Range: 400
+  W: Spirit's Refuge - Range: 400
+  E: Shadow Dash - Range: 600
+  R: Stand United - Range: 35000
+
+Shyvana (Shyvana)
+  Q: Twin Bite - Range: 650
+  W: Burnout - Range: 325
+  E: Flame Breath - Range: 925
+  R: Dragon's Descent - Range: 850
+
+Singed (Singed)
+  Q: Poison Trail - Range: 20
+  W: Mega Adhesive - Range: 1000
+  E: Fling - Range: 125
+  R: Insanity Potion - Range: 20
+
+Sion (Sion)
+  Q: Decimating Smash - Range: 725
+  W: Soul Furnace - Range: 500
+  E: Roar of the Slayer - Range: 800
+  R: Unstoppable Onslaught - Range: 6000
+
+Sivir (Sivir)
+  Q: Boomerang Blade - Range: 1200
+  W: Ricochet - Range: 20
+  E: Spell Shield - Range: 20
+  R: On The Hunt - Range: 1000
+
+Skarner (Skarner)
+  Q: Shattered Earth / Upheaval - Range: 400
+  W: Seismic Bastion - Range: 700
+  E: Ixtal's Impact - Range: 1700
+  R: Impale - Range: 625
+
+Smolder (Smolder)
+  Q: Super Scorcher Breath - Range: 550
+  W: Achooo! - Range: 1500
+  E: Flap, Flap, Flap - Range: 700
+  R: MMOOOMMMM! - Range: 4200
+
+Sona (Sona)
+  Q: Hymn of Valor - Range: 825
+  W: Aria of Perseverance - Range: 1000
+  E: Song of Celerity - Range: 430
+  R: Crescendo - Range: 900
+
+Soraka (Soraka)
+  Q: Starcall - Range: 810
+  W: Astral Infusion - Range: 550
+  E: Equinox - Range: 925
+  R: Wish - Range: 25000
+
+Swain (Swain)
+  Q: Death's Hand - Range: 750
+  W: Vision of Empire - Range: 5500
+  E: Nevermove - Range: 850
+  R: Demonic Ascension - Range: 650
+
+Sylas (Sylas)
+  Q: Chain Lash - Range: 775
+  W: Kingslayer - Range: 400
+  E: Abscond / Abduct - Range: 400
+  R: Hijack - Range: 950
+
+Syndra (Syndra)
+  Q: Dark Sphere - Range: 800
+  W: Force of Will - Range: 925
+  E: Scatter the Weak - Range: 650
+  R: Unleashed Power - Range: 675
+
+Tahm Kench (TahmKench)
+  Q: Tongue Lash - Range: 900
+  W: Abyssal Dive - Range: 1000
+  E: Thick Skin - Range: 2400
+  R: Devour - Range: 350
+
+Taliyah (Taliyah)
+  Q: Threaded Volley - Range: 1000
+  W: Seismic Shove - Range: 900
+  E: Unraveled Earth - Range: 950
+  R: Weaver's Wall - Range: 2500
+
+Talon (Talon)
+  Q: Noxian Diplomacy - Range: 575
+  W: Rake - Range: 650
+  E: Assassin's Path - Range: 725
+  R: Shadow Assault - Range: 550
+
+Taric (Taric)
+  Q: Starlight's Touch - Range: 325
+  W: Bastion - Range: 800
+  E: Dazzle - Range: 610
+  R: Cosmic Radiance - Range: 400
+
+Teemo (Teemo)
+  Q: Blinding Dart - Range: 680
+  W: Move Quick - Range: 20
+  E: Toxic Shot - Range: 680
+  R: Noxious Trap - Range: 600
+
+Thresh (Thresh)
+  Q: Death Sentence - Range: 1075
+  W: Dark Passage - Range: 950
+  E: Flay - Range: 500
+  R: The Box - Range: 450
+
+Tristana (Tristana)
+  Q: Rapid Fire - Range: 20
+  W: Rocket Jump - Range: 900
+  E: Explosive Charge - Range: 550
+  R: Buster Shot - Range: 550
+
+Trundle (Trundle)
+  Q: Chomp - Range: 300
+  W: Frozen Domain - Range: 750
+  E: Pillar of Ice - Range: 1000
+  R: Subjugate - Range: 650
+
+Tryndamere (Tryndamere)
+  Q: Bloodlust - Range: 400
+  W: Mocking Shout - Range: 850
+  E: Spinning Slash - Range: 650
+  R: Undying Rage - Range: 400
+
+Twisted Fate (TwistedFate)
+  Q: Wild Cards - Range: 1450
+  W: Pick a Card - Range: 200
+  E: Stacked Deck - Range: 0
+  R: Destiny - Range: 5500
+
+Twitch (Twitch)
+  Q: Ambush - Range: 20
+  W: Venom Cask - Range: 950
+  E: Contaminate - Range: 1200
+  R: Spray and Pray - Range: 1200
+
+Udyr (Udyr)
+  Q: Wilding Claw - Range: 600
+  W: Iron Mantle - Range: 0
+  E: Blazing Stampede - Range: 600
+  R: Wingborne Storm - Range: 370
+
+Urgot (Urgot)
+  Q: Corrosive Charge - Range: 800
+  W: Purge - Range: 490
+  E: Disdain - Range: 475
+  R: Fear Beyond Death - Range: 2500
+
+Varus (Varus)
+  Q: Piercing Arrow - Range: 925
+  W: Blighted Quiver - Range: 750
+  E: Hail of Arrows - Range: 925
+  R: Chain of Corruption - Range: 1300
+
+Vayne (Vayne)
+  Q: Tumble - Range: 300
+  W: Silver Bolts - Range: 750
+  E: Condemn - Range: 550
+  R: Final Hour - Range: 1
+
+Veigar (Veigar)
+  Q: Baleful Strike - Range: 1000
+  W: Dark Matter - Range: 950
+  E: Event Horizon - Range: 725
+  R: Primordial Burst - Range: 650
+
+Vel'Koz (Velkoz)
+  Q: Plasma Fission - Range: 1050
+  W: Void Rift - Range: 1050
+  E: Tectonic Disruption - Range: 810
+  R: Life Form Disintegration Ray - Range: 1575
+
+Vex (Vex)
+  Q: Mistral Bolt - Range: 1200
+  W: Personal Space - Range: 475
+  E: Looming Darkness - Range: 800
+  R: Shadow Surge - Range: 2000
+
+Vi (Vi)
+  Q: Vault Breaker - Range: 250
+  W: Denting Blows - Range: 750
+  E: Relentless Force - Range: 400
+  R: Cease and Desist - Range: 800
+
+Viego (Viego)
+  Q: Blade of the Ruined King - Range: 600
+  W: Spectral Maw - Range: 400
+  E: Harrowed Path - Range: 750
+  R: Heartbreaker - Range: 500
+
+Viktor (Viktor)
+  Q: Siphon Power - Range: 600
+  W: Gravity Field - Range: 800
+  E: Hextech Ray - Range: 525
+  R: Arcane Storm - Range: 700
+
+Vladimir (Vladimir)
+  Q: Transfusion - Range: 600
+  W: Sanguine Pool - Range: 350
+  E: Tides of Blood - Range: 600
+  R: Hemoplague - Range: 625
+
+Volibear (Volibear)
+  Q: Thundering Smash - Range: 300
+  W: Frenzied Maul - Range: 325
+  E: Sky Splitter - Range: 1200
+  R: Stormbringer - Range: 550
+
+Warwick (Warwick)
+  Q: Jaws of the Beast - Range: 365
+  W: Blood Hunt - Range: 4000
+  E: Primal Howl - Range: 375
+  R: Infinite Duress - Range: 3000
+
+Xayah (Xayah)
+  Q: Double Daggers - Range: 400
+  W: Deadly Plumage - Range: 1000
+  E: Bladecaller - Range: 2000
+  R: Featherstorm - Range: 450
+
+Xerath (Xerath)
+  Q: Arcanopulse - Range: 750
+  W: Eye of Destruction - Range: 1000
+  E: Shocking Orb - Range: 1050
+  R: Rite of the Arcane - Range: 5000
+
+Xin Zhao (XinZhao)
+  Q: Three Talon Strike - Range: 375
+  W: Wind Becomes Lightning - Range: 1000
+  E: Audacious Charge - Range: 650
+  R: Crescent Guard - Range: 500
+
+Yasuo (Yasuo)
+  Q: Steel Tempest - Range: 475
+  W: Wind Wall - Range: 400
+  E: Sweeping Blade - Range: 475
+  R: Last Breath - Range: 1400
+
+Yone (Yone)
+  Q: Mortal Steel - Range: 450
+  W: Spirit Cleave - Range: 700
+  E: Soul Unbound - Range: 0
+  R: Fate Sealed - Range: 1000
+
+Yorick (Yorick)
+  Q: Last Rites - Range: 0
+  W: Dark Procession - Range: 600
+  E: Mourning Mist - Range: 700
+  R: Eulogy of the Isles - Range: 600
+
+Yunara (Yunara)
+  Q: Cultivation of Spirit - Range: 0
+  W: Arc of Judgment | Arc of Ruin - Range: 1150
+  E: Kanmei's Steps | Untouchable Shadow - Range: 0
+  R: Transcend One's Self - Range: 0
+
+Yuumi (Yuumi)
+  Q: Prowling Projectile - Range: 1150
+  W: You and Me! - Range: 700
+  E: Zoomies - Range: 750
+  R: Final Chapter - Range: 1100
+
+Zac (Zac)
+  Q: Stretching Strikes - Range: 800
+  W: Unstable Matter - Range: 350
+  E: Elastic Slingshot - Range: 300
+  R: Let's Bounce! - Range: 300
+
+Zed (Zed)
+  Q: Razor Shuriken - Range: 900
+  W: Living Shadow - Range: 650
+  E: Shadow Slash - Range: 290
+  R: Death Mark - Range: 625
+
+Zeri (Zeri)
+  Q: Burst Fire - Range: 700
+  W: Ultrashock Laser - Range: 1150
+  E: Spark Surge - Range: 300
+  R: Lightning Crash - Range: 800
+
+Ziggs (Ziggs)
+  Q: Bouncing Bomb - Range: 850
+  W: Satchel Charge - Range: 1000
+  E: Hexplosive Minefield - Range: 900
+  R: Mega Inferno Bomb - Range: 5000
+
+Zilean (Zilean)
+  Q: Time Bomb - Range: 900
+  W: Rewind - Range: 600
+  E: Time Warp - Range: 550
+  R: Chronoshift - Range: 900
+
+Zoe (Zoe)
+  Q: Paddle Star! - Range: 800
+  W: Spell Thief - Range: 3000
+  E: Sleepy Trouble Bubble - Range: 800
+  R: Portal Jump - Range: 575
+
+Zyra (Zyra)
+  Q: Deadly Spines - Range: 800
+  W: Rampant Growth - Range: 850
+  E: Grasping Roots - Range: 1100
+  R: Stranglethorns - Range: 700
+

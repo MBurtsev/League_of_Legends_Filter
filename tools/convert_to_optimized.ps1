@@ -10,7 +10,12 @@ $projectRoot = Split-Path $PSScriptRoot -Parent
 $version = (Get-Content "$projectRoot\data\version.txt" -Raw -Encoding UTF8).Trim()
 Write-Host "Data version: $version" -ForegroundColor Cyan
 
+# Read champion lists
+$champListEn = (Get-Content "$projectRoot\data\champion_list_en.json" -Raw -Encoding UTF8) | ConvertFrom-Json
+$champListRu = (Get-Content "$projectRoot\data\champion_list_ru.json" -Raw -Encoding UTF8) | ConvertFrom-Json
+
 # Initialize data structures
+$championIndex = @{}
 $metadata = @{}
 $textsRu = @{}
 $textsEn = @{}
@@ -35,26 +40,47 @@ foreach ($fileEn in $championFiles) {
     
     $champEn = $dataEn.data.PSObject.Properties.Value
     $champRu = $dataRu.data.PSObject.Properties.Value
+    $listEn = $champListEn.data.$champKey
+    $listRu = $champListRu.data.$champKey
+    
+    # Build champion index (non-translatable fields only)
+    $championIndex[$champKey] = [ordered]@{
+        id = $listEn.id
+        key = $listEn.key
+        tags = $listEn.tags
+        info = $listEn.info
+        image = $listEn.image
+        stats = $listEn.stats
+    }
     
     # Extract metadata (language-independent)
-    $meta = @{
+    $metaSkins = @()
+    foreach ($skin in $champEn.skins) {
+        $skinMeta = [ordered]@{}
+        foreach ($prop in $skin.PSObject.Properties) {
+            if ($prop.Name -eq 'name') { continue }
+            $skinMeta[$prop.Name] = $prop.Value
+        }
+        $metaSkins += [PSCustomObject]$skinMeta
+    }
+    
+    $meta = [ordered]@{
         id = $champEn.id
         key = $champEn.key
         tags = $champEn.tags
-        partype = $champEn.partype
         info = $champEn.info
         stats = $champEn.stats
         image = $champEn.image
-        skins = $champEn.skins
+        skins = $metaSkins
         spells = @()
         passive = @{
             image = $champEn.passive.image
         }
     }
     
-    # Extract spell metadata
+    # Extract spell metadata (non-translatable fields only)
     foreach ($spell in $champEn.spells) {
-        $spellMeta = @{
+        $spellMeta = [ordered]@{
             id = $spell.id
             maxrank = $spell.maxrank
             cooldown = $spell.cooldown
@@ -69,70 +95,94 @@ foreach ($fileEn in $championFiles) {
             vars = $spell.vars
             datavalues = $spell.datavalues
             image = $spell.image
-            costType = $spell.costType
-            resource = $spell.resource
         }
-        $meta.spells += $spellMeta
+        $meta.spells += [PSCustomObject]$spellMeta
     }
     
     $metadata[$champKey] = $meta
     
     # Extract English texts
-    $textEn = @{
+    $skinTextsEn = @()
+    foreach ($skin in $champEn.skins) {
+        $skinTextsEn += [ordered]@{
+            id = $skin.id
+            num = $skin.num
+            name = $skin.name
+        }
+    }
+    
+    $textEn = [ordered]@{
         name = $champEn.name
         title = $champEn.title
         lore = $champEn.lore
         blurb = $champEn.blurb
+        partype = $champEn.partype
         allytips = $champEn.allytips
         enemytips = $champEn.enemytips
+        skins = $skinTextsEn
         spells = @()
-        passive = @{
+        passive = [ordered]@{
             name = $champEn.passive.name
             description = $champEn.passive.description
         }
     }
     
     foreach ($spell in $champEn.spells) {
-        $spellText = @{
+        $spellText = [ordered]@{
             name = $spell.name
             description = $spell.description
             tooltip = $spell.tooltip
             leveltip = $spell.leveltip
+            costType = $spell.costType
+            resource = $spell.resource
         }
-        $textEn.spells += $spellText
+        $textEn.spells += [PSCustomObject]$spellText
     }
     
     $textsEn[$champKey] = $textEn
     
     # Extract Russian texts
-    $textRu = @{
+    $skinTextsRu = @()
+    foreach ($skin in $champRu.skins) {
+        $skinTextsRu += [ordered]@{
+            id = $skin.id
+            num = $skin.num
+            name = $skin.name
+        }
+    }
+    
+    $textRu = [ordered]@{
         name = $champRu.name
         title = $champRu.title
         lore = $champRu.lore
         blurb = $champRu.blurb
+        partype = $champRu.partype
         allytips = $champRu.allytips
         enemytips = $champRu.enemytips
+        skins = $skinTextsRu
         spells = @()
-        passive = @{
+        passive = [ordered]@{
             name = $champRu.passive.name
             description = $champRu.passive.description
         }
     }
     
     foreach ($spell in $champRu.spells) {
-        $spellText = @{
+        $spellText = [ordered]@{
             name = $spell.name
             description = $spell.description
             tooltip = $spell.tooltip
             leveltip = $spell.leveltip
+            costType = $spell.costType
+            resource = $spell.resource
         }
-        $textRu.spells += $spellText
+        $textRu.spells += [PSCustomObject]$spellText
     }
     
     $textsRu[$champKey] = $textRu
 }
 
-Write-Host "`n`nGenerating JavaScript files..." -ForegroundColor Yellow
+Write-Host "\n\nGenerating JavaScript files..." -ForegroundColor Yellow
 
 # Generate champion_meta.js
 Write-Host "Creating champion_meta.js..." -ForegroundColor Cyan
@@ -143,8 +193,12 @@ $metaJs = @"
 
 window.LOL_DATA_VERSION = '$version';
 
-window.LOL_CHAMPIONS_META = 
 "@
+$metaJs += "window.LOL_CHAMPION_INDEX = `n"
+$metaJs += ($championIndex | ConvertTo-Json -Depth 10 -Compress)
+$metaJs += ";`n`n"
+
+$metaJs += "window.LOL_CHAMPIONS_META = `n"
 
 $metaJs += ($metadata | ConvertTo-Json -Depth 10 -Compress)
 $metaJs += ";"

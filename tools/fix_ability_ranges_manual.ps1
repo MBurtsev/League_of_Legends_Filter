@@ -27,7 +27,7 @@ $rangeCorrections = @{
     "Jhin" = @(550, 3000, 750, 3500)  # R sniper range ~3500
     "Jinx" = @(600, 1450, 925, "25000")  # R is global
     "Katarina" = @(625, 400, 725, 550)  # W AoE ~400
-    "Kha'Zix" = @(325, 1000, 700, 0)  # R is self-cast stealth
+    "Khazix" = @(325, 1000, 700, 0)  # R is self-cast stealth
     "Kled" = @(800, 0, 550, 3500)  # W is passive
     "LeBlanc" = @(700, 600, 925, 0)  # R mimics other spells, 0 for base
     "Mel" = @(950, 250, 1050, "25000")  # New champion, R appears global
@@ -53,83 +53,110 @@ $rangeCorrections = @{
     "Zeri" = @(700, 1150, 300, 800)  # E dash ~300
 }
 
-$updatedCount = 0
-$errorCount = 0
+$projectRoot = Split-Path $PSScriptRoot -Parent
+$metaPath = Join-Path $projectRoot "champion_meta.js"
+
+if (-not (Test-Path $metaPath)) {
+    Write-Host "[ERROR] champion_meta.js not found at $metaPath" -ForegroundColor Red
+    exit 1
+}
+
+Write-Host "Loading champion_meta.js..." -ForegroundColor Yellow
+$metaRaw = Get-Content $metaPath -Raw -Encoding UTF8
+$pattern = 'window\.LOL_CHAMPIONS_META\s*=\s*(\{.*\});'
+$match = [System.Text.RegularExpressions.Regex]::Match($metaRaw, $pattern, [System.Text.RegularExpressions.RegexOptions]::Singleline)
+
+if (-not $match.Success) {
+    Write-Host "[ERROR] Failed to locate window.LOL_CHAMPIONS_META block" -ForegroundColor Red
+    exit 1
+}
+
+$convertFromJsonParams = @{}
+if ((Get-Command ConvertFrom-Json).Parameters.ContainsKey('Depth')) {
+    $convertFromJsonParams['Depth'] = 100
+}
+
+$metaJson = $match.Groups[1].Value
+$metaData = $metaJson | ConvertFrom-Json @convertFromJsonParams
+
+$spellKeys = @('Q', 'W', 'E', 'R')
+$updatedChampions = @()
 
 foreach ($championId in $rangeCorrections.Keys) {
     Write-Host "Fixing $championId..." -ForegroundColor White
-    
-    $newRanges = $rangeCorrections[$championId]
-    
-    try {
-        # Update both English and Russian files
-        $localFilesEn = Get-ChildItem -Path ".\data\champion\" -Filter "$($championId)_en.json"
-        $localFilesRu = Get-ChildItem -Path ".\data\champion\" -Filter "$($championId)_ru.json"
-        
-        foreach ($localFile in @($localFilesEn, $localFilesRu)) {
-            if (-not $localFile) { continue }
-            
-            $localData = Get-Content $localFile.FullName -Raw | ConvertFrom-Json
-            $localChamp = $localData.data.$championId
-            
-            if (-not $localChamp) {
-                Write-Host "  [WARN] Champion data not found in local file" -ForegroundColor Yellow
-                continue
-            }
-            
-            $changed = $false
-            
-            # Update each spell's range
-            for ($i = 0; $i -lt 4; $i++) {
-                if ($i -ge $localChamp.spells.Count) { break }
-                
-                $localSpell = $localChamp.spells[$i]
-                $newRange = $newRanges[$i]
-                
-                # Skip if keeping 25000 (global abilities)
-                if ($newRange -eq "25000") { continue }
-                
-                # Get current range
-                $currentRange = $localSpell.range[0]
-                
-                if ($currentRange -ne $newRange) {
-                    $spellKey = @("Q", "W", "E", "R")[$i]
-                    Write-Host "  ${spellKey}: $currentRange -> $newRange" -ForegroundColor Cyan
-                    
-                    # Set all levels to same range
-                    $newRangeArray = @($newRange, $newRange, $newRange, $newRange, $newRange)
-                    if ($i -eq 3) {  # R has only 3 levels
-                        $newRangeArray = @($newRange, $newRange, $newRange)
-                    }
-                    
-                    $localSpell.range = $newRangeArray
-                    $localSpell.rangeBurn = "$newRange"
-                    $changed = $true
-                }
-            }
-            
-            # Save updated file
-            if ($changed) {
-                $localData | ConvertTo-Json -Depth 100 -Compress | Set-Content $localFile.FullName -Encoding UTF8
-                Write-Host "  [OK] Updated $($localFile.Name)" -ForegroundColor Green
-                $updatedCount++
-            }
+    $corrections = $rangeCorrections[$championId]
+
+    $championProperty = $metaData.PSObject.Properties | Where-Object { $_.Name -eq $championId }
+    if (-not $championProperty) {
+        Write-Host "  [WARN] Champion not found in metadata" -ForegroundColor Yellow
+        continue
+    }
+
+    $championMeta = $championProperty.Value
+    if (-not $championMeta -or -not $championMeta.spells) {
+        Write-Host "  [WARN] Champion metadata missing spells" -ForegroundColor Yellow
+        continue
+    }
+
+    $changed = $false
+
+    for ($i = 0; $i -lt $championMeta.spells.Count -and $i -lt $corrections.Count; $i++) {
+        $targetRange = $corrections[$i]
+        if ($null -eq $targetRange -or $targetRange -eq "25000") {
+            continue
         }
-        
-    } catch {
-        Write-Host "  [ERROR] Error processing ${championId}: $_" -ForegroundColor Red
-        $errorCount++
+
+        $spell = $championMeta.spells[$i]
+        if (-not $spell.range) {
+            continue
+        }
+
+        $currentRange = $spell.range[0]
+        if ($currentRange -eq $targetRange) {
+            continue
+        }
+
+        $levels = $spell.range.Count
+        if ($levels -le 0) {
+            $levels = 5
+        }
+
+        $newRangeArray = @()
+        for ($lvl = 0; $lvl -lt $levels; $lvl++) {
+            $newRangeArray += $targetRange
+        }
+
+        $spell.range = $newRangeArray
+        $spell.rangeBurn = [string]$targetRange
+        $changed = $true
+
+        $spellKey = $spellKeys[$i]
+        Write-Host "  ${spellKey}: $currentRange -> $targetRange" -ForegroundColor Cyan
+    }
+
+    if ($changed) {
+        $updatedChampions += $championId
     }
 }
 
-Write-Host ""
-Write-Host "=== Summary ===" -ForegroundColor Cyan
-Write-Host "Updated files: $updatedCount" -ForegroundColor Green
-Write-Host "Errors: $errorCount" -ForegroundColor Red
-
-if ($updatedCount -gt 0) {
-    Write-Host ""
-    Write-Host "[WARN] Remember to regenerate champion_data.js!" -ForegroundColor Yellow
-    Write-Host "Run: .\tools\convert_json_to_js.ps1" -ForegroundColor Cyan
+if ($updatedChampions.Count -eq 0) {
+    Write-Host "\nNo updates were necessary." -ForegroundColor Yellow
+    exit 0
 }
+
+Write-Host "\nWriting champion_meta.js..." -ForegroundColor Yellow
+$updatedJson = $metaData | ConvertTo-Json -Depth 100 -Compress
+$newBlock = "window.LOL_CHAMPIONS_META = `n$updatedJson;"
+
+$before = $metaRaw.Substring(0, $match.Index)
+$after = $metaRaw.Substring($match.Index + $match.Length)
+$updatedContent = $before + $newBlock + $after
+
+$utf8NoBom = New-Object System.Text.UTF8Encoding $false
+[System.IO.File]::WriteAllText($metaPath, $updatedContent, $utf8NoBom)
+
+Write-Host "\n=== Summary ===" -ForegroundColor Cyan
+Write-Host "Champions updated: $($updatedChampions.Count)" -ForegroundColor Green
+Write-Host "List: $([string]::Join(', ', $updatedChampions))" -ForegroundColor White
+Write-Host "\nDone. champion_meta.js now contains corrected ranges." -ForegroundColor Green
 

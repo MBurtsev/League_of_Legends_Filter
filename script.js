@@ -256,11 +256,26 @@
   }
 
   async function loadChampionsIndex() {
-    // Check if data is embedded in window (for static file:// support)
-    if (window.LOL_CHAMPION_LIST_EN) {
-      return window.LOL_CHAMPION_LIST_EN.data;
+    // Prefer embedded optimized data
+    if (window.LOL_CHAMPION_INDEX) {
+      return window.LOL_CHAMPION_INDEX;
+    }
+    if (window.LOL_CHAMPIONS_META) {
+      const index = {};
+      for (const [key, meta] of Object.entries(window.LOL_CHAMPIONS_META)) {
+        index[key] = {
+          id: meta.id,
+          key: meta.key,
+          tags: meta.tags,
+          info: meta.info,
+          image: meta.image,
+          stats: meta.stats
+        };
+      }
+      return index;
     }
     
+    // Fallback to legacy champion list
     const url = `${LOCAL_BASE}/data/champion_list_en.json`;
     const json = await fetchJson(url);
     return json.data;
@@ -999,30 +1014,45 @@
       const texts = window[textVar]?.[champKey];
       
       if (meta && texts) {
-        // Merge metadata and texts to match original structure
+        const textSpells = Array.isArray(texts.spells) ? texts.spells : [];
+        const metaSpells = Array.isArray(meta.spells) ? meta.spells : [];
+        const mergedSpells = metaSpells.map((spellMeta, i) => {
+          const spellText = textSpells[i] || {};
+          return {
+            ...spellMeta,
+            ...spellText
+          };
+        });
+        const mergedPassive = {
+          ...meta.passive,
+          ...texts.passive
+        };
+        const metaSkins = Array.isArray(meta.skins) ? meta.skins : [];
+        const textSkins = Array.isArray(texts.skins) ? texts.skins : [];
+        const mergedSkins = metaSkins.map(skinMeta => {
+          const skinText = textSkins.find(s => (s.id && skinMeta.id && String(s.id) === String(skinMeta.id)) || (s.num !== undefined && skinMeta.num !== undefined && Number(s.num) === Number(skinMeta.num))) || null;
+          return {
+            ...skinMeta,
+            name: skinText?.name || ""
+          };
+        });
         return {
           id: meta.id,
           key: meta.key,
           name: texts.name,
           title: texts.title,
           image: meta.image,
-          skins: meta.skins,
+          skins: mergedSkins,
           lore: texts.lore,
           blurb: texts.blurb,
           allytips: texts.allytips,
           enemytips: texts.enemytips,
           tags: meta.tags,
-          partype: meta.partype,
+          partype: texts.partype,
           info: meta.info,
           stats: meta.stats,
-          spells: meta.spells.map((spellMeta, i) => ({
-            ...spellMeta,
-            ...texts.spells[i]
-          })),
-          passive: {
-            ...meta.passive,
-            ...texts.passive
-          }
+          spells: mergedSpells,
+          passive: mergedPassive
         };
       }
     }
@@ -1192,6 +1222,10 @@
           const scalesData = hasOwnHealthScaling(detailEn);
           const ruAbilities = buildAbilities(detailRu, detailEn, true);
           const enAbilities = buildAbilities(detailEn, detailEn, false);
+          const nameEn = detailEn?.name || item.id;
+          const titleEn = detailEn?.title || "";
+          const nameRu = detailRu?.name || nameEn;
+          const titleRu = detailRu?.title || titleEn;
           // spell ranges
           let spellRanges = { Q: 0, W: 0, E: 0, R: 0 };
           if (Array.isArray(detailEn?.spells)) {
@@ -1204,10 +1238,10 @@
           }
           const champ = {
             id: item.id,
-            name: item.name,
-            nameRu: detailRu?.name || item.name,
-            title: item.title,
-            titleRu: detailRu?.title || item.title,
+            name: nameEn,
+            nameRu,
+            title: titleEn,
+            titleRu,
             image: getChampionIcon(state.version, item.image.full),
             attackRange: item.stats?.attackrange ?? 125,
             tags: tagsData.tags,

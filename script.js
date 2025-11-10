@@ -110,6 +110,16 @@
     }
   };
 
+  const ROLE_COLORS = {
+    tank: '#2563eb',
+    fighter: '#f97316',
+    mage: '#a855f7',
+    marksman: '#facc15',
+    assassin: '#ec4899',
+    support: '#22c55e',
+    default: '#6ee7ff'
+  };
+
   const state = {
     version: null,
     championsIndex: null,
@@ -1440,7 +1450,27 @@
     const frag = document.createDocumentFragment();
     for (const c of champions) {
       const card = document.createElement("article");
-      card.className = "card";
+      card.classList.add("card");
+      const roles = Array.isArray(c.classTags)
+        ? c.classTags.map(r => String(r).toLowerCase()).filter(Boolean)
+        : [];
+      const primaryRole = roles[0] || null;
+      if (primaryRole) {
+        card.classList.add(`role-${primaryRole}`);
+        const primaryColor = ROLE_COLORS[primaryRole] || ROLE_COLORS.default;
+        let secondaryColor = primaryColor;
+        const secondaryRole = roles.find(r => r !== primaryRole && ROLE_COLORS[r]);
+        if (secondaryRole) {
+          card.classList.add(`role-${secondaryRole}`);
+          secondaryColor = ROLE_COLORS[secondaryRole];
+        }
+        const gradient =
+          primaryColor === secondaryColor
+            ? `linear-gradient(135deg, ${primaryColor}, ${primaryColor})`
+            : `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor} 50%, ${secondaryColor} 50%, ${secondaryColor} 100%)`;
+        card.classList.add("has-role");
+        card.style.setProperty("--card-border-image", gradient);
+      }
       const splash = document.createElement("div");
       splash.className = "splash";
       splash.style.backgroundImage = `url('${c.image}')`;

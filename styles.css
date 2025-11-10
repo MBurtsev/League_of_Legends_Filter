@@ -7,6 +7,12 @@
   --accent-2: #6ee7ff;
   --border: #232a3d;
   --card: #0f1424;
+  --role-tank: #2563eb;
+  --role-fighter: #f97316;
+  --role-mage: #a855f7;
+  --role-marksman: #facc15;
+  --role-assassin: #ec4899;
+  --role-support: #22c55e;
 }
 
 * {
@@ -205,6 +211,34 @@ body {
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 4px 8px;
+}
+
+.role-filter label {
+  color: var(--role-label-color, var(--text));
+}
+
+.role-filter.role-tank label {
+  --role-label-color: var(--role-tank);
+}
+
+.role-filter.role-fighter label {
+  --role-label-color: var(--role-fighter);
+}
+
+.role-filter.role-mage label {
+  --role-label-color: var(--role-mage);
+}
+
+.role-filter.role-marksman label {
+  --role-label-color: var(--role-marksman);
+}
+
+.role-filter.role-assassin label {
+  --role-label-color: var(--role-assassin);
+}
+
+.role-filter.role-support label {
+  --role-label-color: var(--role-support);
 }
 
 .filter-item label {
@@ -527,6 +561,12 @@ button:hover {
   display: flex;
   flex-direction: column;
   transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.card.has-role {
+  border: 2px solid transparent;
+  border-image-slice: 1;
+  border-image-source: var(--card-border-image, linear-gradient(135deg, var(--border), var(--border)));
 }
 
 .card:hover {

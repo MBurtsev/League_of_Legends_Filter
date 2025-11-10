@@ -31,12 +31,13 @@
       roleSupport: 'Поддержка',
       attackRange: 'Дальность автоатаки',
       spellRange: 'Дальность умений',
-      minAttackRange: 'Мин. дальность автоатаки',
-      minRangeQ: 'Мин. дальность Q',
-      minRangeW: 'Мин. дальность W',
-      minRangeE: 'Мин. дальность E',
-      minRangeR: 'Мин. дальность R',
-      minDps: 'Мин. DPS',
+      minAttackRange: 'Дальность автоатаки',
+      minRangeQ: 'Дальность Q',
+      minRangeW: 'Дальность W',
+      minRangeE: 'Дальность E',
+      minRangeR: 'Дальность R',
+      minDps0: 'DPS 0',
+      minDps18: 'DPS 18',
       combatStats: 'Боевые характеристики',
       showDpsTable: 'Показать таблицу DPS',
       hideDpsTable: 'Скрыть таблицу DPS',
@@ -44,7 +45,6 @@
       attackDamageColumn: 'Урон',
       attackSpeedColumn: 'Скорость атаки',
       dpsColumn: 'DPS',
-      minDps: 'Мин. DPS',
       reset: 'Сбросить',
       searchPlaceholder: 'Поиск по имени чемпиона...',
       found: 'Найдено чемпионов',
@@ -94,12 +94,13 @@
       roleSupport: 'Support',
       attackRange: 'Attack Range',
       spellRange: 'Spell Range',
-      minAttackRange: 'Min. Attack Range',
-      minRangeQ: 'Min. Q Range',
-      minRangeW: 'Min. W Range',
-      minRangeE: 'Min. E Range',
-      minRangeR: 'Min. R Range',
-      minDps: 'Min. DPS',
+      minAttackRange: 'Attack Range',
+      minRangeQ: 'Q Range',
+      minRangeW: 'W Range',
+      minRangeE: 'E Range',
+      minRangeR: 'R Range',
+      minDps0: 'DPS 0',
+      minDps18: 'DPS 18',
       combatStats: 'Combat Stats',
       showDpsTable: 'Show DPS Table',
       hideDpsTable: 'Hide DPS Table',
@@ -107,7 +108,6 @@
       attackDamageColumn: 'Attack Damage',
       attackSpeedColumn: 'Attack Speed',
       dpsColumn: 'DPS',
-      minDps: 'Min. DPS',
       reset: 'Reset',
       searchPlaceholder: 'Search champion name...',
       found: 'Found champions',
@@ -128,6 +128,8 @@
     }
   };
 
+  const PLACEHOLDER_RANGE_THRESHOLD = 20000;
+
   const state = {
     version: null,
     championsIndex: null,
@@ -135,6 +137,8 @@
     language: 'en', // 'ru' or 'en' - default English
     searchQuery: '',
     currentModalChampion: null,
+    rangeBounds: null,
+    dpsBounds: null,
     filters: {
       mobility: false,
       stun: false,
@@ -146,9 +150,16 @@
       shield: false,
       heal: false,
       minRange: 0,
-      minDps: 0
+      minRangeQ: 0,
+      minRangeW: 0,
+      minRangeE: 0,
+      minRangeR: 0,
+      minDps0: 0,
+      minDps18: 0
     }
   };
+
+  const ABILITY_KEYS = ["Q", "W", "E", "R"];
   
   function t(key) {
     return translations[state.language][key] || key;
@@ -157,8 +168,10 @@
   const els = {
     status: null,
     grid: null,
-    minDps: null,
-    minDpsValue: null,
+    minDps0: null,
+    minDps0Value: null,
+    minDps18: null,
+    minDps18Value: null,
     minRange: null,
     minRangeValue: null,
     minRangeQ: null,
@@ -268,6 +281,10 @@
       if (payload.version !== state.version) return false;
       if (!Array.isArray(payload.champions) || !payload.champions.length) return false;
       state.champions = payload.champions;
+      ensureChampionDerivedStats(state.champions);
+      normalizeSpellRangePlaceholders(state.champions);
+      updateRangeSlidersFromChampions();
+      updateDpsSlidersFromChampions();
       setStatus(`Данные загружены из кэша (${state.version}). Чемпионов: ${state.champions.length}`);
       renderGrid(state.champions);
       return true;
@@ -942,6 +959,197 @@
     return Math.max(...nums);
   }
 
+  function normalizeSpellRangePlaceholders(champions) {
+    if (!Array.isArray(champions) || !champions.length) return;
+    const fallbackPerAbility = {};
+    for (const key of ABILITY_KEYS) {
+      fallbackPerAbility[key] = 0;
+    }
+
+    for (const champ of champions) {
+      for (const key of ABILITY_KEYS) {
+        const value = Number(champ?.spellRanges?.[key]);
+        if (Number.isFinite(value) && value > 0 && value < PLACEHOLDER_RANGE_THRESHOLD) {
+          fallbackPerAbility[key] = Math.max(fallbackPerAbility[key], value);
+        }
+      }
+    }
+
+    for (const champ of champions) {
+      for (const key of ABILITY_KEYS) {
+        if (!champ.spellRanges) continue;
+        const value = Number(champ.spellRanges[key]);
+        if (!Number.isFinite(value)) continue;
+        if (value >= PLACEHOLDER_RANGE_THRESHOLD) {
+          const fallback = fallbackPerAbility[key];
+          if (fallback > 0) {
+            champ.spellRanges[key] = fallback;
+          }
+        }
+      }
+    }
+  }
+
+  function computeRangeBounds(champions) {
+    const bounds = {
+      attackRange: { min: null, max: null },
+      spells: {}
+    };
+    for (const key of ABILITY_KEYS) {
+      bounds.spells[key] = { min: null, max: null };
+    }
+    if (!Array.isArray(champions)) {
+      return bounds;
+    }
+    for (const champ of champions) {
+      const attackRange = Number(champ?.attackRange);
+      if (Number.isFinite(attackRange)) {
+        bounds.attackRange.min = bounds.attackRange.min === null ? attackRange : Math.min(bounds.attackRange.min, attackRange);
+        bounds.attackRange.max = bounds.attackRange.max === null ? attackRange : Math.max(bounds.attackRange.max, attackRange);
+      }
+      for (const key of ABILITY_KEYS) {
+        const value = Number(champ?.spellRanges?.[key]);
+        if (Number.isFinite(value)) {
+          const entry = bounds.spells[key];
+          entry.min = entry.min === null ? value : Math.min(entry.min, value);
+          entry.max = entry.max === null ? value : Math.max(entry.max, value);
+        }
+      }
+    }
+    if (bounds.attackRange.min === null || bounds.attackRange.max === null) {
+      bounds.attackRange.min = 0;
+      bounds.attackRange.max = 0;
+    }
+    for (const key of ABILITY_KEYS) {
+      const entry = bounds.spells[key];
+      if (entry.min === null || entry.max === null) {
+        entry.min = 0;
+        entry.max = 0;
+      }
+    }
+    return bounds;
+  }
+
+  function clampToBounds(value, min, max) {
+    if (!Number.isFinite(value)) return min;
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+  }
+
+  function setSliderBounds(slider, valueEl, bound) {
+    if (!slider || !bound) return;
+    const min = Number(bound.min);
+    const max = Number(bound.max);
+    if (!Number.isFinite(min) || !Number.isFinite(max)) return;
+    slider.min = String(min);
+    slider.max = String(max);
+    const clamped = clampToBounds(Number(slider.value), min, max);
+    slider.value = String(clamped);
+    if (valueEl) {
+      valueEl.textContent = String(clamped);
+    }
+    return clamped;
+  }
+
+  function applyRangeBounds(bounds) {
+    state.rangeBounds = bounds;
+    if (!bounds) return;
+    setSliderBounds(els.minRange, els.minRangeValue, bounds.attackRange);
+    setSliderBounds(els.minRangeQ, els.minRangeQValue, bounds.spells.Q);
+    setSliderBounds(els.minRangeW, els.minRangeWValue, bounds.spells.W);
+    setSliderBounds(els.minRangeE, els.minRangeEValue, bounds.spells.E);
+    setSliderBounds(els.minRangeR, els.minRangeRValue, bounds.spells.R);
+  }
+
+  function updateRangeSlidersFromChampions() {
+    if (!Array.isArray(state.champions) || !state.champions.length) {
+      state.rangeBounds = null;
+      return;
+    }
+    const bounds = computeRangeBounds(state.champions);
+    applyRangeBounds(bounds);
+  }
+
+  function computeChampionDpsValues(champion) {
+    const baseAD = Number(champion?.attackDamage) || 0;
+    const adPerLevel = Number(champion?.attackDamagePerLevel) || 0;
+    const baseAS = Number(champion?.attackSpeed) || 0;
+    const asPerLevel = Number(champion?.attackSpeedPerLevel) || 0;
+    const dps0Raw = baseAD * baseAS;
+    const attackDamageLevel18 = baseAD + adPerLevel * 17;
+    const attackSpeedLevel18 = baseAS * (1 + (asPerLevel / 100) * 17);
+    const dps18Raw = attackDamageLevel18 * attackSpeedLevel18;
+    return {
+      dps0: Number.isFinite(dps0Raw) ? Number(dps0Raw.toFixed(1)) : 0,
+      dps18: Number.isFinite(dps18Raw) ? Number(dps18Raw.toFixed(1)) : 0
+    };
+  }
+
+  function ensureChampionDerivedStats(champions) {
+    if (!Array.isArray(champions)) return;
+    for (const champ of champions) {
+      if (!champ) continue;
+      const { dps0, dps18 } = computeChampionDpsValues(champ);
+      champ.dps0 = dps0;
+      champ.dps18 = dps18;
+      champ.dps = champ.dps0;
+    }
+  }
+
+  function computeDpsBounds(champions) {
+    const bounds = {
+      dps0: { min: null, max: null },
+      dps18: { min: null, max: null }
+    };
+    if (!Array.isArray(champions) || !champions.length) {
+      bounds.dps0.min = bounds.dps0.max = 0;
+      bounds.dps18.min = bounds.dps18.max = 0;
+      return bounds;
+    }
+    for (const champ of champions) {
+      const value0 = Number.isFinite(champ?.dps0) ? Number(champ.dps0) : null;
+      const value18 = Number.isFinite(champ?.dps18) ? Number(champ.dps18) : null;
+      if (value0 !== null) {
+        bounds.dps0.min = bounds.dps0.min === null ? value0 : Math.min(bounds.dps0.min, value0);
+        bounds.dps0.max = bounds.dps0.max === null ? value0 : Math.max(bounds.dps0.max, value0);
+      }
+      if (value18 !== null) {
+        bounds.dps18.min = bounds.dps18.min === null ? value18 : Math.min(bounds.dps18.min, value18);
+        bounds.dps18.max = bounds.dps18.max === null ? value18 : Math.max(bounds.dps18.max, value18);
+      }
+    }
+    bounds.dps0.min = Number.isFinite(bounds.dps0.min) ? Math.floor(bounds.dps0.min) : 0;
+    bounds.dps0.max = Number.isFinite(bounds.dps0.max) ? Math.ceil(bounds.dps0.max) : 0;
+    bounds.dps18.min = Number.isFinite(bounds.dps18.min) ? Math.floor(bounds.dps18.min) : 0;
+    bounds.dps18.max = Number.isFinite(bounds.dps18.max) ? Math.ceil(bounds.dps18.max) : 0;
+    return bounds;
+  }
+
+  function applyDpsBounds(bounds) {
+    state.dpsBounds = bounds;
+    if (!bounds) return;
+    const currentDps0 = setSliderBounds(els.minDps0, els.minDps0Value, bounds.dps0);
+    const currentDps18 = setSliderBounds(els.minDps18, els.minDps18Value, bounds.dps18);
+    const minDps0 = Number(bounds.dps0?.min ?? 0);
+    const minDps18 = Number(bounds.dps18?.min ?? 0);
+    state.filters.minDps0 = Number.isFinite(currentDps0) && currentDps0 <= minDps0 ? 0 : Number(currentDps0 || 0);
+    state.filters.minDps18 = Number.isFinite(currentDps18) && currentDps18 <= minDps18 ? 0 : Number(currentDps18 || 0);
+  }
+
+  function updateDpsSlidersFromChampions() {
+    if (!Array.isArray(state.champions) || !state.champions.length) {
+      state.dpsBounds = null;
+      return;
+    }
+    const bounds = computeDpsBounds(state.champions);
+    applyDpsBounds(bounds);
+  }
+
+  function formatDpsValue(value) {
+    return Number.isFinite(value) ? Number(value).toFixed(1) : "—";
+  }
+
   function parseAbilityTagsFromText(text) {
     if (!text) return new Set();
     const t = text.toLowerCase();
@@ -1257,6 +1465,18 @@
               spellRanges[labels[si]] = Number.isFinite(val) ? val : 0;
             }
           }
+          const baseAttackDamage = Number(item.stats?.attackdamage ?? 0);
+          const attackDamagePerLevel = Number(item.stats?.attackdamageperlevel ?? 0);
+          const baseAttackSpeed = Number(item.stats?.attackspeed ?? 0);
+          const attackSpeedPerLevel = Number(item.stats?.attackspeedperlevel ?? 0);
+          const dps0 = Number.isFinite(baseAttackDamage * baseAttackSpeed)
+            ? Number((baseAttackDamage * baseAttackSpeed).toFixed(1))
+            : 0;
+          const attackDamageLevel18 = baseAttackDamage + attackDamagePerLevel * 17;
+          const attackSpeedLevel18 = baseAttackSpeed * (1 + (attackSpeedPerLevel / 100) * 17);
+          const dps18 = Number.isFinite(attackDamageLevel18 * attackSpeedLevel18)
+            ? Number((attackDamageLevel18 * attackSpeedLevel18).toFixed(1))
+            : 0;
           const champ = {
             id: item.id,
             name: nameEn,
@@ -1265,11 +1485,13 @@
             titleRu,
             image: getChampionIcon(state.version, item.image.full),
             attackRange: item.stats?.attackrange ?? 125,
-            attackDamage: item.stats?.attackdamage ?? 0,
-          attackDamagePerLevel: item.stats?.attackdamageperlevel ?? 0,
-          attackSpeed: item.stats?.attackspeed ?? 0,
-          attackSpeedPerLevel: item.stats?.attackspeedperlevel ?? 0,
-            dps: Number(((item.stats?.attackdamage ?? 0) * (item.stats?.attackspeed ?? 0)).toFixed(1)),
+            attackDamage: baseAttackDamage,
+            attackDamagePerLevel,
+            attackSpeed: baseAttackSpeed,
+            attackSpeedPerLevel,
+            dps0,
+            dps18,
+            dps: dps0,
             tags: tagsData.tags,
             tagsByAbility: tagsData.tagsByAbility,
             classTags,
@@ -1338,19 +1560,25 @@
     state.filters.roleSupport = els.checkboxes.roleSupport.checked;
     
     // range sliders
-    if (els.minDps) {
-      state.filters.minDps = Number(els.minDps.value) || 0;
-    } else {
-      state.filters.minDps = 0;
+    const dps0ValueRaw = els.minDps0 ? Number(els.minDps0.value) : NaN;
+    const dps18ValueRaw = els.minDps18 ? Number(els.minDps18.value) : NaN;
+    const dps0Min = els.minDps0 ? Number(els.minDps0.min) : NaN;
+    const dps18Min = els.minDps18 ? Number(els.minDps18.min) : NaN;
+    const dps0Value = Number.isFinite(dps0ValueRaw) ? dps0ValueRaw : 0;
+    const dps18Value = Number.isFinite(dps18ValueRaw) ? dps18ValueRaw : 0;
+    if (els.minDps0Value) {
+      els.minDps0Value.textContent = String(dps0Value);
     }
+    if (els.minDps18Value) {
+      els.minDps18Value.textContent = String(dps18Value);
+    }
+    state.filters.minDps0 = Number.isFinite(dps0Value) && Number.isFinite(dps0Min) && dps0Value <= dps0Min ? 0 : dps0Value;
+    state.filters.minDps18 = Number.isFinite(dps18Value) && Number.isFinite(dps18Min) && dps18Value <= dps18Min ? 0 : dps18Value;
     state.filters.minRange = Number(els.minRange.value) || 0;
     state.filters.minRangeQ = Number(els.minRangeQ.value) || 0;
     state.filters.minRangeW = Number(els.minRangeW.value) || 0;
     state.filters.minRangeE = Number(els.minRangeE.value) || 0;
     state.filters.minRangeR = Number(els.minRangeR.value) || 0;
-    if (els.minDpsValue) {
-      els.minDpsValue.textContent = String(state.filters.minDps);
-    }
     els.minRangeValue.textContent = String(state.filters.minRange);
     els.minRangeQValue.textContent = String(state.filters.minRangeQ);
     els.minRangeWValue.textContent = String(state.filters.minRangeW);
@@ -1370,7 +1598,8 @@
     }
     
     // Range filters
-    if (state.filters.minDps > 0 && (champion.dps ?? 0) < state.filters.minDps) return false;
+    if (state.filters.minDps0 > 0 && (champion.dps0 ?? 0) < state.filters.minDps0) return false;
+    if (state.filters.minDps18 > 0 && (champion.dps18 ?? 0) < state.filters.minDps18) return false;
     if (state.filters.minRange > 0 && (champion.attackRange ?? 0) < state.filters.minRange) {
       return false;
     }
@@ -1507,8 +1736,12 @@
       rangeBadge.title = state.language === 'ru' ? 'Дальность автоатаки' : 'Auto Attack Range';
       const dpsBadge = document.createElement("span");
       dpsBadge.className = "badge badge-dps";
-      dpsBadge.textContent = Number.isFinite(c.dps) ? `${c.dps}` : '—';
-      dpsBadge.title = state.language === 'ru' ? 'Базовый DPS (урон × скорость атаки)' : 'Base DPS (damage × attack speed)';
+      const dps0Display = formatDpsValue(c.dps0);
+      const dps18Display = formatDpsValue(c.dps18);
+      dpsBadge.textContent = `${dps0Display} / ${dps18Display}`;
+      dpsBadge.title = state.language === 'ru'
+        ? 'DPS на уровне 1 и на 18 уровне'
+        : 'DPS at level 1 and level 18';
       badgeWrap.appendChild(rangeBadge);
       badgeWrap.appendChild(dpsBadge);
       const roles = Array.isArray(c.classTags)
@@ -1563,6 +1796,7 @@
     const header = ``;
 
     const abilityData = state.language === 'ru' ? c.ru : c.en;
+    const dpsChipHtml = `<span class="chip">${formatDpsValue(c.dps0)} / ${formatDpsValue(c.dps18)}</span>`;
     
     const abilities = [];
     if (abilityData?.passive) {
@@ -1608,6 +1842,7 @@
             <div class="chips">
               ${roleChips}
               ${dmg ? `<span class="chip">${dmg}</span>` : ""}
+              ${dpsChipHtml}
               <span class="chip">${t('attackRange')}: ${c.attackRange}</span>
               ${c.scalesWithOwnHealth ? `<span class="chip">${t('scalesHealth')}</span>` : ""}
             </div>
@@ -1967,7 +2202,8 @@
     }
     
     // Range filters
-    if (filters.minDps > 0 && (champion.dps ?? 0) < filters.minDps) return false;
+    if ((filters.minDps0 ?? 0) > 0 && (champion.dps0 ?? 0) < filters.minDps0) return false;
+    if ((filters.minDps18 ?? 0) > 0 && (champion.dps18 ?? 0) < filters.minDps18) return false;
     if (filters.minRange > 0 && (champion.attackRange ?? 0) < filters.minRange) {
       return false;
     }
@@ -2107,13 +2343,20 @@
     }
     
     // Update range labels with values
-    const minDpsLabel = qs('label[for="min-dps"]');
-    if (minDpsLabel) {
-      const valueSpan = minDpsLabel.querySelector('#min-dps-value');
-      const value = valueSpan ? valueSpan.textContent : '0';
-      minDpsLabel.innerHTML = `${t('minDps')}: <span id="min-dps-value">${value}</span>`;
+    const minDps0Label = qs('label[for="min-dps0"]');
+    if (minDps0Label) {
+      const valueSpan = minDps0Label.querySelector('#min-dps0-value');
+      const value = valueSpan ? valueSpan.textContent : String(state.filters.minDps0 ?? 0);
+      minDps0Label.innerHTML = `${t('minDps0')}: <span id="min-dps0-value">${value}</span>`;
     }
-    
+
+    const minDps18Label = qs('label[for="min-dps18"]');
+    if (minDps18Label) {
+      const valueSpan = minDps18Label.querySelector('#min-dps18-value');
+      const value = valueSpan ? valueSpan.textContent : String(state.filters.minDps18 ?? 0);
+      minDps18Label.innerHTML = `${t('minDps18')}: <span id="min-dps18-value">${value}</span>`;
+    }
+ 
     const minRangeLabel = qs('label[for="min-range"]');
     if (minRangeLabel) {
       const valueSpan = minRangeLabel.querySelector('#min-range-value');
@@ -2150,12 +2393,19 @@
     }
     
     // Обновляем ссылки на элементы после изменения innerHTML
-    els.minDpsValue = qs("#min-dps-value");
+    els.minDps0Value = qs("#min-dps0-value");
+    els.minDps18Value = qs("#min-dps18-value");
     els.minRangeValue = qs("#min-range-value");
     els.minRangeQValue = qs("#min-range-q-value");
     els.minRangeWValue = qs("#min-range-w-value");
     els.minRangeEValue = qs("#min-range-e-value");
     els.minRangeRValue = qs("#min-range-r-value");
+    if (state.dpsBounds) {
+      applyDpsBounds(state.dpsBounds);
+    }
+    if (state.rangeBounds) {
+      applyRangeBounds(state.rangeBounds);
+    }
     
     // Update modal if it's open
     if (state.currentModalChampion) {
@@ -2202,8 +2452,10 @@
     els.checkboxes.dmgMagic = qs("#dmg-magic");
     // scaling
     els.checkboxes.scalesHealth = qs("#scales-health");
-    els.minDps = qs("#min-dps");
-    els.minDpsValue = qs("#min-dps-value");
+    els.minDps0 = qs("#min-dps0");
+    els.minDps0Value = qs("#min-dps0-value");
+    els.minDps18 = qs("#min-dps18");
+    els.minDps18Value = qs("#min-dps18-value");
     els.minRange = qs("#min-range");
     els.minRangeValue = qs("#min-range-value");
     els.minRangeQ = qs("#min-range-q");
@@ -2356,7 +2608,8 @@
       });
     }
     
-    if (els.minDps) els.minDps.addEventListener("input", applyFiltersAndRender);
+    if (els.minDps0) els.minDps0.addEventListener("input", applyFiltersAndRender);
+    if (els.minDps18) els.minDps18.addEventListener("input", applyFiltersAndRender);
     els.minRange.addEventListener("input", applyFiltersAndRender);
     els.minRangeQ.addEventListener("input", applyFiltersAndRender);
     els.minRangeW.addEventListener("input", applyFiltersAndRender);
@@ -2391,12 +2644,55 @@
         }
       }
       
-      if (els.minDps) els.minDps.value = "0";
-      els.minRange.value = "0";
-      els.minRangeQ.value = "0";
-      els.minRangeW.value = "0";
-      els.minRangeE.value = "0";
-      els.minRangeR.value = "0";
+      if (state.dpsBounds) {
+        applyDpsBounds(state.dpsBounds);
+        const minDps0 = Number(state.dpsBounds.dps0?.min ?? 0);
+        const minDps18 = Number(state.dpsBounds.dps18?.min ?? 0);
+        if (els.minDps0) els.minDps0.value = String(minDps0);
+        if (els.minDps0Value) els.minDps0Value.textContent = String(minDps0);
+        if (els.minDps18) els.minDps18.value = String(minDps18);
+        if (els.minDps18Value) els.minDps18Value.textContent = String(minDps18);
+        state.filters.minDps0 = 0;
+        state.filters.minDps18 = 0;
+      } else {
+        if (els.minDps0) els.minDps0.value = "0";
+        if (els.minDps0Value) els.minDps0Value.textContent = "0";
+        if (els.minDps18) els.minDps18.value = "0";
+        if (els.minDps18Value) els.minDps18Value.textContent = "0";
+        state.filters.minDps0 = 0;
+        state.filters.minDps18 = 0;
+      }
+      if (state.rangeBounds) {
+        applyRangeBounds(state.rangeBounds);
+        const attackMin = Number(state.rangeBounds.attackRange?.min ?? 0);
+        if (els.minRange) {
+          els.minRange.value = String(attackMin);
+        }
+        if (els.minRangeValue) {
+          els.minRangeValue.textContent = String(attackMin);
+        }
+        for (const key of ABILITY_KEYS) {
+          const entry = state.rangeBounds.spells?.[key];
+          const minValue = Number(entry?.min ?? 0);
+          const slider = els[`minRange${key}`];
+          const valueEl = els[`minRange${key}Value`];
+          if (slider) slider.value = String(minValue);
+          if (valueEl) valueEl.textContent = String(minValue);
+        }
+      } else {
+        if (els.minRange) {
+          els.minRange.value = "0";
+        }
+        if (els.minRangeValue) {
+          els.minRangeValue.textContent = "0";
+        }
+        for (const key of ABILITY_KEYS) {
+          const slider = els[`minRange${key}`];
+          const valueEl = els[`minRange${key}Value`];
+          if (slider) slider.value = "0";
+          if (valueEl) valueEl.textContent = "0";
+        }
+      }
       applyFiltersAndRender();
     });
   }
@@ -2444,17 +2740,10 @@
     }
     setStatus(t('loadingAbilities'));
     state.champions = await loadAllChampionDetails(state.championsIndex);
-    if (els.minDps) {
-      const maxDps = state.champions.reduce((acc, champ) => {
-        const value = Number.isFinite(champ.dps) ? champ.dps : 0;
-        return value > acc ? value : acc;
-      }, 0);
-      const niceMax = Math.max(50, Math.ceil(maxDps / 5) * 5);
-      els.minDps.max = String(niceMax);
-      if (Number(els.minDps.value) > niceMax) {
-        els.minDps.value = String(niceMax);
-      }
-    }
+    ensureChampionDerivedStats(state.champions);
+    normalizeSpellRangePlaceholders(state.champions);
+    updateRangeSlidersFromChampions();
+    updateDpsSlidersFromChampions();
     try {
       sessionStorage.setItem(CACHE_KEY, JSON.stringify({
         version: state.version,

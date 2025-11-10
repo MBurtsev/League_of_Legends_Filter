@@ -36,6 +36,15 @@
       minRangeW: 'Мин. дальность W',
       minRangeE: 'Мин. дальность E',
       minRangeR: 'Мин. дальность R',
+      minDps: 'Мин. DPS',
+      combatStats: 'Боевые характеристики',
+      showDpsTable: 'Показать таблицу DPS',
+      hideDpsTable: 'Скрыть таблицу DPS',
+      levelColumn: 'Уровень',
+      attackDamageColumn: 'Урон',
+      attackSpeedColumn: 'Скорость атаки',
+      dpsColumn: 'DPS',
+      minDps: 'Мин. DPS',
       reset: 'Сбросить',
       searchPlaceholder: 'Поиск по имени чемпиона...',
       found: 'Найдено чемпионов',
@@ -90,6 +99,15 @@
       minRangeW: 'Min. W Range',
       minRangeE: 'Min. E Range',
       minRangeR: 'Min. R Range',
+      minDps: 'Min. DPS',
+      combatStats: 'Combat Stats',
+      showDpsTable: 'Show DPS Table',
+      hideDpsTable: 'Hide DPS Table',
+      levelColumn: 'Level',
+      attackDamageColumn: 'Attack Damage',
+      attackSpeedColumn: 'Attack Speed',
+      dpsColumn: 'DPS',
+      minDps: 'Min. DPS',
       reset: 'Reset',
       searchPlaceholder: 'Search champion name...',
       found: 'Found champions',
@@ -127,7 +145,8 @@
       stealth: false,
       shield: false,
       heal: false,
-      minRange: 0
+      minRange: 0,
+      minDps: 0
     }
   };
   
@@ -138,6 +157,8 @@
   const els = {
     status: null,
     grid: null,
+    minDps: null,
+    minDpsValue: null,
     minRange: null,
     minRangeValue: null,
     minRangeQ: null,
@@ -1245,7 +1266,9 @@
             image: getChampionIcon(state.version, item.image.full),
             attackRange: item.stats?.attackrange ?? 125,
             attackDamage: item.stats?.attackdamage ?? 0,
-            attackSpeed: item.stats?.attackspeed ?? 0,
+          attackDamagePerLevel: item.stats?.attackdamageperlevel ?? 0,
+          attackSpeed: item.stats?.attackspeed ?? 0,
+          attackSpeedPerLevel: item.stats?.attackspeedperlevel ?? 0,
             dps: Number(((item.stats?.attackdamage ?? 0) * (item.stats?.attackspeed ?? 0)).toFixed(1)),
             tags: tagsData.tags,
             tagsByAbility: tagsData.tagsByAbility,
@@ -1315,11 +1338,19 @@
     state.filters.roleSupport = els.checkboxes.roleSupport.checked;
     
     // range sliders
+    if (els.minDps) {
+      state.filters.minDps = Number(els.minDps.value) || 0;
+    } else {
+      state.filters.minDps = 0;
+    }
     state.filters.minRange = Number(els.minRange.value) || 0;
     state.filters.minRangeQ = Number(els.minRangeQ.value) || 0;
     state.filters.minRangeW = Number(els.minRangeW.value) || 0;
     state.filters.minRangeE = Number(els.minRangeE.value) || 0;
     state.filters.minRangeR = Number(els.minRangeR.value) || 0;
+    if (els.minDpsValue) {
+      els.minDpsValue.textContent = String(state.filters.minDps);
+    }
     els.minRangeValue.textContent = String(state.filters.minRange);
     els.minRangeQValue.textContent = String(state.filters.minRangeQ);
     els.minRangeWValue.textContent = String(state.filters.minRangeW);
@@ -1339,6 +1370,7 @@
     }
     
     // Range filters
+    if (state.filters.minDps > 0 && (champion.dps ?? 0) < state.filters.minDps) return false;
     if (state.filters.minRange > 0 && (champion.attackRange ?? 0) < state.filters.minRange) {
       return false;
     }
@@ -1348,7 +1380,7 @@
     if (state.filters.minRangeR > 0 && (champion.spellRanges?.R ?? 0) < state.filters.minRangeR) return false;
     
     // Ability tag filters with Q/W/E/R specificity
-    const abilityTags = ['mobility', 'stun', 'slow', 'root', 'knockup', 'silence', 'stealth', 'attackspeed', 'movespeed', 'shield', 'heal', 'pull', 'lifesteal'];
+      const abilityTags = ['mobility', 'stun', 'slow', 'root', 'knockup', 'silence', 'stealth', 'attackspeed', 'movespeed', 'shield', 'heal', 'pull', 'lifesteal'];
     for (const tag of abilityTags) {
       const anySelected = state.filters[tag];
       if (!anySelected) continue;
@@ -1528,21 +1560,7 @@
     const champName = state.language === 'ru' ? c.nameRu : c.name;
     const champTitle = state.language === 'ru' ? c.titleRu : c.title;
 
-    const header = `
-      <div class="modal-header">
-        <img class="avatar" src="${c.image}" alt="">
-        <div>
-          <h2 id="modal-title" class="modal-title">${champName}</h2>
-          <div class="modal-subtitle">${champTitle}</div>
-          <div class="chips">
-            ${roleChips}
-            ${dmg ? `<span class="chip">${dmg}</span>` : ""}
-            <span class="chip">${t('attackRange')}: ${c.attackRange}</span>
-            ${c.scalesWithOwnHealth ? `<span class="chip">${t('scalesHealth')}</span>` : ""}
-          </div>
-        </div>
-      </div>
-    `;
+    const header = ``;
 
     const abilityData = state.language === 'ru' ? c.ru : c.en;
     
@@ -1578,8 +1596,29 @@
     }
 
     return `
-      ${header}
+      <div class="modal-header">
+        <img class="avatar" src="${c.image}" alt="">
+        <div>
+          <div class="modal-title-row">
+            <h2 id="modal-title" class="modal-title">${champName}</h2>
+            <button type="button" class="modal-dps-toggle" data-toggle-dps="true">DPS</button>
+          </div>
+          <div class="modal-subtitle-row">
+            <div class="modal-subtitle">${champTitle}</div>
+            <div class="chips">
+              ${roleChips}
+              ${dmg ? `<span class="chip">${dmg}</span>` : ""}
+              <span class="chip">${t('attackRange')}: ${c.attackRange}</span>
+              ${c.scalesWithOwnHealth ? `<span class="chip">${t('scalesHealth')}</span>` : ""}
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="modal-section">
+        <div class="modal-block modal-stats-block hidden" data-dps-block="true">
+          <h4>${t('combatStats')}</h4>
+          <div class="modal-dps-table" data-dps-table="true"></div>
+        </div>
         <div class="modal-block">
           <h4>${t('abilitiesTitle')}</h4>
           ${abilities.join("")}
@@ -1588,32 +1627,85 @@
     `;
   }
 
+  function buildDpsTableHtml(champion) {
+    const levels = Array.from({ length: 18 }, (_, i) => i + 1);
+    const baseAD = Number(champion.attackDamage) || 0;
+    const adPerLevel = Number(champion.attackDamagePerLevel) || 0;
+    const baseAS = Number(champion.attackSpeed) || 0;
+    const asPerLevel = Number(champion.attackSpeedPerLevel) || 0;
+    const rows = levels.map(level => {
+      const attackDamage = baseAD + adPerLevel * (level - 1);
+      const attackSpeed = baseAS * (1 + (asPerLevel / 100) * (level - 1));
+      const dps = attackDamage * attackSpeed;
+      return `
+        <tr>
+          <td>${level}</td>
+          <td>${attackDamage.toFixed(1)}</td>
+          <td>${attackSpeed.toFixed(3)}</td>
+          <td>${dps.toFixed(1)}</td>
+        </tr>
+      `;
+    }).join("");
+    return `
+      <table>
+        <thead>
+          <tr>
+            <th>${t('levelColumn')}</th>
+            <th>${t('attackDamageColumn')}</th>
+            <th>${t('attackSpeedColumn')}</th>
+            <th>${t('dpsColumn')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows}
+        </tbody>
+      </table>
+    `;
+  }
+
+  function initModalDpsTable(champion) {
+    if (!els.modalContent) return;
+    const toggleBtn = els.modalContent.querySelector('[data-toggle-dps="true"]');
+    const tableContainer = els.modalContent.querySelector('[data-dps-table="true"]');
+    const block = els.modalContent.querySelector('[data-dps-block="true"]');
+    if (!toggleBtn || !tableContainer || !block) return;
+    let expanded = false;
+    toggleBtn.addEventListener("click", () => {
+      expanded = !expanded;
+      if (expanded) {
+        tableContainer.innerHTML = buildDpsTableHtml(champion);
+        tableContainer.classList.add("visible");
+        block.classList.remove("hidden");
+      } else {
+        tableContainer.classList.remove("visible");
+        tableContainer.innerHTML = "";
+        block.classList.add("hidden");
+      }
+      requestAnimationFrame(() => {
+        fitModalScale();
+        setTimeout(fitModalScale, 60);
+      });
+    });
+  }
+
   function fitModalScale() {
     if (!els.modal || !els.modalScale) return;
     // сброс масштаба
-    els.modalScale.style.transform = "scale(1)";
+    els.modalScale.style.transform = "none";
     // желаемая ширина модалки — 1000px, но не больше 96vw
     const desiredW = Math.min(1000, Math.floor(window.innerWidth * 0.96));
     els.modal.style.width = `${desiredW}px`;
-    // высоту будем ставить вручную по рассчитанному контенту
-
     const margin = 24; // inset 12px * 2
-    const cw = els.modalScale.scrollWidth;
-    const ch = els.modalScale.scrollHeight;
-    const vw = desiredW - margin; // доступная ширина для контента
-    const maxH = Math.floor(window.innerHeight * 0.96) - margin;
-    const sW = vw / cw;
-    const sH = maxH / ch;
-    const s = Math.min(1, sW, sH);
-    els.modalScale.style.transform = `scale(${s})`;
-    // выставляем итоговую высоту модального окна
-    const finalH = Math.ceil(ch * s + margin);
+    const maxModalHeight = Math.floor(window.innerHeight * 0.9);
+    const contentHeight = els.modalScale.scrollHeight + margin;
+    const finalH = Math.min(maxModalHeight, contentHeight);
     els.modal.style.height = `${finalH}px`;
   }
 
   function openModalForChampion(c) {
     state.currentModalChampion = c;
     els.modalContent.innerHTML = buildModalHtml(c);
+    initModalDpsTable(c);
     els.modalRoot.classList.add("open");
     document.body.classList.add("modal-open");
     // подождать рендер и вписать
@@ -1875,6 +1967,7 @@
     }
     
     // Range filters
+    if (filters.minDps > 0 && (champion.dps ?? 0) < filters.minDps) return false;
     if (filters.minRange > 0 && (champion.attackRange ?? 0) < filters.minRange) {
       return false;
     }
@@ -2013,6 +2106,13 @@
     }
     
     // Update range labels with values
+    const minDpsLabel = qs('label[for="min-dps"]');
+    if (minDpsLabel) {
+      const valueSpan = minDpsLabel.querySelector('#min-dps-value');
+      const value = valueSpan ? valueSpan.textContent : '0';
+      minDpsLabel.innerHTML = `${t('minDps')}: <span id="min-dps-value">${value}</span>`;
+    }
+    
     const minRangeLabel = qs('label[for="min-range"]');
     if (minRangeLabel) {
       const valueSpan = minRangeLabel.querySelector('#min-range-value');
@@ -2049,6 +2149,7 @@
     }
     
     // Обновляем ссылки на элементы после изменения innerHTML
+    els.minDpsValue = qs("#min-dps-value");
     els.minRangeValue = qs("#min-range-value");
     els.minRangeQValue = qs("#min-range-q-value");
     els.minRangeWValue = qs("#min-range-w-value");
@@ -2058,6 +2159,7 @@
     // Update modal if it's open
     if (state.currentModalChampion) {
       els.modalContent.innerHTML = buildModalHtml(state.currentModalChampion);
+      initModalDpsTable(state.currentModalChampion);
       requestAnimationFrame(() => {
         fitModalScale();
         setTimeout(fitModalScale, 60);
@@ -2099,6 +2201,8 @@
     els.checkboxes.dmgMagic = qs("#dmg-magic");
     // scaling
     els.checkboxes.scalesHealth = qs("#scales-health");
+    els.minDps = qs("#min-dps");
+    els.minDpsValue = qs("#min-dps-value");
     els.minRange = qs("#min-range");
     els.minRangeValue = qs("#min-range-value");
     els.minRangeQ = qs("#min-range-q");
@@ -2251,6 +2355,7 @@
       });
     }
     
+    if (els.minDps) els.minDps.addEventListener("input", applyFiltersAndRender);
     els.minRange.addEventListener("input", applyFiltersAndRender);
     els.minRangeQ.addEventListener("input", applyFiltersAndRender);
     els.minRangeW.addEventListener("input", applyFiltersAndRender);
@@ -2285,6 +2390,7 @@
         }
       }
       
+      if (els.minDps) els.minDps.value = "0";
       els.minRange.value = "0";
       els.minRangeQ.value = "0";
       els.minRangeW.value = "0";
@@ -2337,6 +2443,17 @@
     }
     setStatus(t('loadingAbilities'));
     state.champions = await loadAllChampionDetails(state.championsIndex);
+    if (els.minDps) {
+      const maxDps = state.champions.reduce((acc, champ) => {
+        const value = Number.isFinite(champ.dps) ? champ.dps : 0;
+        return value > acc ? value : acc;
+      }, 0);
+      const niceMax = Math.max(50, Math.ceil(maxDps / 5) * 5);
+      els.minDps.max = String(niceMax);
+      if (Number(els.minDps.value) > niceMax) {
+        els.minDps.value = String(niceMax);
+      }
+    }
     try {
       sessionStorage.setItem(CACHE_KEY, JSON.stringify({
         version: state.version,

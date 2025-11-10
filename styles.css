@@ -711,19 +711,38 @@ body.modal-open {
   border: 1px solid var(--border);
   border-radius: 14px;
   box-shadow: 0 30px 120px rgba(0,0,0,0.6);
-  overflow: hidden; /* без скроллов */
+  overflow: hidden;
   width: 800px;      /* шире: 800px */
   max-width: 96vw;   /* на маленьких экранах сужаемся */
+  max-height: 90vh;
   /* высота авто по контенту */
 }
 .modal-viewport {
   position: absolute;
   inset: 12px 12px 12px 12px; /* внутренние отступы */
-  overflow: hidden; /* без скроллов */
+  overflow: hidden;
 }
 .modal-scale {
   transform-origin: top left;
   will-change: transform;
+  max-height: calc(90vh - 24px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
+}
+.modal-scale::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-scale::-webkit-scrollbar-track {
+  background: transparent;
+}
+.modal-scale::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.45);
+  border-radius: 3px;
+}
+.modal-scale::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(226, 232, 240, 0.55);
 }
 .modal-close {
   position: absolute;
@@ -749,6 +768,17 @@ body.modal-open {
   gap: 12px;
   align-items: center;
   margin-bottom: 10px;
+}
+.modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.modal-subtitle-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 .modal-header .avatar {
   width: 64px;
@@ -823,6 +853,78 @@ body.modal-open {
   margin: 0 0 8px;
   font-size: 13px;
   color: var(--accent-2);
+}
+
+.modal-dps-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(180deg, #7f1d1d, #450a0a);
+  color: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.modal-dps-toggle:hover {
+  background: linear-gradient(180deg, #991b1b, #601010);
+  transform: translateY(-1px);
+}
+
+.modal-dps-toggle:active {
+  transform: translateY(0);
+}
+
+.modal-dps-table {
+  margin-top: 10px;
+  display: none;
+  overflow-x: auto;
+}
+
+.modal-stats-block.hidden {
+  display: none;
+}
+
+.modal-dps-table.visible {
+  display: block;
+}
+
+.modal-dps-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.modal-dps-table th,
+.modal-dps-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+}
+
+.modal-dps-table th:first-child,
+.modal-dps-table td:first-child {
+  text-align: left;
+}
+
+.modal-dps-table thead {
+  background: rgba(255, 255, 255, 0.05);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+}
+
+.modal-dps-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 /* Tooltip with abilities (ru) */

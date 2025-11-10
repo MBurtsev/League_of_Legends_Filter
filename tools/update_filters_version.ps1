@@ -9,10 +9,14 @@
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+$Script:ScriptRoot = Split-Path -Parent $PSCommandPath
 
 function Get-ProjectRoot {
-  $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-  return Resolve-Path (Join-Path $scriptDir '..')
+  $rootPathInfo = Resolve-Path (Join-Path $Script:ScriptRoot '..')
+  if ($rootPathInfo -is [System.Management.Automation.PathInfo]) {
+    return $rootPathInfo.Path
+  }
+  return [string]$rootPathInfo
 }
 
 function Get-CommitCount {
@@ -45,25 +49,23 @@ function Update-IndexFile([string]$indexPath, [string]$versionText) {
   $updated = [System.Text.RegularExpressions.Regex]::Replace(
     $content,
     $pattern,
-    $versionText
+    { param($m) $versionText }
   )
 
-  Set-Content -Path $indexPath -Value $updated -Encoding UTF8
+Set-Content -LiteralPath $indexPath -Value $updated -Encoding UTF8 -Force
 }
 
-try {
-  $projectRoot = Get-ProjectRoot
-  $indexPath = Join-Path $projectRoot 'index.html'
+Write-Host "Starting version update script..."
 
-  $commitCount = Get-CommitCount
-  $version = Format-Version -commitCount $commitCount
+$projectRoot = Get-ProjectRoot
+$indexPath = Join-Path $projectRoot 'index.html'
+Write-Host "Project root: $projectRoot"
+Write-Host "Index path: $indexPath"
 
-  Update-IndexFile -indexPath $indexPath -versionText $version
+$commitCount = Get-CommitCount
+$version = Format-Version -commitCount $commitCount
 
-  Write-Host "Filters version updated to $version (commits: $commitCount)"
-}
-catch {
-  Write-Error $_
-  exit 1
-}
+Update-IndexFile -indexPath $indexPath -versionText $version
+
+Write-Host "Filters version updated to $version (commits: $commitCount)"
 

@@ -2061,6 +2061,7 @@
   }
   
   function updateUILanguage() {
+    document.documentElement.lang = state.language;
     // Update all elements with data-i18n attribute
     const i18nElements = document.querySelectorAll('[data-i18n]');
     i18nElements.forEach(el => {

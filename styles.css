@@ -213,34 +213,6 @@ body {
   padding: 4px 8px;
 }
 
-.role-filter label {
-  color: var(--role-label-color, var(--text));
-}
-
-.role-filter.role-tank label {
-  --role-label-color: var(--role-tank);
-}
-
-.role-filter.role-fighter label {
-  --role-label-color: var(--role-fighter);
-}
-
-.role-filter.role-mage label {
-  --role-label-color: var(--role-mage);
-}
-
-.role-filter.role-marksman label {
-  --role-label-color: var(--role-marksman);
-}
-
-.role-filter.role-assassin label {
-  --role-label-color: var(--role-assassin);
-}
-
-.role-filter.role-support label {
-  --role-label-color: var(--role-support);
-}
-
 .filter-item label {
   font-size: 15px; /* было около 16px по умолчанию, уменьшили на 1px */
   line-height: 1.1;
@@ -563,12 +535,6 @@ button:hover {
   transition: transform 120ms ease, box-shadow 120ms ease;
 }
 
-.card.has-role {
-  border: 2px solid transparent;
-  border-image-slice: 1;
-  border-image-source: var(--card-border-image, linear-gradient(135deg, var(--border), var(--border)));
-}
-
 .card:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
@@ -612,6 +578,59 @@ button:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+}
+
+.role-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 2px;
+}
+
+.role-tag,
+.role-chip {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #0b1120;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  background: var(--border);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.role-tag.role-tank,
+.role-chip.role-tank {
+  background: var(--role-tank);
+}
+
+.role-tag.role-fighter,
+.role-chip.role-fighter {
+  background: var(--role-fighter);
+}
+
+.role-tag.role-mage,
+.role-chip.role-mage {
+  background: var(--role-mage);
+}
+
+.role-tag.role-marksman,
+.role-chip.role-marksman {
+  background: var(--role-marksman);
+}
+
+.role-tag.role-assassin,
+.role-chip.role-assassin {
+  background: var(--role-assassin);
+}
+
+.role-tag.role-support,
+.role-chip.role-support {
+  background: var(--role-support);
 }
 
 .tag {
@@ -725,6 +744,36 @@ body.modal-open {
   border-radius: 999px;
   padding: 2px 6px;
   background: rgba(255,255,255,0.03);
+}
+
+.chip.role-chip {
+  color: #0b1120;
+  border: none;
+  background: var(--border);
+}
+
+.chip.role-chip.role-tank {
+  background: var(--role-tank);
+}
+
+.chip.role-chip.role-fighter {
+  background: var(--role-fighter);
+}
+
+.chip.role-chip.role-mage {
+  background: var(--role-mage);
+}
+
+.chip.role-chip.role-marksman {
+  background: var(--role-marksman);
+}
+
+.chip.role-chip.role-assassin {
+  background: var(--role-assassin);
+}
+
+.chip.role-chip.role-support {
+  background: var(--role-support);
 }
 .modal-section {
   display: grid;

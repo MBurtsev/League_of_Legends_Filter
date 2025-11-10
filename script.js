@@ -110,16 +110,6 @@
     }
   };
 
-  const ROLE_COLORS = {
-    tank: '#2563eb',
-    fighter: '#f97316',
-    mage: '#a855f7',
-    marksman: '#facc15',
-    assassin: '#ec4899',
-    support: '#22c55e',
-    default: '#6ee7ff'
-  };
-
   const state = {
     version: null,
     championsIndex: null,
@@ -1447,30 +1437,18 @@
       els.grid.innerHTML = `<div class="status">Ничего не найдено. Попробуйте ослабить фильтры.</div>`;
       return;
     }
+    const roleLabels = {
+      tank: t('roleTank'),
+      fighter: t('roleFighter'),
+      mage: t('roleMage'),
+      marksman: t('roleMarksman'),
+      assassin: t('roleAssassin'),
+      support: t('roleSupport')
+    };
     const frag = document.createDocumentFragment();
     for (const c of champions) {
       const card = document.createElement("article");
-      card.classList.add("card");
-      const roles = Array.isArray(c.classTags)
-        ? c.classTags.map(r => String(r).toLowerCase()).filter(Boolean)
-        : [];
-      const primaryRole = roles[0] || null;
-      if (primaryRole) {
-        card.classList.add(`role-${primaryRole}`);
-        const primaryColor = ROLE_COLORS[primaryRole] || ROLE_COLORS.default;
-        let secondaryColor = primaryColor;
-        const secondaryRole = roles.find(r => r !== primaryRole && ROLE_COLORS[r]);
-        if (secondaryRole) {
-          card.classList.add(`role-${secondaryRole}`);
-          secondaryColor = ROLE_COLORS[secondaryRole];
-        }
-        const gradient =
-          primaryColor === secondaryColor
-            ? `linear-gradient(135deg, ${primaryColor}, ${primaryColor})`
-            : `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor} 50%, ${secondaryColor} 50%, ${secondaryColor} 100%)`;
-        card.classList.add("has-role");
-        card.style.setProperty("--card-border-image", gradient);
-      }
+      card.className = "card";
       const splash = document.createElement("div");
       splash.className = "splash";
       splash.style.backgroundImage = `url('${c.image}')`;
@@ -1499,7 +1477,21 @@
         tag.textContent = t;
         tagsWrap.appendChild(tag);
       }
+      const roles = Array.isArray(c.classTags)
+        ? c.classTags.map(r => String(r).toLowerCase()).filter(Boolean)
+        : [];
       body.appendChild(title);
+      if (roles.length) {
+        const roleTagsWrap = document.createElement("div");
+        roleTagsWrap.className = "role-tags";
+        for (const role of roles) {
+          const roleTag = document.createElement("span");
+          roleTag.className = `role-tag role-${role}`;
+          roleTag.textContent = roleLabels[role] || role;
+          roleTagsWrap.appendChild(roleTag);
+        }
+        body.appendChild(roleTagsWrap);
+      }
       body.appendChild(tagsWrap);
 
       card.appendChild(splash);
@@ -1518,7 +1510,11 @@
       assassin: t('roleAssassin'),
       support: t('roleSupport')
     };
-    const roles = (c.classTags || []).map(r => roleMap[r] || r).join("</span><span class=\"chip\">");
+    const roleChips = Array.isArray(c.classTags) ? c.classTags.map(r => {
+      const key = String(r).toLowerCase();
+      const label = roleMap[key] || roleMap[r] || r;
+      return `<span class="chip role-chip role-${key}">${label}</span>`;
+    }).join("") : "";
     const dmg = (c.damageTypes || []).map(d => d === "physical" ? t('dmgPhysical') : d === "magic" ? t('dmgMagic') : d).join("</span><span class=\"chip\">");
 
     const formatRangeNote = (val) => {
@@ -1537,7 +1533,7 @@
           <h2 id="modal-title" class="modal-title">${champName}</h2>
           <div class="modal-subtitle">${champTitle}</div>
           <div class="chips">
-            ${roles ? `<span class="chip">${roles}</span>` : ""}
+            ${roleChips}
             ${dmg ? `<span class="chip">${dmg}</span>` : ""}
             <span class="chip">${t('attackRange')}: ${c.attackRange}</span>
             ${c.scalesWithOwnHealth ? `<span class="chip">${t('scalesHealth')}</span>` : ""}

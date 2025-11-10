@@ -1244,6 +1244,9 @@
             titleRu,
             image: getChampionIcon(state.version, item.image.full),
             attackRange: item.stats?.attackrange ?? 125,
+            attackDamage: item.stats?.attackdamage ?? 0,
+            attackSpeed: item.stats?.attackspeed ?? 0,
+            dps: Number(((item.stats?.attackdamage ?? 0) * (item.stats?.attackspeed ?? 0)).toFixed(1)),
             tags: tagsData.tags,
             tagsByAbility: tagsData.tagsByAbility,
             classTags,
@@ -1463,24 +1466,24 @@
       const name = document.createElement("h3");
       name.className = "name";
       name.textContent = state.language === 'ru' ? c.nameRu : c.name;
-      const badge = document.createElement("span");
-      badge.className = "badge";
-      badge.textContent = `${c.attackRange}`;
-
       title.appendChild(name);
-      title.appendChild(badge);
-      const tagsWrap = document.createElement("div");
-      tagsWrap.className = "tags";
-      for (const t of c.tags) {
-        const tag = document.createElement("span");
-        tag.className = "tag";
-        tag.textContent = t;
-        tagsWrap.appendChild(tag);
-      }
+      const badgeWrap = document.createElement("div");
+      badgeWrap.className = "tags badge-group";
+      const rangeBadge = document.createElement("span");
+      rangeBadge.className = "badge";
+      rangeBadge.textContent = `${c.attackRange}`;
+      rangeBadge.title = state.language === 'ru' ? 'Дальность автоатаки' : 'Auto Attack Range';
+      const dpsBadge = document.createElement("span");
+      dpsBadge.className = "badge badge-dps";
+      dpsBadge.textContent = Number.isFinite(c.dps) ? `${c.dps}` : '—';
+      dpsBadge.title = state.language === 'ru' ? 'Базовый DPS (урон × скорость атаки)' : 'Base DPS (damage × attack speed)';
+      badgeWrap.appendChild(rangeBadge);
+      badgeWrap.appendChild(dpsBadge);
       const roles = Array.isArray(c.classTags)
         ? c.classTags.map(r => String(r).toLowerCase()).filter(Boolean)
         : [];
       body.appendChild(title);
+      body.appendChild(badgeWrap);
       if (roles.length) {
         const roleTagsWrap = document.createElement("div");
         roleTagsWrap.className = "role-tags";
@@ -1492,7 +1495,6 @@
         }
         body.appendChild(roleTagsWrap);
       }
-      body.appendChild(tagsWrap);
 
       card.appendChild(splash);
       card.appendChild(body);

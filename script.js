@@ -39,6 +39,10 @@
       minDps0: 'DPS 0',
       minDps18: 'DPS 18',
       combatStats: 'Боевые характеристики',
+      hpColumn: 'Здоровье',
+      mpColumn: 'Мана',
+      armorColumn: 'Броня',
+      mrColumn: 'Магическая защита',
       showDpsTable: 'Показать таблицу DPS',
       hideDpsTable: 'Скрыть таблицу DPS',
       levelColumn: 'Уровень',
@@ -102,6 +106,10 @@
       minDps0: 'DPS 0',
       minDps18: 'DPS 18',
       combatStats: 'Combat Stats',
+      hpColumn: 'Health',
+      mpColumn: 'Mana',
+      armorColumn: 'Armor',
+      mrColumn: 'Magic Resist',
       showDpsTable: 'Show DPS Table',
       hideDpsTable: 'Hide DPS Table',
       levelColumn: 'Level',
@@ -197,7 +205,7 @@
   const RU_LOCALE = "ru_RU"; // ru для отображения описаний
   const FALLBACK_VERSION = "15.21.1";
   const CONCURRENCY = 10;
-  const CACHE_KEY = "lol_champ_cache_v18"; // v18: поддержка статических файлов через window объект
+  const CACHE_KEY = "lol_champ_cache_v19"; // v19: добавлены боевые характеристики HP/MP/Armor/MR
 
   function qs(selector) {
     return document.querySelector(selector);
@@ -1465,6 +1473,14 @@
               spellRanges[labels[si]] = Number.isFinite(val) ? val : 0;
             }
           }
+          const baseHp = Number(item.stats?.hp ?? 0);
+          const hpPerLevel = Number(item.stats?.hpperlevel ?? 0);
+          const baseMp = Number(item.stats?.mp ?? 0);
+          const mpPerLevel = Number(item.stats?.mpperlevel ?? 0);
+          const baseArmor = Number(item.stats?.armor ?? 0);
+          const armorPerLevel = Number(item.stats?.armorperlevel ?? 0);
+          const baseSpellBlock = Number(item.stats?.spellblock ?? 0);
+          const spellBlockPerLevel = Number(item.stats?.spellblockperlevel ?? 0);
           const baseAttackDamage = Number(item.stats?.attackdamage ?? 0);
           const attackDamagePerLevel = Number(item.stats?.attackdamageperlevel ?? 0);
           const baseAttackSpeed = Number(item.stats?.attackspeed ?? 0);
@@ -1485,6 +1501,14 @@
             titleRu,
             image: getChampionIcon(state.version, item.image.full),
             attackRange: item.stats?.attackrange ?? 125,
+            hp: baseHp,
+            hpPerLevel,
+            mp: baseMp,
+            mpPerLevel,
+            armor: baseArmor,
+            armorPerLevel,
+            spellBlock: baseSpellBlock,
+            spellBlockPerLevel,
             attackDamage: baseAttackDamage,
             attackDamagePerLevel,
             attackSpeed: baseAttackSpeed,
@@ -1868,16 +1892,32 @@
     const adPerLevel = Number(champion.attackDamagePerLevel) || 0;
     const baseAS = Number(champion.attackSpeed) || 0;
     const asPerLevel = Number(champion.attackSpeedPerLevel) || 0;
+    const baseHp = Number(champion.hp) || 0;
+    const hpPerLevel = Number(champion.hpPerLevel) || 0;
+    const baseMp = Number(champion.mp) || 0;
+    const mpPerLevel = Number(champion.mpPerLevel) || 0;
+    const baseArmor = Number(champion.armor) || 0;
+    const armorPerLevel = Number(champion.armorPerLevel) || 0;
+    const baseMr = Number(champion.spellBlock) || 0;
+    const mrPerLevel = Number(champion.spellBlockPerLevel) || 0;
     const rows = levels.map(level => {
       const attackDamage = baseAD + adPerLevel * (level - 1);
       const attackSpeed = baseAS * (1 + (asPerLevel / 100) * (level - 1));
       const dps = attackDamage * attackSpeed;
+      const hp = baseHp + hpPerLevel * (level - 1);
+      const mp = baseMp + mpPerLevel * (level - 1);
+      const armor = baseArmor + armorPerLevel * (level - 1);
+      const mr = baseMr + mrPerLevel * (level - 1);
       return `
         <tr>
           <td>${level}</td>
           <td>${attackDamage.toFixed(1)}</td>
           <td>${attackSpeed.toFixed(3)}</td>
           <td>${dps.toFixed(1)}</td>
+          <td>${hp.toFixed(0)}</td>
+          <td>${mp.toFixed(0)}</td>
+          <td>${armor.toFixed(1)}</td>
+          <td>${mr.toFixed(1)}</td>
         </tr>
       `;
     }).join("");
@@ -1889,6 +1929,10 @@
             <th>${t('attackDamageColumn')}</th>
             <th>${t('attackSpeedColumn')}</th>
             <th>${t('dpsColumn')}</th>
+            <th>${t('hpColumn')}</th>
+            <th>${t('mpColumn')}</th>
+            <th>${t('armorColumn')}</th>
+            <th>${t('mrColumn')}</th>
           </tr>
         </thead>
         <tbody>

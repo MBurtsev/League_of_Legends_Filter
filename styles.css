@@ -156,8 +156,8 @@ body {
 .filters {
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px;
+  border-radius: 10px;
+  padding: 10px;
   position: sticky;
   top: 12px;
   max-height: calc(100vh - 24px);
@@ -214,35 +214,35 @@ body {
 .filters-group {
   display: grid;
   gap: 0px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .filters-subtitle {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 11px;
   margin-bottom: 2px;
 }
 
 .filter-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 4px 8px;
+  padding: 1px;
 }
 
 .filter-item label {
-  font-size: 15px; /* было около 16px по умолчанию, уменьшили на 1px */
+  font-size: 13px;
   line-height: 1.1;
   flex: 1;
   cursor: pointer;
 }
 
 .filter-item input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   accent-color: var(--accent);
   flex-shrink: 0;
 }
@@ -260,9 +260,9 @@ body {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 8px;
-  margin-bottom: 4px;
-  gap: 8px;
+  padding: 1px;
+  margin-bottom: 3px;
+  gap: 6px;
 }
 
 .filter-item-extended > .filter-badge {
@@ -272,14 +272,14 @@ body {
 .filter-main {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex: 1;
   min-width: 0;
 }
 
 .filter-main > input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   accent-color: var(--accent);
   cursor: pointer;
   flex-shrink: 0;
@@ -291,7 +291,7 @@ body {
 }
 
 .filter-main > label {
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1.1;
   cursor: pointer;
   flex: 1;

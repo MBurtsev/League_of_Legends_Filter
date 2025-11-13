@@ -65,7 +65,14 @@
       cooldown: 'Перезарядка',
       cost: 'Стоимость',
       range: 'Дальность',
-      footer: 'Неофициальный инструмент. Все права на материалы принадлежат Riot Games.'
+      footer: 'Неофициальный инструмент. Все права на материалы принадлежат Riot Games.',
+      roleOr: 'ИЛИ',
+      roleAnd: 'И',
+      abilityQ: 'Способность Q',
+      abilityW: 'Способность W',
+      abilityE: 'Способность E',
+      abilityR: 'Способность R (ультимейт)',
+      abilityAll: 'Все'
     },
     en: {
       filters: 'Filters',
@@ -132,7 +139,14 @@
       cooldown: 'Cooldown',
       cost: 'Cost',
       range: 'Range',
-      footer: 'Unofficial tool. All rights to materials belong to Riot Games.'
+      footer: 'Unofficial tool. All rights to materials belong to Riot Games.',
+      roleOr: 'OR',
+      roleAnd: 'AND',
+      abilityQ: 'Ability Q',
+      abilityW: 'Ability W',
+      abilityE: 'Ability E',
+      abilityR: 'Ability R (Ultimate)',
+      abilityAll: 'All'
     }
   };
 
@@ -2487,6 +2501,20 @@
       searchInput.placeholder = t('searchPlaceholder');
     }
     
+    // Update role tooltips
+    const roleTooltips = document.querySelectorAll('[data-role-tooltip]');
+    roleTooltips.forEach(el => {
+      const tooltipKey = el.getAttribute('data-role-tooltip');
+      el.setAttribute('title', t(tooltipKey));
+    });
+    
+    // Update ability tooltips
+    const abilityTooltips = document.querySelectorAll('[data-ability-tooltip]');
+    abilityTooltips.forEach(el => {
+      const tooltipKey = el.getAttribute('data-ability-tooltip');
+      el.setAttribute('title', t(tooltipKey));
+    });
+    
     // Update filter labels
     const filterLabels = {
       'filter-mobility': 'mobility',
@@ -2592,6 +2620,84 @@
         setTimeout(fitModalScale, 60);
       });
     }
+  }
+  
+  function setupCheckboxTooltips() {
+    // Создаем глобальный элемент для подсказки
+    let tooltipEl = document.getElementById('custom-checkbox-tooltip');
+    if (!tooltipEl) {
+      tooltipEl = document.createElement('div');
+      tooltipEl.id = 'custom-checkbox-tooltip';
+      tooltipEl.className = 'custom-checkbox-tooltip';
+      document.body.appendChild(tooltipEl);
+    }
+    
+    // Находим все чекбоксы с data-role-tooltip или data-ability-tooltip
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][data-role-tooltip], input[type="checkbox"][data-ability-tooltip]');
+    
+    // Устанавливаем обработчики только один раз
+    if (checkboxes.length > 0 && !checkboxes[0].hasAttribute('data-tooltip-setup')) {
+      checkboxes.forEach(checkbox => {
+        // Сохраняем текст подсказки в data-атрибут
+        let tooltipKey = '';
+        if (checkbox.hasAttribute('data-role-tooltip')) {
+          tooltipKey = checkbox.getAttribute('data-role-tooltip');
+        } else if (checkbox.hasAttribute('data-ability-tooltip')) {
+          tooltipKey = checkbox.getAttribute('data-ability-tooltip');
+        }
+        
+        if (tooltipKey) {
+          const tooltipText = t(tooltipKey);
+          checkbox.setAttribute('data-tooltip-text', tooltipText);
+          checkbox.removeAttribute('title'); // Удаляем стандартный title
+          checkbox.setAttribute('data-tooltip-setup', 'true'); // Помечаем как настроенный
+        }
+        
+        // Добавляем обработчики событий (только один раз)
+        checkbox.addEventListener('mouseenter', function(e) {
+          const text = this.getAttribute('data-tooltip-text');
+          if (text) {
+            const rect = this.getBoundingClientRect();
+            tooltipEl.textContent = text;
+            tooltipEl.style.display = 'block';
+            tooltipEl.style.left = (rect.left + rect.width / 2) + 'px';
+            tooltipEl.style.top = (rect.top - 4) + 'px';
+            tooltipEl.style.transform = 'translate(-50%, -100%)';
+          }
+        });
+        
+        checkbox.addEventListener('mouseleave', function() {
+          tooltipEl.style.display = 'none';
+        });
+        
+        checkbox.addEventListener('mousemove', function(e) {
+          if (tooltipEl.style.display === 'block') {
+            const rect = this.getBoundingClientRect();
+            tooltipEl.style.left = (rect.left + rect.width / 2) + 'px';
+            tooltipEl.style.top = (rect.top - 4) + 'px';
+          }
+        });
+      });
+    } else {
+      // Если уже были настроены, просто обновляем тексты
+      checkboxes.forEach(checkbox => {
+        let tooltipKey = '';
+        if (checkbox.hasAttribute('data-role-tooltip')) {
+          tooltipKey = checkbox.getAttribute('data-role-tooltip');
+        } else if (checkbox.hasAttribute('data-ability-tooltip')) {
+          tooltipKey = checkbox.getAttribute('data-ability-tooltip');
+        }
+        
+        if (tooltipKey) {
+          checkbox.setAttribute('data-tooltip-text', t(tooltipKey));
+        }
+      });
+    }
+  }
+  
+  function updateCheckboxTooltips() {
+    // Обновляем текст подсказок после изменения языка
+    setupCheckboxTooltips(); // Переустанавливаем, чтобы обновить тексты
   }
   
   function applyFiltersAndRender() {
@@ -2817,6 +2923,7 @@
       langToggle.addEventListener("change", (e) => {
         state.language = e.target.checked ? 'ru' : 'en';
         updateUILanguage();
+        updateCheckboxTooltips(); // Обновляем подсказки чекбоксов после смены языка
         applyFiltersAndRender();
       });
     }
@@ -2937,6 +3044,7 @@
     
     bindUI();
     updateUILanguage(); // Применяем текущий язык к интерфейсу
+    setupCheckboxTooltips(); // Настраиваем кастомные подсказки для чекбоксов
     setStatus(t('detectingVersion'));
     state.version = await getLatestVersion();
     setStatus(`${t('versionDetected')}: ${state.version}. ${t('checkingCache')}`);

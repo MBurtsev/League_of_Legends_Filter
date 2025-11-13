@@ -19,6 +19,60 @@
   box-sizing: border-box;
 }
 
+/* Кастомные подсказки без задержки для не-чекбоксов */
+[title]:not(input[type="checkbox"]) {
+  position: relative;
+}
+
+[title]:not(input[type="checkbox"]):hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  font-size: 12px;
+  white-space: nowrap;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 10000;
+  margin-bottom: 4px;
+  opacity: 1;
+  transition: none;
+  animation: none;
+}
+
+[title]:not(input[type="checkbox"]):hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+  z-index: 10000;
+  margin-bottom: -4px;
+}
+
+/* Исключаем все чекбоксы из правил подсказок, чтобы не конфликтовать с псевдоэлементами */
+/* Явно запрещаем перезапись псевдоэлементов для чекбоксов */
+input[type="checkbox"][title]::before,
+input[type="checkbox"][title]::after {
+  /* Не применяем стили подсказок к чекбоксам */
+  /* Оставляем существующие стили для галочек и чисел */
+}
+
+input[type="checkbox"][title]:hover::before,
+input[type="checkbox"][title]:hover::after {
+  /* Не применяем стили подсказок при наведении */
+  /* Оставляем существующие стили для галочек и чисел */
+}
+
+/* Чекбоксы будут использовать стандартные подсказки браузера (с задержкой, но без конфликтов) */
+
 body {
   margin: 0;
   background: radial-gradient(1200px 800px at 20% -5%, rgba(0, 194, 255, 0.12), transparent 60%),
@@ -26,6 +80,33 @@ body {
               var(--bg);
   color: var(--text);
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Кастомная подсказка для чекбоксов */
+.custom-checkbox-tooltip {
+  position: fixed;
+  display: none;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  font-size: 12px;
+  white-space: nowrap;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 10001;
+  opacity: 1;
+  transition: none;
+  animation: none;
+}
+
+.custom-checkbox-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
 }
 
 .app-header {

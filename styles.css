@@ -269,7 +269,7 @@ body {
 }
 
 .role-or-checkbox::before {
-  content: '37';
+  content: attr(data-count);
   position: absolute;
   left: 50%;
   top: 50%;
@@ -318,7 +318,7 @@ body {
 }
 
 .role-and-checkbox::before {
-  content: '37';
+  content: attr(data-count);
   position: absolute;
   left: 50%;
   top: 50%;
@@ -329,13 +329,13 @@ body {
   line-height: 1;
 }
 
+.role-and-checkbox:checked::before {
+  content: '';
+}
+
 .role-and-checkbox:checked {
   background-color: #1d4ed8;
   border-color: #1e40af;
-}
-
-.role-and-checkbox:checked::before {
-  content: '';
 }
 
 .role-and-checkbox:checked::after {

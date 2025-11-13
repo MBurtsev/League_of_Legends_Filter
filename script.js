@@ -2241,31 +2241,9 @@
       mainLabelHealth.style.cursor = allDisabledHealth ? 'not-allowed' : 'pointer';
     }
     
-    // Для фильтров ролей
+    // Для фильтров ролей - подсчитываем для ИЛИ и И режимов
     for (const roleFilter of roleFilters) {
-      // Создаем копию фильтров БЕЗ других ролей, только с текущей проверяемой ролью
-      const testFilters = { ...currentFilters };
-      // Убираем все роли и их флаги "И"
-      for (const rf of roleFilters) {
-        delete testFilters[rf];
-        delete testFilters[`${rf}And`];
-      }
-      // Добавляем только проверяемую роль (в режиме ИЛИ для подсчета бейджа)
-      testFilters[roleFilter] = true;
-      testFilters[`${roleFilter}And`] = false;
-      
-      let count = 0;
-      for (const champ of state.champions) {
-        if (championMatchesFiltersWithOverride(champ, testFilters)) {
-          count++;
-        }
-      }
-      
-      const badge = document.querySelector(`.filter-badge[data-filter="${roleFilter}"]`);
-      if (badge) badge.textContent = count;
-      
-      // Делаем disabled роль, если по ней нет чемпионов
-      const roleId = roleFilter.replace('role', 'role-').toLowerCase().replace('role-', 'role-');
+      // Определяем ID чекбокса для этой роли
       let checkboxId = '';
       if (roleFilter === 'roleTank') checkboxId = 'role-tank';
       else if (roleFilter === 'roleFighter') checkboxId = 'role-fighter';
@@ -2275,14 +2253,63 @@
       else if (roleFilter === 'roleSupport') checkboxId = 'role-support';
       
       const roleCheckbox = qs(`#${checkboxId}`);
-      const roleLabel = roleCheckbox ? roleCheckbox.nextElementSibling : null;
-      if (roleCheckbox) {
-        roleCheckbox.disabled = count === 0;
-        if (count === 0) roleCheckbox.checked = false;
+      const roleCheckboxAnd = roleCheckbox?.nextElementSibling;
+      
+      // Проверяем, выбран ли уже этот фильтр
+      const isAlreadySelected = currentFilters[roleFilter];
+      const isAlreadyAndMode = currentFilters[`${roleFilter}And`];
+      
+      // Создаем базовые тестовые фильтры без этой роли (чтобы показать что будет при добавлении)
+      const baseFilters = { ...currentFilters };
+      // Убираем проверяемую роль из базовых фильтров
+      delete baseFilters[roleFilter];
+      delete baseFilters[`${roleFilter}And`];
+      
+      // Подсчет для режима ИЛИ
+      const testFiltersOR = { ...baseFilters };
+      testFiltersOR[roleFilter] = true;
+      testFiltersOR[`${roleFilter}And`] = false;
+      
+      let countOR = 0;
+      for (const champ of state.champions) {
+        if (championMatchesFiltersWithOverride(champ, testFiltersOR)) {
+          countOR++;
+        }
       }
+      
+      // Подсчет для режима И
+      const testFiltersAND = { ...baseFilters };
+      testFiltersAND[roleFilter] = true;
+      testFiltersAND[`${roleFilter}And`] = true;
+      
+      let countAND = 0;
+      for (const champ of state.champions) {
+        if (championMatchesFiltersWithOverride(champ, testFiltersAND)) {
+          countAND++;
+        }
+      }
+      
+      // Обновляем data-count для чекбокса ИЛИ (роль)
+      if (roleCheckbox) {
+        roleCheckbox.setAttribute('data-count', countOR);
+        // Делаем disabled роль, если по ней нет чемпионов
+        roleCheckbox.disabled = countOR === 0;
+        if (countOR === 0) roleCheckbox.checked = false;
+      }
+      
+      // Обновляем data-count для чекбокса И
+      if (roleCheckboxAnd) {
+        roleCheckboxAnd.setAttribute('data-count', countAND);
+        // Делаем disabled роль, если по ней нет чемпионов
+        roleCheckboxAnd.disabled = countAND === 0;
+        if (countAND === 0) roleCheckboxAnd.checked = false;
+      }
+      
+      const roleLabel = roleCheckbox ? roleCheckbox.nextElementSibling : null;
       if (roleLabel) {
-        roleLabel.style.opacity = count === 0 ? '0.4' : '1';
-        roleLabel.style.cursor = count === 0 ? 'not-allowed' : 'pointer';
+        const maxCount = Math.max(countOR, countAND);
+        roleLabel.style.opacity = maxCount === 0 ? '0.4' : '1';
+        roleLabel.style.cursor = maxCount === 0 ? 'not-allowed' : 'pointer';
       }
     }
   }

@@ -240,9 +240,9 @@ body {
   cursor: pointer;
 }
 
-.filter-item input[type="checkbox"] {
-  width: 14px;
-  height: 14px;
+.filter-item input[type="checkbox"]:not(.role-or-checkbox):not(.role-and-checkbox) {
+  width: 26px;
+  height: 20px;
   accent-color: var(--accent);
   flex-shrink: 0;
 }
@@ -252,9 +252,10 @@ body {
   cursor: not-allowed;
 }
 
+.filter-item .role-or-checkbox,
 .role-or-checkbox {
-  width: 14px;
-  height: 14px;
+  width: 26px !important;
+  height: 20px !important;
   flex-shrink: 0;
   cursor: pointer;
   appearance: none;
@@ -264,6 +265,19 @@ body {
   border: 2px solid #15803d;
   border-radius: 3px;
   position: relative;
+  margin: 1px 0;
+}
+
+.role-or-checkbox::before {
+  content: '37';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
 }
 
 .role-or-checkbox:checked {
@@ -271,19 +285,25 @@ body {
   border-color: #166534;
 }
 
+.role-or-checkbox:checked::before {
+  content: '';
+}
+
 .role-or-checkbox:checked::after {
   content: '✓';
   position: absolute;
-  left: 1px;
-  top: -2px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   color: white;
   font-size: 12px;
   font-weight: bold;
 }
 
+.filter-item .role-and-checkbox,
 .role-and-checkbox {
-  width: 14px;
-  height: 14px;
+  width: 26px !important;
+  height: 20px !important;
   flex-shrink: 0;
   margin-left: 2px;
   cursor: pointer;
@@ -294,6 +314,19 @@ body {
   border: 2px solid #1d4ed8;
   border-radius: 3px;
   position: relative;
+  margin: 1px 0;
+}
+
+.role-and-checkbox::before {
+  content: '37';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
 }
 
 .role-and-checkbox:checked {
@@ -301,11 +334,16 @@ body {
   border-color: #1e40af;
 }
 
+.role-and-checkbox:checked::before {
+  content: '';
+}
+
 .role-and-checkbox:checked::after {
   content: '✓';
   position: absolute;
-  left: 1px;
-  top: -2px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   color: white;
   font-size: 12px;
   font-weight: bold;
@@ -337,8 +375,8 @@ body {
 }
 
 .filter-main > input[type="checkbox"] {
-  width: 14px;
-  height: 14px;
+  width: 26px;
+  height: 20px;
   accent-color: var(--accent);
   cursor: pointer;
   flex-shrink: 0;
@@ -382,8 +420,8 @@ body {
 
 /* Цветные чекбоксы для Q/W/E/R */
 .filter-abilities > input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 26px;
+  height: 20px;
   cursor: pointer;
   flex-shrink: 0;
 }

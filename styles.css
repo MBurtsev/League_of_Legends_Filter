@@ -252,6 +252,65 @@ body {
   cursor: not-allowed;
 }
 
+.role-or-checkbox {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #16a34a;
+  border: 2px solid #15803d;
+  border-radius: 3px;
+  position: relative;
+}
+
+.role-or-checkbox:checked {
+  background-color: #15803d;
+  border-color: #166534;
+}
+
+.role-or-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  left: 1px;
+  top: -2px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.role-and-checkbox {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-left: 2px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #2563eb;
+  border: 2px solid #1d4ed8;
+  border-radius: 3px;
+  position: relative;
+}
+
+.role-and-checkbox:checked {
+  background-color: #1d4ed8;
+  border-color: #1e40af;
+}
+
+.role-and-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  left: 1px;
+  top: -2px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
 /* Расширенные фильтры с Q/W/E/R */
 .filter-item-extended {
   display: flex;

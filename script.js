@@ -1576,12 +1576,18 @@
     }
     
     // roles
-    state.filters.roleTank = els.checkboxes.roleTank.checked;
-    state.filters.roleFighter = els.checkboxes.roleFighter.checked;
-    state.filters.roleMage = els.checkboxes.roleMage.checked;
-    state.filters.roleMarksman = els.checkboxes.roleMarksman.checked;
-    state.filters.roleAssassin = els.checkboxes.roleAssassin.checked;
-    state.filters.roleSupport = els.checkboxes.roleSupport.checked;
+    state.filters.roleTank = els.checkboxes.roleTank.checked || els.checkboxes.roleTankAnd?.checked || false;
+    state.filters.roleTankAnd = els.checkboxes.roleTankAnd?.checked || false;
+    state.filters.roleFighter = els.checkboxes.roleFighter.checked || els.checkboxes.roleFighterAnd?.checked || false;
+    state.filters.roleFighterAnd = els.checkboxes.roleFighterAnd?.checked || false;
+    state.filters.roleMage = els.checkboxes.roleMage.checked || els.checkboxes.roleMageAnd?.checked || false;
+    state.filters.roleMageAnd = els.checkboxes.roleMageAnd?.checked || false;
+    state.filters.roleMarksman = els.checkboxes.roleMarksman.checked || els.checkboxes.roleMarksmanAnd?.checked || false;
+    state.filters.roleMarksmanAnd = els.checkboxes.roleMarksmanAnd?.checked || false;
+    state.filters.roleAssassin = els.checkboxes.roleAssassin.checked || els.checkboxes.roleAssassinAnd?.checked || false;
+    state.filters.roleAssassinAnd = els.checkboxes.roleAssassinAnd?.checked || false;
+    state.filters.roleSupport = els.checkboxes.roleSupport.checked || els.checkboxes.roleSupportAnd?.checked || false;
+    state.filters.roleSupportAnd = els.checkboxes.roleSupportAnd?.checked || false;
     
     // range sliders
     const dps0ValueRaw = els.minDps0 ? Number(els.minDps0.value) : NaN;
@@ -1704,16 +1710,62 @@
     }
     
     // Role filters
-    const selectedRoles = [];
-    if (state.filters.roleTank) selectedRoles.push("tank");
-    if (state.filters.roleFighter) selectedRoles.push("fighter");
-    if (state.filters.roleMage) selectedRoles.push("mage");
-    if (state.filters.roleMarksman) selectedRoles.push("marksman");
-    if (state.filters.roleAssassin) selectedRoles.push("assassin");
-    if (state.filters.roleSupport) selectedRoles.push("support");
-    if (selectedRoles.length > 0) {
-      const hasAnyRole = selectedRoles.some(r => champion.classTags?.includes(r));
-      if (!hasAnyRole) return false;
+    const rolesOR = [];
+    const rolesAND = [];
+    
+    if (state.filters.roleTank) {
+      if (state.filters.roleTankAnd) {
+        rolesAND.push("tank");
+      } else {
+        rolesOR.push("tank");
+      }
+    }
+    if (state.filters.roleFighter) {
+      if (state.filters.roleFighterAnd) {
+        rolesAND.push("fighter");
+      } else {
+        rolesOR.push("fighter");
+      }
+    }
+    if (state.filters.roleMage) {
+      if (state.filters.roleMageAnd) {
+        rolesAND.push("mage");
+      } else {
+        rolesOR.push("mage");
+      }
+    }
+    if (state.filters.roleMarksman) {
+      if (state.filters.roleMarksmanAnd) {
+        rolesAND.push("marksman");
+      } else {
+        rolesOR.push("marksman");
+      }
+    }
+    if (state.filters.roleAssassin) {
+      if (state.filters.roleAssassinAnd) {
+        rolesAND.push("assassin");
+      } else {
+        rolesOR.push("assassin");
+      }
+    }
+    if (state.filters.roleSupport) {
+      if (state.filters.roleSupportAnd) {
+        rolesAND.push("support");
+      } else {
+        rolesOR.push("support");
+      }
+    }
+    
+    // Роли с режимом И должны быть ВСЕ у чемпиона
+    if (rolesAND.length > 0) {
+      const hasAllRolesAND = rolesAND.every(r => champion.classTags?.includes(r));
+      if (!hasAllRolesAND) return false;
+    }
+    
+    // Роли с режимом ИЛИ - хотя бы одна должна быть
+    if (rolesOR.length > 0) {
+      const hasAnyRoleOR = rolesOR.some(r => champion.classTags?.includes(r));
+      if (!hasAnyRoleOR) return false;
     }
     
     return true;
@@ -2193,12 +2245,14 @@
     for (const roleFilter of roleFilters) {
       // Создаем копию фильтров БЕЗ других ролей, только с текущей проверяемой ролью
       const testFilters = { ...currentFilters };
-      // Убираем все роли
+      // Убираем все роли и их флаги "И"
       for (const rf of roleFilters) {
         delete testFilters[rf];
+        delete testFilters[`${rf}And`];
       }
-      // Добавляем только проверяемую роль
+      // Добавляем только проверяемую роль (в режиме ИЛИ для подсчета бейджа)
       testFilters[roleFilter] = true;
+      testFilters[`${roleFilter}And`] = false;
       
       let count = 0;
       for (const champ of state.champions) {
@@ -2325,16 +2379,62 @@
     }
     
     // Role filters
-    const selectedRoles = [];
-    if (filters.roleTank) selectedRoles.push("tank");
-    if (filters.roleFighter) selectedRoles.push("fighter");
-    if (filters.roleMage) selectedRoles.push("mage");
-    if (filters.roleMarksman) selectedRoles.push("marksman");
-    if (filters.roleAssassin) selectedRoles.push("assassin");
-    if (filters.roleSupport) selectedRoles.push("support");
-    if (selectedRoles.length > 0) {
-      const hasAnyRole = selectedRoles.some(r => champion.classTags?.includes(r));
-      if (!hasAnyRole) return false;
+    const rolesOR = [];
+    const rolesAND = [];
+    
+    if (filters.roleTank) {
+      if (filters.roleTankAnd) {
+        rolesAND.push("tank");
+      } else {
+        rolesOR.push("tank");
+      }
+    }
+    if (filters.roleFighter) {
+      if (filters.roleFighterAnd) {
+        rolesAND.push("fighter");
+      } else {
+        rolesOR.push("fighter");
+      }
+    }
+    if (filters.roleMage) {
+      if (filters.roleMageAnd) {
+        rolesAND.push("mage");
+      } else {
+        rolesOR.push("mage");
+      }
+    }
+    if (filters.roleMarksman) {
+      if (filters.roleMarksmanAnd) {
+        rolesAND.push("marksman");
+      } else {
+        rolesOR.push("marksman");
+      }
+    }
+    if (filters.roleAssassin) {
+      if (filters.roleAssassinAnd) {
+        rolesAND.push("assassin");
+      } else {
+        rolesOR.push("assassin");
+      }
+    }
+    if (filters.roleSupport) {
+      if (filters.roleSupportAnd) {
+        rolesAND.push("support");
+      } else {
+        rolesOR.push("support");
+      }
+    }
+    
+    // Роли с режимом И должны быть ВСЕ у чемпиона
+    if (rolesAND.length > 0) {
+      const hasAllRolesAND = rolesAND.every(r => champion.classTags?.includes(r));
+      if (!hasAllRolesAND) return false;
+    }
+    
+    // Роли с режимом ИЛИ - хотя бы одна должна быть
+    if (rolesOR.length > 0) {
+      const hasAnyRoleOR = rolesOR.some(r => champion.classTags?.includes(r));
+      if (!hasAnyRoleOR) return false;
     }
     
     return true;
@@ -2486,11 +2586,17 @@
     els.checkboxes.lifesteal = qs("#filter-lifesteal");
     // roles
     els.checkboxes.roleTank = qs("#role-tank");
+    els.checkboxes.roleTankAnd = qs("#role-tank-and");
     els.checkboxes.roleFighter = qs("#role-fighter");
+    els.checkboxes.roleFighterAnd = qs("#role-fighter-and");
     els.checkboxes.roleMage = qs("#role-mage");
+    els.checkboxes.roleMageAnd = qs("#role-mage-and");
     els.checkboxes.roleMarksman = qs("#role-marksman");
+    els.checkboxes.roleMarksmanAnd = qs("#role-marksman-and");
     els.checkboxes.roleAssassin = qs("#role-assassin");
+    els.checkboxes.roleAssassinAnd = qs("#role-assassin-and");
     els.checkboxes.roleSupport = qs("#role-support");
+    els.checkboxes.roleSupportAnd = qs("#role-support-and");
     // damage types
     els.checkboxes.dmgPhysical = qs("#dmg-physical");
     els.checkboxes.dmgMagic = qs("#dmg-magic");
@@ -2584,15 +2690,46 @@
       }
     }
     
+    // Обработчики взаимоисключения для ролей (первый чекбокс vs "И")
+    const rolePairs = [
+      { role: els.checkboxes.roleTank, and: els.checkboxes.roleTankAnd },
+      { role: els.checkboxes.roleFighter, and: els.checkboxes.roleFighterAnd },
+      { role: els.checkboxes.roleMage, and: els.checkboxes.roleMageAnd },
+      { role: els.checkboxes.roleMarksman, and: els.checkboxes.roleMarksmanAnd },
+      { role: els.checkboxes.roleAssassin, and: els.checkboxes.roleAssassinAnd },
+      { role: els.checkboxes.roleSupport, and: els.checkboxes.roleSupportAnd }
+    ];
+    
+    for (const pair of rolePairs) {
+      if (pair.role && pair.and) {
+        // Если выбран первый чекбокс (роль), снять второй (И)
+        pair.role.addEventListener("change", (e) => {
+          if (e.target.checked && pair.and) {
+            pair.and.checked = false;
+          }
+          applyFiltersAndRender();
+        });
+        // Если выбран второй чекбокс (И), снять первый (роль)
+        pair.and.addEventListener("change", (e) => {
+          if (e.target.checked && pair.role) {
+            pair.role.checked = false;
+          }
+          applyFiltersAndRender();
+        });
+      }
+    }
+    
     // Обработчики для остальных чекбоксов (роли и т.д.)
     const dmgFilterIds = ['dmg-physical', 'dmg-magic', 'scales-health'];
     for (const el of Object.values(els.checkboxes)) {
-      // Пропускаем ability фильтры и dmg фильтры, для них уже добавлены обработчики выше
-      const id = el.id;
-      if (id && (abilityFilters.some(f => id === `filter-${f}`) || dmgFilterIds.includes(id))) {
+      // Пропускаем ability фильтры, dmg фильтры и role-and чекбоксы, для них уже добавлены обработчики выше
+      const id = el?.id;
+      if (id && (abilityFilters.some(f => id === `filter-${f}`) || dmgFilterIds.includes(id) || id.endsWith('-and'))) {
         continue;
       }
-      el.addEventListener("change", applyFiltersAndRender);
+      if (el) {
+        el.addEventListener("change", applyFiltersAndRender);
+      }
     }
     
     // Add event listeners for damage type and health scaling Q/W/E/R checkboxes

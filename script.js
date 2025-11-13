@@ -1473,7 +1473,16 @@
     const roleFilters = ['roleTank', 'roleFighter', 'roleMage', 'roleMarksman', 'roleAssassin', 'roleSupport'];
     
     for (const filter of abilityFilters) {
-      const testFilters = { ...currentFilters, [filter]: true };
+      const testFilters = { ...currentFilters };
+      
+      const abilities = ['q', 'w', 'e', 'r'];
+      abilities.forEach(ability => {
+        const abilityKey = `${filter}${ability.toUpperCase()}`;
+        delete testFilters[abilityKey];
+      });
+      delete testFilters[filter];
+      
+      testFilters[filter] = true;
       
       let count = 0;
       for (const champ of state.champions) {
@@ -1485,7 +1494,6 @@
       const checkbox = qs(`#filter-${filter}`);
       if (checkbox) checkbox.setAttribute('data-count', count);
       
-      const abilities = ['q', 'w', 'e', 'r'];
       const disabledStates = [];
       for (const ability of abilities) {
         const abilityKey = `${filter}${ability.toUpperCase()}`;
@@ -1524,7 +1532,16 @@
     }
     
     for (const dmgFilter of dmgFilters) {
-      const testFilters = { ...currentFilters, [dmgFilter.key]: true };
+      const testFilters = { ...currentFilters };
+      
+      const abilities = ['q', 'w', 'e', 'r'];
+      abilities.forEach(ability => {
+        const abilityKey = `${dmgFilter.key}${ability.toUpperCase()}`;
+        delete testFilters[abilityKey];
+      });
+      delete testFilters[dmgFilter.key];
+      
+      testFilters[dmgFilter.key] = true;
       
       let count = 0;
       for (const champ of state.champions) {
@@ -1533,7 +1550,6 @@
         }
       }
       
-      const abilities = ['q', 'w', 'e', 'r'];
       const id = dmgFilter.key === 'dmgPhysical' ? 'dmg-physical' : 'dmg-magic';
       
       const checkbox = qs(`#${id}`);
@@ -1575,7 +1591,17 @@
       }
     }
     
-    const testFilters = { ...currentFilters, [scalesFilter.key]: true };
+    const testFilters = { ...currentFilters };
+    
+    const abilities = ['q', 'w', 'e', 'r'];
+    abilities.forEach(ability => {
+      const abilityKey = `${scalesFilter.key}${ability.toUpperCase()}`;
+      delete testFilters[abilityKey];
+    });
+    delete testFilters[scalesFilter.key];
+    
+    testFilters[scalesFilter.key] = true;
+    
     let count = 0;
     for (const champ of state.champions) {
       if (championMatchesFiltersWithOverride(champ, testFilters)) {
@@ -1586,7 +1612,6 @@
     const checkbox = qs('#scales-health');
     if (checkbox) checkbox.setAttribute('data-count', count);
     
-    const abilities = ['q', 'w', 'e', 'r'];
     const disabledStatesHealth = [];
     for (const ability of abilities) {
       const abilityKey = `${scalesFilter.key}${ability.toUpperCase()}`;

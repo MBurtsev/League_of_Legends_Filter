@@ -2094,9 +2094,9 @@
         }
       }
       
-      // Обновляем бейдж
-      const badge = document.querySelector(`.filter-badge[data-filter="${filter}"]`);
-      if (badge) badge.textContent = count;
+      // Обновляем data-count в чекбоксе
+      const checkbox = qs(`#filter-${filter}`);
+      if (checkbox) checkbox.setAttribute('data-count', count);
       
       // Проверяем Q/W/E/R чекбоксы
       const abilities = ['q', 'w', 'e', 'r'];
@@ -2118,6 +2118,7 @@
         
         const checkbox = qs(`#filter-${filter}-${ability}`);
         if (checkbox) {
+          checkbox.setAttribute('data-count', countAbility);
           checkbox.disabled = countAbility === 0;
           disabledStates.push(countAbility === 0);
         }
@@ -2148,12 +2149,13 @@
         }
       }
       
-      const badge = document.querySelector(`.filter-badge[data-filter="${dmgFilter.key}"]`);
-      if (badge) badge.textContent = count;
-      
       // Проверяем Q/W/E/R чекбоксы
       const abilities = ['q', 'w', 'e', 'r'];
       const id = dmgFilter.key === 'dmgPhysical' ? 'dmg-physical' : 'dmg-magic';
+      
+      // Обновляем data-count в чекбоксе
+      const checkbox = qs(`#${id}`);
+      if (checkbox) checkbox.setAttribute('data-count', count);
       const disabledStates = [];
       for (const ability of abilities) {
         const abilityKey = `${dmgFilter.key}${ability.toUpperCase()}`;
@@ -2172,6 +2174,7 @@
         
         const checkbox = qs(`#${id}-${ability}`);
         if (checkbox) {
+          checkbox.setAttribute('data-count', countAbility);
           checkbox.disabled = countAbility === 0;
           disabledStates.push(countAbility === 0);
         }
@@ -2200,8 +2203,9 @@
       }
     }
     
-    const badge = document.querySelector(`.filter-badge[data-filter="${scalesFilter.key}"]`);
-    if (badge) badge.textContent = count;
+    // Обновляем data-count в чекбоксе
+    const checkbox = qs('#scales-health');
+    if (checkbox) checkbox.setAttribute('data-count', count);
     
     // Проверяем Q/W/E/R чекбоксы для здоровья
     const abilities = ['q', 'w', 'e', 'r'];
@@ -2223,6 +2227,7 @@
       
       const checkbox = qs(`#scales-health-${ability}`);
       if (checkbox) {
+        checkbox.setAttribute('data-count', countAbility);
         checkbox.disabled = countAbility === 0;
         disabledStatesHealth.push(countAbility === 0);
       }

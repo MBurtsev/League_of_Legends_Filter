@@ -1,162 +1,55 @@
 (() => {
   const translations = {
-    ru: {
-      filters: 'Фильтры',
-      abilities: 'Умения',
-      abilitiesTitle: 'Способности',
-      buffs: 'Бафы',
-      debuffs: 'Дебафы',
-      mobility: 'Прыжок / рывок',
-      stun: 'Оглушение',
-      slow: 'Замедление',
-      root: 'Удержание',
-      knockup: 'Подброс / отброс',
-      silence: 'Молчание',
-      stealth: 'Невидимость',
-      attackspeed: 'Ускорение автоатаки',
-      movespeed: 'Ускорение бега',
-      shield: 'Щит',
-      heal: 'Лечение',
-      pull: 'Притяжение',
-      lifesteal: 'Вампиризм',
-      dmgPhysical: 'Физический урон',
-      dmgMagic: 'Магический урон',
-      scalesHealth: 'Урон от здоровья',
-      roles: 'Роли чемпиона',
-      roleTank: 'Танк',
-      roleFighter: 'Воин',
-      roleMage: 'Маг',
-      roleMarksman: 'Стрелок',
-      roleAssassin: 'Убийца',
-      roleSupport: 'Поддержка',
-      attackRange: 'Дальность автоатаки',
-      spellRange: 'Дальность умений',
-      minAttackRange: 'Дальность автоатаки',
-      minRangeQ: 'Дальность Q',
-      minRangeW: 'Дальность W',
-      minRangeE: 'Дальность E',
-      minRangeR: 'Дальность R',
-      minDps0: 'DPS 0',
-      minDps18: 'DPS 18',
-      combatStats: 'Боевые характеристики',
-      hpColumn: 'Здоровье',
-      mpColumn: 'Мана',
-      armorColumn: 'Броня',
-      mrColumn: 'Магическая защита',
-      showDpsTable: 'Показать таблицу DPS',
-      hideDpsTable: 'Скрыть таблицу DPS',
-      levelColumn: 'Уровень',
-      attackDamageColumn: 'Урон',
-      attackSpeedColumn: 'Скорость атаки',
-      dpsColumn: 'DPS',
-      reset: 'Сбросить',
-      searchPlaceholder: 'Поиск по имени чемпиона...',
-      found: 'Найдено чемпионов',
-      of: 'из',
-      loading: 'Загрузка данных чемпионов…',
-      detectingVersion: 'Определение версии данных…',
-      versionDetected: 'Версия данных',
-      checkingCache: 'Проверка кэша…',
-      cacheNotFound: 'Кэш не найден. Загрузка списка чемпионов…',
-      loadingAbilities: 'Загрузка подробных данных способностей…',
-      ready: 'Готово. Чемпионов загружено',
-      applyingFilters: 'Применяю фильтры…',
-      passive: 'Пассивное умение',
-      cooldown: 'Перезарядка',
-      cost: 'Стоимость',
-      range: 'Дальность',
-      footer: 'Неофициальный инструмент. Все права на материалы принадлежат Riot Games.',
-      roleOr: 'ИЛИ',
-      roleAnd: 'И',
-      abilityQ: 'Способность Q',
-      abilityW: 'Способность W',
-      abilityE: 'Способность E',
-      abilityR: 'Способность R (ультимейт)',
-      abilityAll: 'Все'
-    },
-    en: {
-      filters: 'Filters',
-      abilities: 'Abilities',
-      abilitiesTitle: 'Abilities',
-      buffs: 'Buffs',
-      debuffs: 'Debuffs',
-      mobility: 'Dash / Blink',
-      stun: 'Stun',
-      slow: 'Slow',
-      root: 'Root',
-      knockup: 'Knock Up / Back',
-      silence: 'Silence',
-      stealth: 'Stealth',
-      attackspeed: 'Attack Speed Buff',
-      movespeed: 'Movement Speed Buff',
-      shield: 'Shield',
-      heal: 'Heal',
-      pull: 'Pull / Grab',
-      lifesteal: 'Lifesteal / Omnivamp',
-      dmgPhysical: 'Physical Damage',
-      dmgMagic: 'Magic Damage',
-      scalesHealth: 'Health Scaling',
-      roles: 'Champion Roles',
-      roleTank: 'Tank',
-      roleFighter: 'Fighter',
-      roleMage: 'Mage',
-      roleMarksman: 'Marksman',
-      roleAssassin: 'Assassin',
-      roleSupport: 'Support',
-      attackRange: 'Attack Range',
-      spellRange: 'Spell Range',
-      minAttackRange: 'Attack Range',
-      minRangeQ: 'Q Range',
-      minRangeW: 'W Range',
-      minRangeE: 'E Range',
-      minRangeR: 'R Range',
-      minDps0: 'DPS 0',
-      minDps18: 'DPS 18',
-      combatStats: 'Combat Stats',
-      hpColumn: 'Health',
-      mpColumn: 'Mana',
-      armorColumn: 'Armor',
-      mrColumn: 'Magic Resist',
-      showDpsTable: 'Show DPS Table',
-      hideDpsTable: 'Hide DPS Table',
-      levelColumn: 'Level',
-      attackDamageColumn: 'Attack Damage',
-      attackSpeedColumn: 'Attack Speed',
-      dpsColumn: 'DPS',
-      reset: 'Reset',
-      searchPlaceholder: 'Search champion name...',
-      found: 'Found champions',
-      of: 'of',
-      loading: 'Loading champion data…',
-      detectingVersion: 'Detecting data version…',
-      versionDetected: 'Data version',
-      checkingCache: 'Checking cache…',
-      cacheNotFound: 'Cache not found. Loading champion list…',
-      loadingAbilities: 'Loading detailed ability data…',
-      ready: 'Ready. Champions loaded',
-      applyingFilters: 'Applying filters…',
-      passive: 'Passive',
-      cooldown: 'Cooldown',
-      cost: 'Cost',
-      range: 'Range',
-      footer: 'Unofficial tool. All rights to materials belong to Riot Games.',
-      roleOr: 'OR',
-      roleAnd: 'AND',
-      abilityQ: 'Ability Q',
-      abilityW: 'Ability W',
-      abilityE: 'Ability E',
-      abilityR: 'Ability R (Ultimate)',
-      abilityAll: 'All'
-    }
+    ru: {},
+    en: {}
   };
-
+  
+  const uiTranslationsState = {
+    ru: { loaded: false, loading: null },
+    en: { loaded: false, loading: null }
+  };
+  
+  async function loadUITranslations(lang) {
+    const varName = `UI_TRANSLATIONS_${lang.toUpperCase()}`;
+    
+    if (window[varName]) {
+      translations[lang] = window[varName];
+      uiTranslationsState[lang].loaded = true;
+      return;
+    }
+    
+    if (uiTranslationsState[lang].loading) {
+      return uiTranslationsState[lang].loading;
+    }
+    
+    uiTranslationsState[lang].loading = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = `ui_translations_${lang}.js`;
+      script.onload = () => {
+        if (window[varName]) {
+          translations[lang] = window[varName];
+        }
+        uiTranslationsState[lang].loaded = true;
+        uiTranslationsState[lang].loading = null;
+        resolve();
+      };
+      script.onerror = () => {
+        uiTranslationsState[lang].loading = null;
+        reject(new Error(`Failed to load ${varName}`));
+      };
+      document.head.appendChild(script);
+    });
+    
+    return uiTranslationsState[lang].loading;
+  }
+  
   const PLACEHOLDER_RANGE_THRESHOLD = 20000;
-
+  
   const state = {
     version: null,
     championsIndex: null,
     champions: [],
-    language: 'en', // 'ru' or 'en' - default English
+    language: 'en',
     searchQuery: '',
     currentModalChampion: null,
     rangeBounds: null,
@@ -184,7 +77,10 @@
   const ABILITY_KEYS = ["Q", "W", "E", "R"];
   
   function t(key) {
-    return translations[state.language][key] || key;
+    const lang = state.language || 'en';
+    const langTranslations = window[`UI_TRANSLATIONS_${lang.toUpperCase()}`] || translations[lang];
+    const translation = langTranslations && langTranslations[key];
+    return translation || key;
   }
 
   const els = {
@@ -214,12 +110,12 @@
     modalClose: null
   };
 
-  const LOCAL_BASE = "."; // Базовая папка для локальных файлов
-  const LOCALE = "en_US"; // используем en_US для надежного поиска по ключевым словам
-  const RU_LOCALE = "ru_RU"; // ru для отображения описаний
+  const LOCAL_BASE = ".";
+  const LOCALE = "en_US";
+  const RU_LOCALE = "ru_RU";
   const FALLBACK_VERSION = "15.21.1";
   const CONCURRENCY = 10;
-  const CACHE_KEY = "lol_champ_cache_v19"; // v19: добавлены боевые характеристики HP/MP/Armor/MR
+  const CACHE_KEY = "lol_champ_cache_v19";
 
   function qs(selector) {
     return document.querySelector(selector);
@@ -238,7 +134,6 @@
   }
 
   async function getLatestVersion() {
-    // Check if data is embedded in window (for static file:// support)
     if (window.LOL_DATA_VERSION) {
       return window.LOL_DATA_VERSION;
     }
@@ -255,7 +150,6 @@
     return FALLBACK_VERSION;
   }
 
-  // Dynamic language file loading
   const languageState = {
     ru: { loaded: false, loading: null },
     en: { loaded: false, loading: null }
@@ -265,18 +159,15 @@
     const lang = locale === RU_LOCALE ? 'ru' : 'en';
     const varName = `LOL_CHAMPIONS_TEXT_${lang.toUpperCase()}`;
     
-    // Already loaded
     if (window[varName]) {
       languageState[lang].loaded = true;
       return;
     }
     
-    // Already loading
     if (languageState[lang].loading) {
       return languageState[lang].loading;
     }
     
-    // Start loading
     languageState[lang].loading = new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = `champion_text_${lang}.js`;
@@ -307,7 +198,7 @@
       normalizeSpellRangePlaceholders(state.champions);
       updateRangeSlidersFromChampions();
       updateDpsSlidersFromChampions();
-      setStatus(`Данные загружены из кэша (${state.version}). Чемпионов: ${state.champions.length}`);
+      setStatus(`${t('cacheLoaded')} (${state.version}). ${t('found')}: ${state.champions.length}`);
       renderGrid(state.champions);
       return true;
     } catch {
@@ -316,7 +207,6 @@
   }
 
   async function loadChampionsIndex() {
-    // Prefer embedded optimized data
     if (window.LOL_CHAMPION_INDEX) {
       return window.LOL_CHAMPION_INDEX;
     }
@@ -335,7 +225,6 @@
       return index;
     }
     
-    // Fallback to legacy champion list
     const url = `${LOCAL_BASE}/data/champion_list_en.json`;
     const json = await fetchJson(url);
     return json.data;
@@ -358,15 +247,10 @@
     const dict = {};
     const missingKeys = new Set();
     
-    // Fallback замены отключены - плейсхолдеры остаются в оригинальном виде
     const fallbackDescriptionsRu = {
-      // Словарь убран - оставляем плейсхолдеры как есть
-      "spellmodifierdescriptionappend": ""  // Только этот удаляем, он всегда пустой
+      "spellmodifierdescriptionappend": ""
     };
-    /*
-    // ОТКЛЮЧЕНО: Старый словарь замен (оставлен для справки)
     const fallbackDescriptionsRu_DISABLED = {
-      // Урон
       "basedamage": "базовый урон",
       "totaldamage": "урон",
       "bonusdamage": "бонусный урон",
@@ -384,7 +268,6 @@
       "damagecalc": "урон",
       "rampdamagecalc": "усиленный урон",
       
-      // Замедление
       "slowamount": "сила замедления",
       "slowamount*100": "сила замедления%",
       "slowpercent": "сила замедления",
@@ -402,11 +285,9 @@
       "wslowduration": "длительность замедления",
       "wslowpercentage*-100": "сила замедления%",
       
-      // Оглушение
       "stunduration": "длительность оглушения",
       "wallstunduration": "длительность оглушения от стены",
       
-      // Здоровье
       "missinghealthpercent": "% от недостающего здоровья",
       "missinghealthdamage*100": "% от недостающего здоровья",
       "maxhealthpercent": "% от макс. здоровья",
@@ -422,7 +303,6 @@
       "totalpercenthealth": "общий % здоровья",
       "totalpercenthealthonhit": "общий % здоровья при попадании",
       
-      // Щит
       "shieldamount": "сила щита",
       "shieldconversion": "% конверсии в щит",
       "shieldconversion*100": "% конверсии в щит",
@@ -436,12 +316,10 @@
       "totalshieldstrength": "сила щита",
       "calc_shield": "сила щита",
       
-      // Лечение
       "heal": "лечение",
       "healamount": "сила лечения",
       "totalevamp": "вампиризм",
       
-      // Скорость передвижения
       "msamount": "% скорости передвижения",
       "msamount*100": "% скорости передвижения",
       "msduration": "длительность ускорения",
@@ -460,7 +338,6 @@
       "berserkms*100": "% скорости передвижения берсерка",
       "extramovespeedpercent*100": "% дополнительной скорости передвижения",
       
-      // Скорость атаки
       "attackspeed": "скорость атаки",
       "attackspeed*100": "скорость атаки%",
       "attackspeedmod*100": "% модификатора скорости атаки",
@@ -473,7 +350,6 @@
       "rocketaspdpenalty*100": "штраф скорости атаки ракет%",
       "empoweredqas": "усиленная скорость атаки Q",
       
-      // Сила атаки
       "attackdamage": "сила атаки",
       "totalad": "сила атаки",
       "bonusad": "бонусная сила атаки",
@@ -481,12 +357,10 @@
       "rtotaladamp*100": "% усиления силы атаки",
       "qtotaladratio": "коэфф. силы атаки",
       
-      // Сила умений
       "abilitypower": "сила умений",
       "totalap": "сила умений",
       "bonusap": "бонусная сила умений",
       
-      // Прочее (снижение урона, усиление, казнь)
       "damagestored": "% накопления урона",
       "damagestored*100": "% накопления урона",
       "maxgrit": "макс. накопление",
@@ -539,8 +413,7 @@
       "e4": "эффект 4",
       "e5": "эффект 5",
       
-      // Специфичные плейсхолдеры для разных способностей
-      "spellmodifierdescriptionappend": "", // обычно пустой, просто удаляем
+      "spellmodifierdescriptionappend": "",
       "f1": "макс. урон",
       "f2": "макс. эффект",
       "f3": "доп. эффект",
@@ -548,7 +421,6 @@
       "f2.0": "макс. эффект",
       "f3.0": "доп. эффект",
       
-      // Урон от разных способностей
       "qultdamagebeam": "урон луча",
       "wulttotaldamage": "общий урон",
       "eulttotaldamage": "общий урон",
@@ -570,7 +442,6 @@
       "totalattackpercentmissinghealth": "% урона от недостающего здоровья",
       "totalaoeоedamage": "общий урон по области",
       
-      // Дополнительный урон
       "bonusdamagetooltip": "бонусный урон",
       "bonusdamage": "бонусный урон",
       "extradamage": "дополнительный урон",
@@ -624,7 +495,6 @@
       "darkinpercentdamage": "процентный урон Темного",
       "basedamage*0.5": "базовый урон × 0.5",
       
-      // Вампиризм и лечение
       "lifesteal": "вампиризм",
       "totallifesteal": "вампиризм",
       "lifestealmod*100": "модификатор вампиризма%",
@@ -645,7 +515,6 @@
       "attackhealpercent*100": "% лечения при атаке",
       "percentmaxhpheal": "% лечения от макс. здоровья",
       
-      // Перезарядка
       "recastcooldown": "перезарядка повторного применения",
       "chargecooldown": "перезарядка заряда",
       "rechargetime": "время восстановления",
@@ -664,7 +533,6 @@
       "lockouttime": "время блокировки",
       "trapdetonationtime": "время детонации ловушки",
       
-      // Энергия и ресурсы
       "energycost": "затраты энергии",
       "energyrestore": "восстановление энергии",
       "manacost": "затраты маны",
@@ -673,7 +541,6 @@
       "healthcost": "затраты здоровья",
       "nocost": "без затрат",
       
-      // Дальность и радиус
       "castrange": "дальность применения",
       "effectradius": "радиус действия",
       "explosionradius": "радиус взрыва",
@@ -682,7 +549,6 @@
       "bonusattackrange": "бонусная дальность атак",
       "rocketbonusrange": "бонусная дальность ракет",
       
-      // Длительность эффектов
       "ccaduration": "длительность контроля",
       "knockupduration": "длительность подброса",
       "knockupdurationtooltiponly": "длительность подброса",
@@ -731,7 +597,6 @@
       "rdeathmarkduration": "длительность метки смерти",
       "maxstuntt": "макс. длительность оглушения",
       
-      // Дополнительные эффекты
       "missingmana": "недостающая мана",
       "missingmanapercent": "% недостающей маны",
       "currenthealth": "текущее здоровье",
@@ -745,7 +610,6 @@
       "targetbonushealth": "бонусное здоровье цели",
       "targetbonushealthpercent": "% бонусного здоровья цели",
       
-      // Броня и магическая защита
       "armor": "броня",
       "bonusarmor": "бонусная броня",
       "totalarmor": "общая броня",
@@ -768,7 +632,6 @@
       "shredduration": "длительность снижения",
       "shredamount": "величина снижения",
       
-      // Скейлы
       "adscaling": "скейл от силы атаки",
       "apscaling": "скейл от силы умений",
       "healthscaling": "скейл от здоровья",
@@ -776,7 +639,6 @@
       "mrscaling": "скейл от магической защиты",
       "critscaling": "скейл от критического удара",
       
-      // Прочее
       "chargecount": "количество зарядов",
       "maxcharges": "макс. количество зарядов",
       "qstackcount": "количество зарядов Q",
@@ -805,7 +667,6 @@
       "monsterdamagebase": "базовый урон по монстрам",
       "monsterdamagebonus": "бонусный урон по монстрам"
     };
-    */
     
     const addDict = (obj) => {
       if (!obj) return;
@@ -827,24 +688,19 @@
         }
         if (valStr) dict[key] = valStr;
         
-        // Добавляем также варианты с префиксами
         const link = String(v?.link || "").toLowerCase();
         if (link && link !== "unknown") {
-          // Создаём дополнительные ключи для скейлинга
           dict[`bonus${link}`] = valStr;
           dict[`total${link}`] = valStr;
         }
       }
     };
     
-    // datavalues сначала из en, затем ru как fallback
     addDict(spellEn?.datavalues);
     addDict(spellRu?.datavalues);
-    // vars из обоих источников
     addVars(spellEn?.vars);
     addVars(spellRu?.vars);
 
-    // effectBurn -> e1/e2/...
     const effectBurn = spellEn?.effectBurn || spellRu?.effectBurn;
     if (Array.isArray(effectBurn)) {
       effectBurn.forEach((v, i) => {
@@ -852,7 +708,6 @@
         dict[`e${i}`] = v;
       });
     }
-    // распространённые ключи
     if (spellEn?.cooldownBurn || spellRu?.cooldownBurn) {
       dict["cooldown"] = spellEn?.cooldownBurn || spellRu?.cooldownBurn;
       dict["cooldownburn"] = dict["cooldown"];
@@ -866,8 +721,6 @@
       dict["rangeburn"] = dict["range"];
     }
     
-    // Дополнительная эвристика: ищем связанные ключи
-    // Например, если есть "damage", то добавляем "totaldamage", "bonusdamage"
     const keysSnapshot = Object.keys(dict);
     for (const k of keysSnapshot) {
       if (!k.startsWith("total") && !k.startsWith("bonus") && !k.startsWith("base")) {
@@ -879,14 +732,10 @@
     result = result.replace(/\{\{\s*([a-z0-9_*+\-./]+)\s*\}\}/gi, (fullMatch, key) => {
       const keyLower = String(key).toLowerCase();
       
-      // Сначала пытаемся найти по полному ключу (например, "f2.0")
       let val = dict[keyLower];
       
-      // Если не нашли, убираем только математические операции вроде *100, но сохраняем точки в середине (f2.0)
       if (val == null) {
-        // Убираем только умножение/деление в конце
         let cleanKey = keyLower;
-        // Если есть *100 или *-100, удаляем это
         if (cleanKey.includes('*')) {
           cleanKey = cleanKey.split('*')[0];
         }
@@ -894,7 +743,6 @@
       }
       
       if (val != null) {
-        // Если в ключе была математическая операция (например, *100), применяем её
         if (key.includes('*100')) {
           const numVal = parseFloat(val);
           if (!isNaN(numVal)) {
@@ -910,8 +758,6 @@
         return String(val);
       }
       
-      // ОТКЛЮЧЕНО: Fallback замена плейсхолдеров на текст (оставляем плейсхолдеры как есть)
-      /*
       if (isRussian) {
         const cleanKeyForFallback = keyLower.replace(/[*+\-./0-9\s]/g, '');
         const fallback = fallbackDescriptionsRu[keyLower] || fallbackDescriptionsRu[cleanKeyForFallback];
@@ -925,17 +771,13 @@
           }
         }
       }
-      */
       
-      // Оставляем плейсхолдеры в оригинальном виде
       missingKeys.add(key);
       return fullMatch;
     });
     
-    // Очистка лишних пробелов после удаления плейсхолдеров
     result = result.replace(/\s{2,}/g, ' ').trim();
     
-    // Логируем недостающие ключи для дебага (только в консоль)
     if (missingKeys.size > 0 && (spellEn?.id || spellRu?.id)) {
       console.log(`[${spellEn?.id || spellRu?.id}] Replaced placeholders:`, Array.from(missingKeys));
     }
@@ -944,15 +786,13 @@
   }
 
   function parseRangeValue(rangeField, rangeBurnField) {
-    // priority: numeric array -> max; then rangeBurn string -> max numeric
     let nums = [];
     const toStringLower = (v) => (typeof v === "string" ? v.toLowerCase() : "");
 
-    // handle special textual values
     const rf = toStringLower(rangeField);
     const rb = toStringLower(rangeBurnField);
     const isGlobal = rf.includes("global") || rf.includes("infinite") || rb.includes("global") || rb.includes("infinite");
-    if (isGlobal) return 50000; // условная "очень большая" дальность
+    if (isGlobal) return 50000;
 
     if (Array.isArray(rangeField)) {
       nums = rangeField
@@ -1177,17 +1017,14 @@
     const t = text.toLowerCase();
     const tags = new Set();
 
-    // mobility
     if (/\b(dash|dashes|blink|blinks|leap|leaps|jump|jumps|teleport|teleports|reposition|untargetable)\b/.test(t)) {
       tags.add("mobility");
     }
-    // hard CC
     if (/\b(stun|stunned)\b/.test(t)) tags.add("stun");
     if (/\b(root|rooted|immobilize|immobilized|snare|snared)\b/.test(t)) tags.add("root");
     if (/\b(knock\s?up|airborne|launched)\b/.test(t)) tags.add("knockup");
     if (/\b(knock\s?back|pushed back|displace|displaced)\b/.test(t)) tags.add("knockup");
     if (/\b(silence|silenced)\b/.test(t)) tags.add("silence");
-    // soft CC, utility
     if (/\b(slow|slowed)\b/.test(t)) tags.add("slow");
     if (/\b(pull|pulls|pulled|drag|drags|dragged|grab|grabs|grabbed)\b/.test(t)) tags.add("pull");
     if (/\b(stealth|invisible|camouflage|camouflaged)\b/.test(t)) tags.add("stealth");
@@ -1195,8 +1032,6 @@
     if (/\b(movement speed|move speed|bonus movement speed|increases movement speed|gain movement speed)\b/.test(t)) tags.add("movespeed");
     if (/\b(shield|shielded)\b/.test(t)) tags.add("shield");
     if (/\b(heal|heals|healed|restore health|restores health)\b/.test(t)) tags.add("heal");
-    // Lifesteal/vamp - patterns that indicate healing proportional to damage dealt
-    // Also includes placeholders like {{ vamppercentage }}, {{ lifesteal }}, etc.
     if (/\b(lifesteal|life steal|omnivamp|spell vamp|vamp)\b/i.test(t) ||
         /\{\{\s*(vamp|lifesteal|omnivamp)/i.test(t) ||
         /(heal|healing|heals).{0,15}(for|from).{0,15}(damage dealt|damage)/i.test(t) ||
@@ -1228,7 +1063,6 @@
           collect(s.leveltip.label.join(" ")).forEach(t => abilityTags.add(t));
         }
         
-        // Добавляем теги к общему списку и к конкретной способности
         abilityTags.forEach(t => {
           tags.add(t);
           tagsByAbility[abilityKeys[i]].add(t);
@@ -1255,9 +1089,7 @@
   async function loadChampionDetailByLocale(champKey, locale) {
     const lang = locale === RU_LOCALE ? 'ru' : 'en';
     
-    // NEW: Check if optimized data structure is available
     if (window.LOL_CHAMPIONS_META) {
-      // Load language file if not loaded yet
       await loadLanguageFile(locale);
       
       const meta = window.LOL_CHAMPIONS_META[champKey];
@@ -1308,7 +1140,6 @@
       }
     }
     
-    // OLD: Fallback to legacy format
     if (window.LOL_CHAMPIONS_DATA) {
       const suffix = locale === RU_LOCALE ? 'ru' : 'en';
       const key = `${champKey}_${suffix}`;
@@ -1318,7 +1149,6 @@
       }
     }
     
-    // Load from file
     const suffix = locale === RU_LOCALE ? 'ru' : 'en';
     const url = `${LOCAL_BASE}/data/champion/${champKey}_${suffix}.json`;
     const json = await fetchJson(url);
@@ -1372,7 +1202,6 @@
     const hasScaling = false;
     const scalingByAbility = { Q: false, W: false, E: false, R: false };
     
-    // ищем скейлы от собственного здоровья по vars.link
     const links = new Set();
     const collect = (arr) => {
       if (!Array.isArray(arr)) return;
@@ -1381,7 +1210,6 @@
       }
     };
     
-    // В современных версиях Data Dragon vars[] пустые, поэтому также ищем плейсхолдеры в тексте
     const healthPlaceholders = [
       'maxhealth', 'bonushealth', 'missinghealthpercent', 'missinghealthdamage',
       'percenthealth', 'percentmaxhealth', 'maxhealthpercent', 'maxhealthdamage',
@@ -1394,7 +1222,6 @@
       return healthPlaceholders.some(ph => lower.includes(`{{ ${ph}`));
     };
     
-    // Проверяем все способности
     if (detailEn?.spells) {
       const abilityKeys = ['Q', 'W', 'E', 'R'];
       for (let i = 0; i < detailEn.spells.length && i < 4; i++) {
@@ -1410,9 +1237,7 @@
       }
     }
     
-    // Проверяем пассивку (считаем что это общий скейл)
     if (detailEn?.passive && checkText(detailEn.passive.description)) {
-      // Если пассивка имеет скейл, считаем что чемпион в целом имеет его
       Object.keys(scalingByAbility).forEach(k => scalingByAbility[k] = true);
     }
     
@@ -1426,7 +1251,7 @@
 
   function mapRoleTagsLowercase(tags) {
     if (!Array.isArray(tags)) return [];
-    return tags.map(t => String(t).toLowerCase()); // e.g., ["tank","fighter"]
+    return tags.map(t => String(t).toLowerCase());
   }
 
   function buildAbilities(detail, detailEn, isRussian = true) {
@@ -1457,7 +1282,6 @@
     const entries = Object.values(indexData);
     const results = [];
 
-    // простая ограниченная параллельность
     let i = 0;
     async function worker() {
       while (i < entries.length) {
@@ -1477,7 +1301,6 @@
           const titleEn = detailEn?.title || "";
           const nameRu = detailRu?.name || nameEn;
           const titleRu = detailRu?.title || titleEn;
-          // spell ranges
           let spellRanges = { Q: 0, W: 0, E: 0, R: 0 };
           if (Array.isArray(detailEn?.spells)) {
             const labels = ["Q", "W", "E", "R"];
@@ -1542,7 +1365,7 @@
             spellRanges
           };
           results.push(champ);
-          setStatus(`Загружено чемпионов: ${results.length}/${entries.length}`);
+          setStatus(`${t('found')}: ${results.length} ${t('of')} ${entries.length}`);
         } catch (e) {
           console.warn("Failed to load detail for", item.id, e);
         }
@@ -1555,7 +1378,6 @@
   }
 
   function readFiltersFromUI() {
-    // Ability filters with Q/W/E/R specificity
     const abilityFilters = ['mobility', 'stun', 'slow', 'root', 'knockup', 'silence', 'stealth', 'attackspeed', 'movespeed', 'shield', 'heal', 'pull', 'lifesteal'];
     for (const filter of abilityFilters) {
       const mainChecked = els.checkboxes[filter].checked;
@@ -1571,7 +1393,6 @@
       state.filters[`${filter}R`] = rChecked;
     }
     
-    // Damage type filters with Q/W/E/R specificity
     const dmgTypes = ['dmgPhysical', 'dmgMagic', 'scalesHealth'];
     for (const filter of dmgTypes) {
       const id = filter === 'dmgPhysical' ? 'dmg-physical' : 
@@ -1589,7 +1410,6 @@
       state.filters[`${filter}R`] = rChecked;
     }
     
-    // roles
     state.filters.roleTank = els.checkboxes.roleTank.checked || els.checkboxes.roleTankAnd?.checked || false;
     state.filters.roleTankAnd = els.checkboxes.roleTankAnd?.checked || false;
     state.filters.roleFighter = els.checkboxes.roleFighter.checked || els.checkboxes.roleFighterAnd?.checked || false;
@@ -1603,7 +1423,6 @@
     state.filters.roleSupport = els.checkboxes.roleSupport.checked || els.checkboxes.roleSupportAnd?.checked || false;
     state.filters.roleSupportAnd = els.checkboxes.roleSupportAnd?.checked || false;
     
-    // range sliders
     const dps0ValueRaw = els.minDps0 ? Number(els.minDps0.value) : NaN;
     const dps18ValueRaw = els.minDps18 ? Number(els.minDps18.value) : NaN;
     const dps0Min = els.minDps0 ? Number(els.minDps0.min) : NaN;
@@ -1631,7 +1450,6 @@
   }
 
   function championMatchesFilters(champion) {
-    // Search filter
     if (state.searchQuery) {
       const query = state.searchQuery.toLowerCase();
       const nameEn = (champion.name || '').toLowerCase();
@@ -1641,7 +1459,6 @@
       }
     }
     
-    // Range filters
     if (state.filters.minDps0 > 0 && (champion.dps0 ?? 0) < state.filters.minDps0) return false;
     if (state.filters.minDps18 > 0 && (champion.dps18 ?? 0) < state.filters.minDps18) return false;
     if (state.filters.minRange > 0 && (champion.attackRange ?? 0) < state.filters.minRange) {
@@ -1652,13 +1469,11 @@
     if (state.filters.minRangeE > 0 && (champion.spellRanges?.E ?? 0) < state.filters.minRangeE) return false;
     if (state.filters.minRangeR > 0 && (champion.spellRanges?.R ?? 0) < state.filters.minRangeR) return false;
     
-    // Ability tag filters with Q/W/E/R specificity
       const abilityTags = ['mobility', 'stun', 'slow', 'root', 'knockup', 'silence', 'stealth', 'attackspeed', 'movespeed', 'shield', 'heal', 'pull', 'lifesteal'];
     for (const tag of abilityTags) {
       const anySelected = state.filters[tag];
       if (!anySelected) continue;
       
-      // Check if specific abilities are required
       const qRequired = state.filters[`${tag}Q`];
       const wRequired = state.filters[`${tag}W`];
       const eRequired = state.filters[`${tag}E`];
@@ -1667,18 +1482,15 @@
       const hasSpecificRequirements = qRequired || wRequired || eRequired || rRequired;
       
       if (hasSpecificRequirements) {
-        // If specific abilities are required, check each one
         if (qRequired && !champion.tagsByAbility?.Q?.includes(tag)) return false;
         if (wRequired && !champion.tagsByAbility?.W?.includes(tag)) return false;
         if (eRequired && !champion.tagsByAbility?.E?.includes(tag)) return false;
         if (rRequired && !champion.tagsByAbility?.R?.includes(tag)) return false;
       } else {
-        // If only general checkbox is selected, check if champion has it at all
         if (!champion.tags.includes(tag)) return false;
       }
     }
     
-    // Damage type filters with Q/W/E/R specificity
     const checkDamageType = (filterName, typeName) => {
       const anySelected = state.filters[filterName];
       if (!anySelected) return true;
@@ -1704,7 +1516,6 @@
     if (!checkDamageType('dmgPhysical', 'physical')) return false;
     if (!checkDamageType('dmgMagic', 'magic')) return false;
     
-    // Health scaling filter with Q/W/E/R specificity
     if (state.filters.scalesHealth) {
       const qRequired = state.filters.scalesHealthQ;
       const wRequired = state.filters.scalesHealthW;
@@ -1723,7 +1534,6 @@
       }
     }
     
-    // Role filters
     const rolesOR = [];
     const rolesAND = [];
     
@@ -1770,13 +1580,11 @@
       }
     }
     
-    // Роли с режимом И должны быть ВСЕ у чемпиона
     if (rolesAND.length > 0) {
       const hasAllRolesAND = rolesAND.every(r => champion.classTags?.includes(r));
       if (!hasAllRolesAND) return false;
     }
     
-    // Роли с режимом ИЛИ - хотя бы одна должна быть
     if (rolesOR.length > 0) {
       const hasAnyRoleOR = rolesOR.some(r => champion.classTags?.includes(r));
       if (!hasAnyRoleOR) return false;
@@ -1788,7 +1596,7 @@
   function renderGrid(champions) {
     els.grid.innerHTML = "";
     if (!champions.length) {
-      els.grid.innerHTML = `<div class="status">Ничего не найдено. Попробуйте ослабить фильтры.</div>`;
+      els.grid.innerHTML = `<div class="status">${t('noResults')}</div>`;
       return;
     }
     const roleLabels = {
@@ -1807,7 +1615,7 @@
       splash.className = "splash";
       splash.style.backgroundImage = `url('${c.image}')`;
       splash.style.cursor = "pointer";
-      splash.title = "Открыть полную информацию";
+      splash.title = t('openFullInfo');
       splash.addEventListener("click", () => openModalForChampion(c));
 
       const body = document.createElement("div");
@@ -1823,15 +1631,13 @@
       const rangeBadge = document.createElement("span");
       rangeBadge.className = "badge";
       rangeBadge.textContent = `${c.attackRange}`;
-      rangeBadge.title = state.language === 'ru' ? 'Дальность автоатаки' : 'Auto Attack Range';
+      rangeBadge.title = t('attackRange');
       const dpsBadge = document.createElement("span");
       dpsBadge.className = "badge badge-dps";
       const dps0Display = formatDpsValue(c.dps0);
       const dps18Display = formatDpsValue(c.dps18);
       dpsBadge.textContent = `${dps0Display} / ${dps18Display}`;
-      dpsBadge.title = state.language === 'ru'
-        ? 'DPS на уровне 1 и на 18 уровне'
-        : 'DPS at level 1 and level 18';
+      dpsBadge.title = t('dpsTooltip');
       badgeWrap.appendChild(rangeBadge);
       badgeWrap.appendChild(dpsBadge);
       const roles = Array.isArray(c.classTags)
@@ -2035,12 +1841,10 @@
 
   function fitModalScale() {
     if (!els.modal || !els.modalScale) return;
-    // сброс масштаба
     els.modalScale.style.transform = "none";
-    // желаемая ширина модалки — 1000px, но не больше 96vw
     const desiredW = Math.min(1000, Math.floor(window.innerWidth * 0.96));
     els.modal.style.width = `${desiredW}px`;
-    const margin = 24; // inset 12px * 2
+    const margin = 24;
     const maxModalHeight = Math.floor(window.innerHeight * 0.9);
     const contentHeight = els.modalScale.scrollHeight + margin;
     const finalH = Math.min(maxModalHeight, contentHeight);
@@ -2053,10 +1857,8 @@
     initModalDpsTable(c);
     els.modalRoot.classList.add("open");
     document.body.classList.add("modal-open");
-    // подождать рендер и вписать
     requestAnimationFrame(() => {
       fitModalScale();
-      // повторные пересчёты после загрузки иконок
       setTimeout(fitModalScale, 60);
       setTimeout(fitModalScale, 200);
     });
@@ -2084,7 +1886,6 @@
   }
 
   function updateFilterBadgesAndDisable() {
-    // Получаем текущие выбранные фильтры
     const currentFilters = { ...state.filters };
     
     const abilityFilters = ['mobility', 'stun', 'slow', 'root', 'knockup', 'silence', 'stealth', 'attackspeed', 'movespeed', 'shield', 'heal', 'pull', 'lifesteal'];
@@ -2095,12 +1896,9 @@
     const scalesFilter = { key: 'scalesHealth', type: 'health' };
     const roleFilters = ['roleTank', 'roleFighter', 'roleMage', 'roleMarksman', 'roleAssassin', 'roleSupport'];
     
-    // Для каждого фильтра способностей
     for (const filter of abilityFilters) {
-      // Создаем временные фильтры с добавлением текущего фильтра
       const testFilters = { ...currentFilters, [filter]: true };
       
-      // Считаем сколько чемпионов пройдет фильтр
       let count = 0;
       for (const champ of state.champions) {
         if (championMatchesFiltersWithOverride(champ, testFilters)) {
@@ -2108,11 +1906,9 @@
         }
       }
       
-      // Обновляем data-count в чекбоксе
       const checkbox = qs(`#filter-${filter}`);
       if (checkbox) checkbox.setAttribute('data-count', count);
       
-      // Проверяем Q/W/E/R чекбоксы
       const abilities = ['q', 'w', 'e', 'r'];
       const disabledStates = [];
       for (const ability of abilities) {
@@ -2138,7 +1934,6 @@
         }
       }
       
-      // Если все Q/W/E/R disabled, делаем disabled всю строку
       const allDisabled = disabledStates.length === 4 && disabledStates.every(d => d === true);
       const mainCheckbox = qs(`#filter-${filter}`);
       const mainLabel = mainCheckbox ? mainCheckbox.nextElementSibling : null;
@@ -2152,7 +1947,6 @@
       }
     }
     
-    // Для фильтров урона
     for (const dmgFilter of dmgFilters) {
       const testFilters = { ...currentFilters, [dmgFilter.key]: true };
       
@@ -2163,11 +1957,9 @@
         }
       }
       
-      // Проверяем Q/W/E/R чекбоксы
       const abilities = ['q', 'w', 'e', 'r'];
       const id = dmgFilter.key === 'dmgPhysical' ? 'dmg-physical' : 'dmg-magic';
       
-      // Обновляем data-count в чекбоксе
       const checkbox = qs(`#${id}`);
       if (checkbox) checkbox.setAttribute('data-count', count);
       const disabledStates = [];
@@ -2194,7 +1986,6 @@
         }
       }
       
-      // Если все Q/W/E/R disabled, делаем disabled всю строку
       const allDisabled = disabledStates.length === 4 && disabledStates.every(d => d === true);
       const mainCheckbox = qs(`#${id}`);
       const mainLabel = mainCheckbox ? mainCheckbox.nextElementSibling : null;
@@ -2208,7 +1999,6 @@
       }
     }
     
-    // Для фильтра здоровья
     const testFilters = { ...currentFilters, [scalesFilter.key]: true };
     let count = 0;
     for (const champ of state.champions) {
@@ -2217,11 +2007,9 @@
       }
     }
     
-    // Обновляем data-count в чекбоксе
     const checkbox = qs('#scales-health');
     if (checkbox) checkbox.setAttribute('data-count', count);
     
-    // Проверяем Q/W/E/R чекбоксы для здоровья
     const abilities = ['q', 'w', 'e', 'r'];
     const disabledStatesHealth = [];
     for (const ability of abilities) {
@@ -2247,7 +2035,6 @@
       }
     }
     
-    // Если все Q/W/E/R disabled, делаем disabled всю строку
     const allDisabledHealth = disabledStatesHealth.length === 4 && disabledStatesHealth.every(d => d === true);
     const mainCheckboxHealth = qs(`#scales-health`);
     const mainLabelHealth = mainCheckboxHealth ? mainCheckboxHealth.nextElementSibling : null;
@@ -2260,9 +2047,7 @@
       mainLabelHealth.style.cursor = allDisabledHealth ? 'not-allowed' : 'pointer';
     }
     
-    // Для фильтров ролей - подсчитываем для ИЛИ и И режимов
     for (const roleFilter of roleFilters) {
-      // Определяем ID чекбокса для этой роли
       let checkboxId = '';
       if (roleFilter === 'roleTank') checkboxId = 'role-tank';
       else if (roleFilter === 'roleFighter') checkboxId = 'role-fighter';
@@ -2274,17 +2059,13 @@
       const roleCheckbox = qs(`#${checkboxId}`);
       const roleCheckboxAnd = roleCheckbox?.nextElementSibling;
       
-      // Проверяем, выбран ли уже этот фильтр
       const isAlreadySelected = currentFilters[roleFilter];
       const isAlreadyAndMode = currentFilters[`${roleFilter}And`];
       
-      // Создаем базовые тестовые фильтры без этой роли (чтобы показать что будет при добавлении)
       const baseFilters = { ...currentFilters };
-      // Убираем проверяемую роль из базовых фильтров
       delete baseFilters[roleFilter];
       delete baseFilters[`${roleFilter}And`];
       
-      // Подсчет для режима ИЛИ
       const testFiltersOR = { ...baseFilters };
       testFiltersOR[roleFilter] = true;
       testFiltersOR[`${roleFilter}And`] = false;
@@ -2296,7 +2077,6 @@
         }
       }
       
-      // Подсчет для режима И
       const testFiltersAND = { ...baseFilters };
       testFiltersAND[roleFilter] = true;
       testFiltersAND[`${roleFilter}And`] = true;
@@ -2308,18 +2088,14 @@
         }
       }
       
-      // Обновляем data-count для чекбокса ИЛИ (роль)
       if (roleCheckbox) {
         roleCheckbox.setAttribute('data-count', countOR);
-        // Делаем disabled роль, если по ней нет чемпионов
         roleCheckbox.disabled = countOR === 0;
         if (countOR === 0) roleCheckbox.checked = false;
       }
       
-      // Обновляем data-count для чекбокса И
       if (roleCheckboxAnd) {
         roleCheckboxAnd.setAttribute('data-count', countAND);
-        // Делаем disabled роль, если по ней нет чемпионов
         roleCheckboxAnd.disabled = countAND === 0;
         if (countAND === 0) roleCheckboxAnd.checked = false;
       }
@@ -2334,8 +2110,6 @@
   }
   
   function championMatchesFiltersWithOverride(champion, filters) {
-    // Копия championMatchesFilters но с переданными фильтрами
-    // Search filter (всегда учитывается из state)
     if (state.searchQuery) {
       const query = state.searchQuery.toLowerCase();
       const nameEn = (champion.name || '').toLowerCase();
@@ -2345,7 +2119,6 @@
       }
     }
     
-    // Range filters
     if ((filters.minDps0 ?? 0) > 0 && (champion.dps0 ?? 0) < filters.minDps0) return false;
     if ((filters.minDps18 ?? 0) > 0 && (champion.dps18 ?? 0) < filters.minDps18) return false;
     if (filters.minRange > 0 && (champion.attackRange ?? 0) < filters.minRange) {
@@ -2356,7 +2129,6 @@
     if (filters.minRangeE > 0 && (champion.spellRanges?.E ?? 0) < filters.minRangeE) return false;
     if (filters.minRangeR > 0 && (champion.spellRanges?.R ?? 0) < filters.minRangeR) return false;
     
-    // Ability tag filters with Q/W/E/R specificity
     const abilityTags = ['mobility', 'stun', 'slow', 'root', 'knockup', 'silence', 'stealth', 'attackspeed', 'movespeed', 'shield', 'heal', 'pull', 'lifesteal'];
     for (const tag of abilityTags) {
       const anySelected = filters[tag];
@@ -2379,7 +2151,6 @@
       }
     }
     
-    // Damage type filters with Q/W/E/R specificity
     const checkDamageType = (filterName, typeName) => {
       const anySelected = filters[filterName];
       if (!anySelected) return true;
@@ -2405,7 +2176,6 @@
     if (!checkDamageType('dmgPhysical', 'physical')) return false;
     if (!checkDamageType('dmgMagic', 'magic')) return false;
     
-    // Health scaling filter with Q/W/E/R specificity
     if (filters.scalesHealth) {
       const qRequired = filters.scalesHealthQ;
       const wRequired = filters.scalesHealthW;
@@ -2424,7 +2194,6 @@
       }
     }
     
-    // Role filters
     const rolesOR = [];
     const rolesAND = [];
     
@@ -2471,13 +2240,11 @@
       }
     }
     
-    // Роли с режимом И должны быть ВСЕ у чемпиона
     if (rolesAND.length > 0) {
       const hasAllRolesAND = rolesAND.every(r => champion.classTags?.includes(r));
       if (!hasAllRolesAND) return false;
     }
     
-    // Роли с режимом ИЛИ - хотя бы одна должна быть
     if (rolesOR.length > 0) {
       const hasAnyRoleOR = rolesOR.some(r => champion.classTags?.includes(r));
       if (!hasAnyRoleOR) return false;
@@ -2488,34 +2255,29 @@
   
   function updateUILanguage() {
     document.documentElement.lang = state.language;
-    // Update all elements with data-i18n attribute
     const i18nElements = document.querySelectorAll('[data-i18n]');
     i18nElements.forEach(el => {
       const key = el.getAttribute('data-i18n');
       el.textContent = t(key);
     });
     
-    // Update search placeholder
     const searchInput = qs("#search-input");
     if (searchInput) {
       searchInput.placeholder = t('searchPlaceholder');
     }
     
-    // Update role tooltips
     const roleTooltips = document.querySelectorAll('[data-role-tooltip]');
     roleTooltips.forEach(el => {
       const tooltipKey = el.getAttribute('data-role-tooltip');
       el.setAttribute('title', t(tooltipKey));
     });
     
-    // Update ability tooltips
     const abilityTooltips = document.querySelectorAll('[data-ability-tooltip]');
     abilityTooltips.forEach(el => {
       const tooltipKey = el.getAttribute('data-ability-tooltip');
       el.setAttribute('title', t(tooltipKey));
     });
     
-    // Update filter labels
     const filterLabels = {
       'filter-mobility': 'mobility',
       'filter-stun': 'stun',
@@ -2546,7 +2308,6 @@
       if (label) label.textContent = t(key);
     }
     
-    // Update range labels with values
     const minDps0Label = qs('label[for="min-dps0"]');
     if (minDps0Label) {
       const valueSpan = minDps0Label.querySelector('#min-dps0-value');
@@ -2596,7 +2357,6 @@
       minRangeRLabel.innerHTML = `${t('minRangeR')}: <span id="min-range-r-value">${value}</span>`;
     }
     
-    // Обновляем ссылки на элементы после изменения innerHTML
     els.minDps0Value = qs("#min-dps0-value");
     els.minDps18Value = qs("#min-dps18-value");
     els.minRangeValue = qs("#min-range-value");
@@ -2611,7 +2371,6 @@
       applyRangeBounds(state.rangeBounds);
     }
     
-    // Update modal if it's open
     if (state.currentModalChampion) {
       els.modalContent.innerHTML = buildModalHtml(state.currentModalChampion);
       initModalDpsTable(state.currentModalChampion);
@@ -2623,7 +2382,6 @@
   }
   
   function setupCheckboxTooltips() {
-    // Создаем глобальный элемент для подсказки
     let tooltipEl = document.getElementById('custom-checkbox-tooltip');
     if (!tooltipEl) {
       tooltipEl = document.createElement('div');
@@ -2632,13 +2390,10 @@
       document.body.appendChild(tooltipEl);
     }
     
-    // Находим все чекбоксы с data-role-tooltip или data-ability-tooltip
     const checkboxes = document.querySelectorAll('input[type="checkbox"][data-role-tooltip], input[type="checkbox"][data-ability-tooltip]');
     
-    // Устанавливаем обработчики только один раз
     if (checkboxes.length > 0 && !checkboxes[0].hasAttribute('data-tooltip-setup')) {
       checkboxes.forEach(checkbox => {
-        // Сохраняем текст подсказки в data-атрибут
         let tooltipKey = '';
         if (checkbox.hasAttribute('data-role-tooltip')) {
           tooltipKey = checkbox.getAttribute('data-role-tooltip');
@@ -2649,11 +2404,10 @@
         if (tooltipKey) {
           const tooltipText = t(tooltipKey);
           checkbox.setAttribute('data-tooltip-text', tooltipText);
-          checkbox.removeAttribute('title'); // Удаляем стандартный title
-          checkbox.setAttribute('data-tooltip-setup', 'true'); // Помечаем как настроенный
+          checkbox.removeAttribute('title');
+          checkbox.setAttribute('data-tooltip-setup', 'true');
         }
         
-        // Добавляем обработчики событий (только один раз)
         checkbox.addEventListener('mouseenter', function(e) {
           const text = this.getAttribute('data-tooltip-text');
           if (text) {
@@ -2679,7 +2433,6 @@
         });
       });
     } else {
-      // Если уже были настроены, просто обновляем тексты
       checkboxes.forEach(checkbox => {
         let tooltipKey = '';
         if (checkbox.hasAttribute('data-role-tooltip')) {
@@ -2696,8 +2449,21 @@
   }
   
   function updateCheckboxTooltips() {
-    // Обновляем текст подсказок после изменения языка
-    setupCheckboxTooltips(); // Переустанавливаем, чтобы обновить тексты
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][data-role-tooltip], input[type="checkbox"][data-ability-tooltip]');
+    
+    checkboxes.forEach(checkbox => {
+      let tooltipKey = '';
+      if (checkbox.hasAttribute('data-role-tooltip')) {
+        tooltipKey = checkbox.getAttribute('data-role-tooltip');
+      } else if (checkbox.hasAttribute('data-ability-tooltip')) {
+        tooltipKey = checkbox.getAttribute('data-ability-tooltip');
+      }
+      
+      if (tooltipKey) {
+        const tooltipText = t(tooltipKey);
+        checkbox.setAttribute('data-tooltip-text', tooltipText);
+      }
+    });
   }
   
   function applyFiltersAndRender() {
@@ -2722,7 +2488,6 @@
     els.checkboxes.heal = qs("#filter-heal");
     els.checkboxes.pull = qs("#filter-pull");
     els.checkboxes.lifesteal = qs("#filter-lifesteal");
-    // roles
     els.checkboxes.roleTank = qs("#role-tank");
     els.checkboxes.roleTankAnd = qs("#role-tank-and");
     els.checkboxes.roleFighter = qs("#role-fighter");
@@ -2735,10 +2500,8 @@
     els.checkboxes.roleAssassinAnd = qs("#role-assassin-and");
     els.checkboxes.roleSupport = qs("#role-support");
     els.checkboxes.roleSupportAnd = qs("#role-support-and");
-    // damage types
     els.checkboxes.dmgPhysical = qs("#dmg-physical");
     els.checkboxes.dmgMagic = qs("#dmg-magic");
-    // scaling
     els.checkboxes.scalesHealth = qs("#scales-health");
     els.minDps0 = qs("#min-dps0");
     els.minDps0Value = qs("#min-dps0-value");
@@ -2755,7 +2518,6 @@
     els.minRangeR = qs("#min-range-r");
     els.minRangeRValue = qs("#min-range-r-value");
     els.resetBtn = qs("#reset-filters");
-    // modal
     els.modalRoot = qs("#modal-root");
     els.modal = qs("#modal-root .modal");
     els.modalViewport = qs("#modal-root .modal-viewport");
@@ -2764,7 +2526,6 @@
     els.modalClose = qs("#modal-root .modal-close");
     bindModalEvents();
 
-    // Mobile filters menu
     const filtersToggle = qs("#filters-toggle");
     const filtersPanel = qs("#filters-panel");
     const filtersClose = qs("#filters-close");
@@ -2794,13 +2555,11 @@
       filtersBackdrop.addEventListener("click", closeFilters);
     }
 
-    // Add event listeners for main checkboxes
     const abilityFilters = ['mobility', 'stun', 'slow', 'root', 'knockup', 'silence', 'stealth', 'attackspeed', 'movespeed', 'shield', 'heal', 'pull', 'lifesteal'];
     for (const filter of abilityFilters) {
       const mainCheckbox = qs(`#filter-${filter}`);
       const abilities = ['q', 'w', 'e', 'r'];
       
-      // Основной чекбокс сбрасывает все Q/W/E/R
       if (mainCheckbox) {
         mainCheckbox.addEventListener("change", (e) => {
           if (e.target.checked) {
@@ -2813,12 +2572,10 @@
         });
       }
       
-      // Q/W/E/R чекбоксы сбрасывают основной
       for (const ability of abilities) {
         const checkbox = qs(`#filter-${filter}-${ability}`);
         if (checkbox) {
           checkbox.addEventListener("change", (e) => {
-            // Если выбран Q/W/E/R чекбокс, снять основной чекбокс
             if (e.target.checked && mainCheckbox) {
               mainCheckbox.checked = false;
             }
@@ -2828,7 +2585,6 @@
       }
     }
     
-    // Обработчики взаимоисключения для ролей (первый чекбокс vs "И")
     const rolePairs = [
       { role: els.checkboxes.roleTank, and: els.checkboxes.roleTankAnd },
       { role: els.checkboxes.roleFighter, and: els.checkboxes.roleFighterAnd },
@@ -2840,14 +2596,12 @@
     
     for (const pair of rolePairs) {
       if (pair.role && pair.and) {
-        // Если выбран первый чекбокс (роль), снять второй (И)
         pair.role.addEventListener("change", (e) => {
           if (e.target.checked && pair.and) {
             pair.and.checked = false;
           }
           applyFiltersAndRender();
         });
-        // Если выбран второй чекбокс (И), снять первый (роль)
         pair.and.addEventListener("change", (e) => {
           if (e.target.checked && pair.role) {
             pair.role.checked = false;
@@ -2857,10 +2611,8 @@
       }
     }
     
-    // Обработчики для остальных чекбоксов (роли и т.д.)
     const dmgFilterIds = ['dmg-physical', 'dmg-magic', 'scales-health'];
     for (const el of Object.values(els.checkboxes)) {
-      // Пропускаем ability фильтры, dmg фильтры и role-and чекбоксы, для них уже добавлены обработчики выше
       const id = el?.id;
       if (id && (abilityFilters.some(f => id === `filter-${f}`) || dmgFilterIds.includes(id) || id.endsWith('-and'))) {
         continue;
@@ -2870,7 +2622,6 @@
       }
     }
     
-    // Add event listeners for damage type and health scaling Q/W/E/R checkboxes
     const dmgFilters = [
       { id: 'dmg-physical', main: 'dmg-physical' },
       { id: 'dmg-magic', main: 'dmg-magic' },
@@ -2880,7 +2631,6 @@
       const abilities = ['q', 'w', 'e', 'r'];
       const mainCheckbox = qs(`#${filter.main}`);
       
-      // Основной чекбокс сбрасывает все Q/W/E/R
       if (mainCheckbox) {
         mainCheckbox.addEventListener("change", (e) => {
           if (e.target.checked) {
@@ -2893,12 +2643,10 @@
         });
       }
       
-      // Q/W/E/R чекбоксы сбрасывают основной
       for (const ability of abilities) {
         const checkbox = qs(`#${filter.id}-${ability}`);
         if (checkbox) {
           checkbox.addEventListener("change", (e) => {
-            // Если выбран Q/W/E/R чекбокс, снять основной чекбокс
             if (e.target.checked && mainCheckbox) {
               mainCheckbox.checked = false;
             }
@@ -2908,7 +2656,6 @@
       }
     }
     
-    // Search input
     const searchInput = qs("#search-input");
     if (searchInput) {
       searchInput.addEventListener("input", (e) => {
@@ -2917,13 +2664,12 @@
       });
     }
     
-    // Language toggle
     const langToggle = qs("#lang-toggle");
     if (langToggle) {
       langToggle.addEventListener("change", (e) => {
         state.language = e.target.checked ? 'ru' : 'en';
         updateUILanguage();
-        updateCheckboxTooltips(); // Обновляем подсказки чекбоксов после смены языка
+        updateCheckboxTooltips();
         applyFiltersAndRender();
       });
     }
@@ -2936,7 +2682,6 @@
     els.minRangeE.addEventListener("input", applyFiltersAndRender);
     els.minRangeR.addEventListener("input", applyFiltersAndRender);
     els.resetBtn.addEventListener("click", () => {
-      // Reset search
       if (searchInput) {
         searchInput.value = '';
         state.searchQuery = '';
@@ -2944,7 +2689,6 @@
       
       for (const el of Object.values(els.checkboxes)) el.checked = false;
       
-      // Reset all Q/W/E/R ability checkboxes
       const abilityFilters = ['mobility', 'stun', 'slow', 'root', 'knockup', 'silence', 'stealth', 'attackspeed', 'movespeed', 'shield', 'heal', 'pull', 'lifesteal'];
       for (const filter of abilityFilters) {
         const abilities = ['q', 'w', 'e', 'r'];
@@ -2954,7 +2698,6 @@
         }
       }
       
-      // Reset damage type and health scaling Q/W/E/R checkboxes
       const dmgFilters = ['dmg-physical', 'dmg-magic', 'scales-health'];
       for (const filter of dmgFilters) {
         const abilities = ['q', 'w', 'e', 'r'];
@@ -3021,20 +2764,26 @@
     els.status = qs("#status");
     els.grid = qs("#grid");
     
-    // Проверка языка браузера при старте
     const browserLanguages = navigator.languages || [navigator.language || navigator.userLanguage];
     const hasRussian = browserLanguages.some(lang => lang.toLowerCase().startsWith('ru'));
     
     if (hasRussian) {
       state.language = 'ru';
-      // Обновляем переключатель языка (checked=true для ru, false для en)
       const langToggle = qs("#lang-toggle");
       if (langToggle) {
         langToggle.checked = true;
       }
     }
     
-    // Pre-load language file based on browser language
+    try {
+      await Promise.all([
+        loadUITranslations('ru'),
+        loadUITranslations('en')
+      ]);
+    } catch (e) {
+      console.warn("Failed to load UI translations:", e);
+    }
+    
     const initialLocale = hasRussian ? RU_LOCALE : LOCALE;
     try {
       await loadLanguageFile(initialLocale);
@@ -3043,8 +2792,8 @@
     }
     
     bindUI();
-    updateUILanguage(); // Применяем текущий язык к интерфейсу
-    setupCheckboxTooltips(); // Настраиваем кастомные подсказки для чекбоксов
+    updateUILanguage();
+    setupCheckboxTooltips();
     setStatus(t('detectingVersion'));
     state.version = await getLatestVersion();
     setStatus(`${t('versionDetected')}: ${state.version}. ${t('checkingCache')}`);
@@ -3056,7 +2805,7 @@
     try {
       state.championsIndex = await loadChampionsIndex();
     } catch (e) {
-      setStatus("Failed to load champion list from Data Dragon.");
+      setStatus(t('loadChampionsError'));
       throw e;
     }
     setStatus(t('loadingAbilities'));

@@ -649,6 +649,9 @@
     if (champDetail && champDetail.passive) {
       collect(champDetail.passive.name).forEach(t => tags.add(t));
       collect(champDetail.passive.description).forEach(t => tags.add(t));
+      if (champDetail.passive.tooltip) {
+        collect(champDetail.passive.tooltip).forEach(t => tags.add(t));
+      }
     }
     
     return { 
